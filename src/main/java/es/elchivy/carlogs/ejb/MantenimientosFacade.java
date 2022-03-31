@@ -15,9 +15,9 @@ import javax.persistence.PersistenceContext;
  * @author Sergio
  */
 @Stateless
-public class MantenimientosFacade extends AbstractFacade<Mantenimientos> implements MantenimientosFacadeLocal {
+public class MantenimientosFacade extends AbstractFacade<Mantenimientos> {
 
-    @PersistenceContext(unitName = "my_persistence_unit")
+    @PersistenceContext(unitName = "CarLogsPU")
     private EntityManager em;
 
     @Override
