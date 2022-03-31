@@ -26,5 +26,5 @@ Feel free to create as many branches as you want.
 
 Enjoy!
 
-For more information, please contact me at [scasaf00](scasaf00@estudiantes.unileon.es).
+For more information, please contact me at [scasaf00](https://www.github.com/scasaf00).
 
