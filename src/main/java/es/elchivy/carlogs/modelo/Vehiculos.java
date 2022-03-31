@@ -1,0 +1,183 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package es.elchivy.carlogs.modelo;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/**
+ *
+ * @author Sergio
+ */
+@Entity
+@Table(name = "vehiculos")
+@NamedQueries({
+    @NamedQuery(name = "Vehiculos.findAll", query = "SELECT v FROM Vehiculos v"),
+    @NamedQuery(name = "Vehiculos.findByMatricula", query = "SELECT v FROM Vehiculos v WHERE v.matricula = :matricula"),
+    @NamedQuery(name = "Vehiculos.findByMarca", query = "SELECT v FROM Vehiculos v WHERE v.marca = :marca"),
+    @NamedQuery(name = "Vehiculos.findByModelo", query = "SELECT v FROM Vehiculos v WHERE v.modelo = :modelo"),
+    @NamedQuery(name = "Vehiculos.findByColor", query = "SELECT v FROM Vehiculos v WHERE v.color = :color"),
+    @NamedQuery(name = "Vehiculos.findByGastoKm", query = "SELECT v FROM Vehiculos v WHERE v.gastoKm = :gastoKm"),
+    @NamedQuery(name = "Vehiculos.findByKmActual", query = "SELECT v FROM Vehiculos v WHERE v.kmActual = :kmActual")})
+public class Vehiculos implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 7)
+    @Column(name = "matricula")
+    private String matricula;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "marca")
+    private String marca;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "modelo")
+    private String modelo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "color")
+    private String color;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "gasto_km")
+    private BigDecimal gastoKm;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "km_actual")
+    private BigDecimal kmActual;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Usuarios usuarioId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
+    private Collection<Gastos> gastosCollection;
+
+    public Vehiculos() {
+    }
+
+    public Vehiculos(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public Vehiculos(String matricula, String marca, String modelo, String color, BigDecimal gastoKm, BigDecimal kmActual) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.color = color;
+        this.gastoKm = gastoKm;
+        this.kmActual = kmActual;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public BigDecimal getGastoKm() {
+        return gastoKm;
+    }
+
+    public void setGastoKm(BigDecimal gastoKm) {
+        this.gastoKm = gastoKm;
+    }
+
+    public BigDecimal getKmActual() {
+        return kmActual;
+    }
+
+    public void setKmActual(BigDecimal kmActual) {
+        this.kmActual = kmActual;
+    }
+
+    public Usuarios getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Usuarios usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Collection<Gastos> getGastosCollection() {
+        return gastosCollection;
+    }
+
+    public void setGastosCollection(Collection<Gastos> gastosCollection) {
+        this.gastosCollection = gastosCollection;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (matricula != null ? matricula.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Vehiculos)) {
+            return false;
+        }
+        Vehiculos other = (Vehiculos) object;
+        if ((this.matricula == null && other.matricula != null) || (this.matricula != null && !this.matricula.equals(other.matricula))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "es.elchivy.carlogs.modelo.Vehiculos[ matricula=" + matricula + " ]";
+    }
+    
+}
