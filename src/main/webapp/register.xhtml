@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f = "http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Registro</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:panel header="Resgistro" style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
+            <h:panelGrid class="panel" columns="2" cellpadding="4" >
+                <h:outputText value="Usuario: " />
+                <p:inputText id="usuario" required="true" />
+                <h:outputText value="Contraseña: " />
+                <p:password id="password" required="true"/>
+                <h:outputText value="Repetir Contraseña: " />
+                <p:password id="password_again" required="true"/>
+                <p:outputLabel for="@next" value="Tipo de usuario"/>
+                <p:selectOneMenu id="tipo">
+                    <p:ajax update="@this" process="@this"/>
+                    <f:selectItem itemLabel="Normal" itemValue="normal"/>
+                    <f:selectItem itemLabel="Gasolinero" itemValue="gasolinero"/>
+                </p:selectOneMenu>
+                <h:outputText value="Gasolinera: " type="hidden"/>
+                <p:inputText id="gasolineras" required="true" type="hidden"/>
+                <p:commandButton value="Entrar"/>
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
