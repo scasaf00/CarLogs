@@ -26,6 +26,15 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         return em;
     }
 
+    @Override
+    public boolean validarUsuario(Usuarios usuario) {
+        String consulta = "FROM Usuarios u WHERE u.username = :param1 AND u.password = :param2";
+        Query q = em.createQuery(consulta);
+        q.setParameter("param1", usuario.getUsername());
+        q.setParameter("param2", usuario.getPassword());
+        return q.getResultList().size() > 0;
+    }
+
     public UsuariosFacade() {
         super(Usuarios.class);
     }
