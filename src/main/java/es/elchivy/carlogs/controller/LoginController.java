@@ -1,16 +1,20 @@
 package es.elchivy.carlogs.controller;
 
-import java.io.Serializable;
+import es.elchivy.carlogs.ejb.UsuariosFacade;
+import es.elchivy.carlogs.resources.SessionUtils;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 
 @ManagedBean(name = "loginController")
 @ViewScoped
 public class LoginController implements Serializable {
+
+    private final UsuariosFacade usuariosFacade = new UsuariosFacade();
 
     private static final long serialVersionUID = 1L;
     private String password;
@@ -40,6 +44,10 @@ public class LoginController implements Serializable {
         this.uname = uname;
     }
 
+    public UsuariosFacade getUsuariosFacade() {
+        return usuariosFacade;
+    }
+
     public String loginProject() {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -50,5 +58,23 @@ public class LoginController implements Serializable {
 
     }
 
+    //Validate Login
+    public String validateLogin() {
+        boolean valid = usuariosFacade.validarUsuario(this.getUname(), this.getPassword());
+        if(valid){
+            HttpSession session = SessionUtils.getSession();
+            session.setAttribute("username", this.getUname());
+            return "?"; //TODO: redirecr a algun lao
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please Try Again!"));
+            return "index";
+        }
+    }
 
+    public String logout() {
+        HttpSession session = SessionUtils.getSession();
+        session.invalidate();
+        return "index";
+
+    }
 }

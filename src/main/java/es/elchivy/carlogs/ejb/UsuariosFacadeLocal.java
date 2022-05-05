@@ -30,5 +30,5 @@ public interface UsuariosFacadeLocal {
 
     int count();
 
-    boolean validarUsuario(Usuarios usuario);
+    boolean validarUsuario(String username, String password);
 }
