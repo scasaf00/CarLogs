@@ -9,6 +9,7 @@ import es.elchivy.carlogs.modelo.Usuarios;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,8 +26,16 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         return em;
     }
 
+    @Override
+    public boolean validarUsuario(String username , String password) {
+        String consulta = "FROM Usuarios u WHERE u.username = :param1 AND u.password = :param2";
+        Query q = em.createQuery(consulta);
+        q.setParameter("param1", username);
+        q.setParameter("param2", password);
+        return q.getResultList().size() > 0;
+    }
+
     public UsuariosFacade() {
         super(Usuarios.class);
     }
-    
 }

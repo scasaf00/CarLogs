@@ -29,5 +29,6 @@ public interface UsuariosFacadeLocal {
     List<Usuarios> findRange(int[] range);
 
     int count();
-    
+
+    boolean validarUsuario(String username, String password);
 }
