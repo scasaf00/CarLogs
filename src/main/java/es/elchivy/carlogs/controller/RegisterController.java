@@ -1,7 +1,7 @@
 package es.elchivy.carlogs.controller;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 
@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class RegisterController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @ManagedProperty("#{registerController.uname}")
     private String uname;
 
