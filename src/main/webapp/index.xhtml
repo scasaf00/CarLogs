@@ -3,11 +3,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <title>Carlogs - Login</title>
 </h:head>
 
@@ -18,11 +16,11 @@
         </p:messages>
         <p:panel id="loginPanel" header="Login"
                  style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%);">
-            <h:panelGrid id="loginPanel" columns="2" cellpadding="5">
-                <h:outputText value="Username" />
+            <h:panelGrid id="loginGrid" columns="3" cellpadding="5">
+                <h:outputText value="Username"/>
                 <p:inputText id="username" value="#{loginController.uname}" required="true"/>
                 <p:message for="username"/>
-                <h:outputText value="Password" />
+                <h:outputText value="Password"/>
                 <p:password id="password" value="#{loginController.password}" feedback="false" required="true"/>
                 <p:message for="password"/>
             </h:panelGrid>

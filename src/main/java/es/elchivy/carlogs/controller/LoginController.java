@@ -3,6 +3,7 @@ package es.elchivy.carlogs.controller;
 import es.elchivy.carlogs.ejb.UsuariosFacade;
 import es.elchivy.carlogs.resources.SessionUtils;
 
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -17,8 +18,12 @@ public class LoginController implements Serializable {
     private final UsuariosFacade usuariosFacade = new UsuariosFacade();
 
     private static final long serialVersionUID = 1L;
+    @ManagedProperty(value = "#{loginController.password}")
     private String password;
-    private String message, uname;
+    @ManagedProperty(value = "#{loginController.uname}")
+    private String uname;
+
+    private String message;
 
     public String getMessage() {
         return message;
