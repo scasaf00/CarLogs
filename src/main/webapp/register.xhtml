@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f = "http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Registro</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+        <p:panel header="Resgistro" style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
+            <h:panelGrid id ="grid" class="panel" columns="3" cellpadding="4" >
+                <h:outputText value="Usuario: " />
+                <p:inputText id="usuario" required="true" value="#{registerController.uname}"/>
+                <p:message for="usuario"/>
+                <h:outputText value="Contraseña: "/>
+                <p:password id="password" required="true" value="#{registerController.uname}"/>
+                <p:message for="password"/>
+                <h:outputText value="Repetir Contraseña: "/>
+                <p:password id="password_again" required="true"/>
+                <p:message for="password_again"/>
+                <p:outputLabel for="@next" value="Tipo de usuario"/>
+                <p:selectOneMenu id="tipo" value="#{registerController.userType}">
+                    <f:selectItem itemLabel="Normal" itemValue="normal"/>
+                    <f:selectItem itemLabel="Gasolinero" itemValue="gasolinero"/>
+                    <f:ajax render="contenedorGasolinera1 : contenedorGasolinera2" />
+                </p:selectOneMenu>
+                <h:panelGroup id="contenedorGasolinera1">
+                    <p:outputLabel  value="Gasolinera:" rendered="#{registerController.userType == 'gasolinero' ? true:false}"/>
+                </h:panelGroup>
+                <h:panelGroup id="contenedorGasolinera2">
+                    <p:inputText  id="gasolinera" rendered="#{registerController.userType == 'gasolinero' ? true:false}" value="#{registerController.gasolinera}"/>
+                    <p:message for="gasolinera"/>
+                </h:panelGroup>
+                <p:commandButton value="Entrar" update="grid"/>
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
