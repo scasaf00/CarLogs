@@ -58,7 +58,7 @@ public class RegisterController implements Serializable {
         user.setPassword(password);
         user.setTipo(userType);
         System.out.println(user);
-        usuariosFacade.insertarUsuario(user);
+        ejb.insertarUsuario(user);
 
     }
 }
