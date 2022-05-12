@@ -38,7 +38,7 @@
                     <p:inputText  id="gasolinera" rendered="#{registerController.userType == 'gasolinero' ? true:false}" value="#{registerController.gasolinera}"/>
                     <p:message for="gasolinera"/>
                 </h:panelGroup>
-                <p:commandButton value="Entrar" update="grid"/>
+                <p:commandButton value="Registrar"  action="#{registerController.insertUser}"/>
             </h:panelGrid>
         </p:panel>
     </h:form>

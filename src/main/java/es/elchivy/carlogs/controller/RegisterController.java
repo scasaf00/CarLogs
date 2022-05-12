@@ -1,5 +1,8 @@
 package es.elchivy.carlogs.controller;
 
+import es.elchivy.carlogs.ejb.UsuariosFacade;
+import es.elchivy.carlogs.modelo.Usuarios;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.view.ViewScoped;
@@ -42,5 +45,19 @@ public class RegisterController implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public void setGasolinera(String gasolinera) {this.gasolinera = gasolinera;}
+
+    public void insertUser() {
+
+        Usuarios user = new Usuarios();
+        user.setId(0);
+        user.setUsername(uname);
+        user.setPassword(password);
+        user.setTipo(userType);
+        System.out.println(user);
+        usuariosFacade.insertarUsuario(user);
+
     }
 }

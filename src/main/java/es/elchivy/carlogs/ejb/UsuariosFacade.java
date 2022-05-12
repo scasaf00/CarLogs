@@ -35,6 +35,11 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         return q.getResultList().size() > 0;
     }
 
+    @Override
+    public void insertarUsuario(Usuarios usuario) {
+        em.persist(usuario);
+    }
+
     public UsuariosFacade() {
         super(Usuarios.class);
     }
