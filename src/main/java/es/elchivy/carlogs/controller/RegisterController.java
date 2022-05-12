@@ -1,10 +1,11 @@
 package es.elchivy.carlogs.controller;
 
-import es.elchivy.carlogs.ejb.UsuariosFacade;
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
 
-import javax.faces.bean.ManagedBean;
+import javax.ejb.EJB;
 import javax.faces.annotation.ManagedProperty;
+import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 
