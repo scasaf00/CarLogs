@@ -146,7 +146,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Usuarios[ id=" + id + " ]";
+        return "ID: " + id + " - USERNAME: " + username + " - PASSWORD: " + password + " - TIPO: " + tipo;
     }
     
 }

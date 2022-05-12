@@ -13,6 +13,9 @@ import java.io.Serializable;
 @ViewScoped
 public class RegisterController implements Serializable {
 
+    @EJB
+    private UsuariosFacadeLocal ejb;
+
     private static final long serialVersionUID = 1L;
     @ManagedProperty("#{registerController.uname}")
     private String uname;
@@ -20,9 +23,11 @@ public class RegisterController implements Serializable {
     @ManagedProperty("#{registerController.password}")
     private String password;
 
-
     @ManagedProperty("#{registerController.userType}")
     private String userType;
+
+    @ManagedProperty("#{registerController.gasolinera}")
+    private String gasolinera;
 
     public String getUname() {
         return this.uname;
@@ -35,6 +40,8 @@ public class RegisterController implements Serializable {
     public String getUserType() {
         return this.userType;
     }
+
+    public String getGasolinera() {return this.gasolinera;}
 
     public void setUname(String uname) {
         this.uname = uname;
@@ -53,7 +60,6 @@ public class RegisterController implements Serializable {
     public void insertUser() {
 
         Usuarios user = new Usuarios();
-        user.setId(0);
         user.setUsername(uname);
         user.setPassword(password);
         user.setTipo(userType);
