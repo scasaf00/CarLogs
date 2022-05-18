@@ -29,4 +29,8 @@ public interface UsuariosFacadeLocal {
     List<Usuarios> findRange(int[] range);
 
     int count();
+
+    List<Usuarios> validarUsuario(Usuarios usuario);
+
+    void insertarUsuario(Usuarios usuario);
 }
