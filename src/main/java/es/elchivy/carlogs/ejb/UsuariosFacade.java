@@ -6,6 +6,9 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Usuarios;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,8 +27,8 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
     protected EntityManager getEntityManager() {
         return em;
     }
-
-    public UsuariosFacade() {
+  
+  public UsuariosFacade() {
         super(Usuarios.class);
     }
     
