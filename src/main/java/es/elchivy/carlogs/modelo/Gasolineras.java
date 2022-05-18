@@ -14,9 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -53,13 +50,10 @@ public class Gasolineras implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "direccion")
     private String direccion;
-    @JoinTable(name = "gasolineros", joinColumns = {
-        @JoinColumn(name = "gasolinera", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "usuario", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Usuarios> usuariosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolinera")
     private Collection<Repostajes> repostajesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolineras")
+    private Collection<Gasolineros> gasolinerosCollection;
 
     public Gasolineras() {
     }
@@ -98,20 +92,20 @@ public class Gasolineras implements Serializable {
         this.direccion = direccion;
     }
 
-    public Collection<Usuarios> getUsuariosCollection() {
-        return usuariosCollection;
-    }
-
-    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
-        this.usuariosCollection = usuariosCollection;
-    }
-
     public Collection<Repostajes> getRepostajesCollection() {
         return repostajesCollection;
     }
 
     public void setRepostajesCollection(Collection<Repostajes> repostajesCollection) {
         this.repostajesCollection = repostajesCollection;
+    }
+
+    public Collection<Gasolineros> getGasolinerosCollection() {
+        return gasolinerosCollection;
+    }
+
+    public void setGasolinerosCollection(Collection<Gasolineros> gasolinerosCollection) {
+        this.gasolinerosCollection = gasolinerosCollection;
     }
 
     @Override

@@ -5,7 +5,7 @@
  */
 package es.elchivy.carlogs.ejb;
 
-import es.elchivy.carlogs.modelo.Gastos;
+import es.elchivy.carlogs.modelo.Gasolineros;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sergio
  */
 @Stateless
-public class GastosFacade extends AbstractFacade<Gastos> implements GastosFacadeLocal {
+public class GasolinerosFacade extends AbstractFacade<Gasolineros> implements GasolinerosFacadeLocal {
 
     @PersistenceContext(unitName = "CarLogsPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class GastosFacade extends AbstractFacade<Gastos> implements GastosFacade
         return em;
     }
 
-    public GastosFacade() {
-        super(Gastos.class);
+    public GasolinerosFacade() {
+        super(Gasolineros.class);
     }
     
 }
