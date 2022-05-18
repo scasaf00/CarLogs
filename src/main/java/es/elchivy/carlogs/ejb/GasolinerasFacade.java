@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sergio
  */
 @Stateless
-public class GasolinerasFacade extends AbstractFacade<Gasolineras> {
+public class GasolinerasFacade extends AbstractFacade<Gasolineras> implements GasolinerasFacadeLocal {
 
     @PersistenceContext(unitName = "CarLogsPU")
     private EntityManager em;

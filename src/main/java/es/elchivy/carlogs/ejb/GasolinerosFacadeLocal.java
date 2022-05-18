@@ -5,7 +5,7 @@
  */
 package es.elchivy.carlogs.ejb;
 
-import es.elchivy.carlogs.modelo.Usuarios;
+import es.elchivy.carlogs.modelo.Gasolineros;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author Sergio
  */
 @Local
-public interface UsuariosFacadeLocal {
+public interface GasolinerosFacadeLocal {
 
-    void create(Usuarios usuarios);
+    void create(Gasolineros gasolineros);
 
-    void edit(Usuarios usuarios);
+    void edit(Gasolineros gasolineros);
 
-    void remove(Usuarios usuarios);
+    void remove(Gasolineros gasolineros);
 
-    Usuarios find(Object id);
+    Gasolineros find(Object id);
 
-    List<Usuarios> findAll();
+    List<Gasolineros> findAll();
 
-    List<Usuarios> findRange(int[] range);
+    List<Gasolineros> findRange(int[] range);
 
     int count();
     

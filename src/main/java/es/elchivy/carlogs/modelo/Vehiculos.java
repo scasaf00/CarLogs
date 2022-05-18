@@ -69,9 +69,9 @@ public class Vehiculos implements Serializable {
     @NotNull
     @Column(name = "km_actual")
     private BigDecimal kmActual;
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "usuario", referencedColumnName = "username")
     @ManyToOne(optional = false)
-    private Usuarios usuarioId;
+    private Usuarios usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
     private Collection<Gastos> gastosCollection;
 
@@ -139,12 +139,12 @@ public class Vehiculos implements Serializable {
         this.kmActual = kmActual;
     }
 
-    public Usuarios getUsuarioId() {
-        return usuarioId;
+    public Usuarios getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Usuarios usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
     }
 
     public Collection<Gastos> getGastosCollection() {
