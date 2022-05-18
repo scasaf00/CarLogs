@@ -20,10 +20,10 @@
                 <p:inputText id="usuario" required="true" value="#{registerController.uname}"/>
                 <p:message for="usuario"/>
                 <h:outputText value="Contraseña: "/>
-                <p:password id="password" required="true" value="#{registerController.password}"/>
+                <p:password id="password" required="true" value="#{registerController.password}" match="password_again"/>
                 <p:message for="password"/>
                 <h:outputText value="Repetir Contraseña: "/>
-                <p:password id="password_again" required="true"/>
+                <p:password id="password_again" required="true" value="#{registerController.password}"/>
                 <p:message for="password_again"/>
                 <p:outputLabel for="@next" value="Tipo de usuario"/>
                 <p:selectOneMenu id="tipo" value="#{registerController.userType}">

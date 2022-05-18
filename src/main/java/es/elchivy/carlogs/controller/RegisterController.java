@@ -58,13 +58,13 @@ public class RegisterController implements Serializable {
     public void setGasolinera(String gasolinera) {this.gasolinera = gasolinera;}
 
     public void insertUser() {
-
         Usuarios user = new Usuarios();
         user.setUsername(uname);
         user.setPassword(password);
         user.setTipo(userType);
         System.out.println(user);
         ejb.insertarUsuario(user);
-
     }
+
+
 }
