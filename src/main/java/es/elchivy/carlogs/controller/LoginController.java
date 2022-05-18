@@ -1,8 +1,11 @@
 package es.elchivy.carlogs.controller;
 
 import es.elchivy.carlogs.ejb.UsuariosFacade;
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
+import es.elchivy.carlogs.modelo.Usuarios;
 import es.elchivy.carlogs.resources.SessionUtils;
 
+import javax.ejb.EJB;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,7 +18,8 @@ import java.io.Serializable;
 @ViewScoped
 public class LoginController implements Serializable {
 
-    private final UsuariosFacade usuariosFacade = new UsuariosFacade();
+    @EJB
+    private UsuariosFacadeLocal ejb;
 
     private static final long serialVersionUID = 1L;
     @ManagedProperty(value = "#{loginController.password}")
@@ -49,24 +53,14 @@ public class LoginController implements Serializable {
         this.uname = uname;
     }
 
-    public UsuariosFacade getUsuariosFacade() {
-        return usuariosFacade;
-    }
-
-    public String loginProject() {
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "Invalid Login!",
-                    "Please Try Again! " + this.getUname()));
-
-            return "login";
-
+    public UsuariosFacadeLocal getUsuariosFacade() {
+        return ejb;
     }
 
     //Validate Login
     public String validateLogin() {
-        boolean valid = usuariosFacade.validarUsuario(this.getUname(), this.getPassword());
-        if(valid){
+        Usuarios user = ejb.find(uname);
+        if(ejb.validarUsuario(user) != null){
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", this.getUname());
             return "?"; //TODO: redirecr a algun lao
