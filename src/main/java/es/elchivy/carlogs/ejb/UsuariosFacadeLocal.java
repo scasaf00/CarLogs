@@ -30,7 +30,7 @@ public interface UsuariosFacadeLocal {
 
     int count();
 
-    List<Usuarios> validarUsuario(Usuarios usuario);
+    Usuarios validarUsuario(Usuarios usuario);
 
     void insertarUsuario(Usuarios usuario);
 }

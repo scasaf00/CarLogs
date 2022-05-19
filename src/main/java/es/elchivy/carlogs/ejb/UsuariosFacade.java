@@ -31,14 +31,14 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
     }
 
     @Override
-    public List<Usuarios> validarUsuario(Usuarios usuario) {
-        String consulta = "SELECT u FROM Usuarios u WHERE u.username = :usuario and u.password = :password";
+    public Usuarios validarUsuario(Usuarios usuario) {
+        String consulta = "FROM Usuarios u WHERE u.username=:param1 and u.password=:param2";
         Query query = em.createQuery(consulta);
-        query.setParameter("usuario", usuario.getUsername());
-        query.setParameter("password", usuario.getPassword());
-        List<Usuarios> lista = query.getResultList();
-        return lista;
+        query.setParameter("param1", usuario.getUsername());
+        query.setParameter("param2", usuario.getPassword());
+        List<Usuarios> resultado = query.getResultList();
 
+        return resultado.isEmpty() ? null : resultado.get(0);
     }
 
     @Override

@@ -5,75 +5,69 @@ import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
 import es.elchivy.carlogs.resources.SessionUtils;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 @ManagedBean(name = "loginController")
+@Named
 @ViewScoped
 public class LoginController implements Serializable {
 
     @EJB
     private UsuariosFacadeLocal ejb;
 
-    private static final long serialVersionUID = 1L;
-    @ManagedProperty(value = "#{loginController.password}")
-    private String password;
-    @ManagedProperty(value = "#{loginController.uname}")
-    private String uname;
+    private Usuarios user;
 
-    private String message;
-
-    public String getMessage() {
-        return message;
+    @PostConstruct
+    public void init(){
+        user = new Usuarios();
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public Usuarios getUser() {
+        return user;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    public UsuariosFacadeLocal getUsuariosFacade() {
-        return ejb;
+    public void setUser(Usuarios usuario) {
+        this.user = usuario;
     }
 
     //Validate Login
     public String validateLogin() {
-        Usuarios user = ejb.find(uname);
-        if(ejb.validarUsuario(user) != null){
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("username", this.getUname());
-            return "?"; //TODO: redirecr a algun lao
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please Try Again!"));
-            return "index";
+        user = ejb.validarUsuario(user);
+
+        if(user != null){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user",user);
+
+            String rutaIndex = "";
+
+            switch(user.getTipo()){
+                case "ADMIN":
+                    rutaIndex = "/private/admin/indexAdmin.xhtml?faces-redirect=true";
+                    break;
+                case "USER":
+                    rutaIndex = "/private/user/indexUser.xhtml?faces-redirect=true";
+                    break;
+                case "GASOLINERO":
+                    rutaIndex = "/private/gasolinero/indexGasolinero.xhtml?faces-redirect=true";
+                    break;
+
+                default:
+                    FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR","Usuario no valido"));
+            }
+
+            return rutaIndex;
         }
-    }
 
-    public String logout() {
-        HttpSession session = SessionUtils.getSession();
-        session.invalidate();
-        return "index";
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR","Usuario incorrecto"));
 
+        return "";
     }
 }
