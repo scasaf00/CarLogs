@@ -26,6 +26,8 @@ public interface GasolinerosFacadeLocal {
 
     List<Gasolineros> findAll();
 
+    List<Gasolineros> findAllNoAceptados();
+
     List<Gasolineros> findRange(int[] range);
 
     int count();
