@@ -12,6 +12,8 @@ import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -27,8 +29,25 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
     protected EntityManager getEntityManager() {
         return em;
     }
-  
-  public UsuariosFacade() {
+
+    @Override
+    public Usuarios validarUsuario(Usuarios usuario) {
+        String consulta = "FROM Usuarios u WHERE u.username=:param1 and u.password=:param2";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", usuario.getUsername());
+        query.setParameter("param2", usuario.getPassword());
+        List<Usuarios> resultado = query.getResultList();
+
+        return resultado.isEmpty() ? null : resultado.get(0);
+    }
+
+    @Override
+    public void insertarUsuario(Usuarios usuario) {
+        em.persist(usuario);
+    }
+
+
+    public UsuariosFacade() {
         super(Usuarios.class);
     }
     
