@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Gasolinera" icon="pi pi-home" url="#{request.contextPath}/faces/private/gasolinero/indexGasolinero.xhtml?faces-redirect=true">
+        </p:menuitem>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+            <div class="card">
+                <h:form>
+                    <p:growl id="growl" showDetail="true"/>
+
+                    <p:barChart model="#{gasolineroController.barModel}" style="width: 100%; height: 500px;">
+                        <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}" update="growl"/>
+                    </p:barChart>
+                </h:form>
+            </div>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>
