@@ -1,7 +1,10 @@
 package es.elchivy.carlogs.controller;
 
 import es.elchivy.carlogs.ejb.GasolinerosFacadeLocal;
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gasolineros;
+import es.elchivy.carlogs.modelo.Usuarios;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -15,34 +18,28 @@ import java.util.List;
 @ViewScoped
 public class AdminController implements Serializable {
 
-    private List<Gasolineros> gasolineros;
+    private List<Usuarios> usuarios;
 
     @EJB
-    private GasolinerosFacadeLocal ejbGasolineros;
+    private UsuariosFacadeLocal ejbUsuarios;
 
     @PostConstruct
     public void init(){
-        gasolineros = ejbGasolineros.findAllNoAceptados();
+        usuarios = ejbUsuarios.getAllNotAdmin();
+
     }
 
-    public List<Gasolineros> getGasolineros() {
-        this.gasolineros = ejbGasolineros.findAllNoAceptados();
-        return gasolineros;
+    public List<Usuarios> getUsuarios() {
+        return this.usuarios;
     }
 
-    public void setGasolineros(List<Gasolineros> gasolineros) {
-        this.gasolineros = gasolineros;
+    public void setUsuarios(List<Usuarios> gasolineros) {
+        this.usuarios = gasolineros;
     }
 
-
-    public void enviar(Gasolineros g){
-        try {
-            g.setAceptado(true);
-            ejbGasolineros.edit(g);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", g.getAceptado() ? "Aceptado" : "No aceptado"));
-        }catch (Exception e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se ha podido enviar el formulario"));
-        }
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO","Cambios enviados"));
+    public void eliminarUsuario(Usuarios usuario){
+        ejbUsuarios.remove(usuario);
+        usuarios.remove(usuario);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario eliminado", "El usuario ha sido eliminado"));
     }
 }
