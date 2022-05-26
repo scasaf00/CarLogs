@@ -6,9 +6,13 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Gasolineros;
+import es.elchivy.carlogs.modelo.Usuarios;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -28,5 +32,15 @@ public class GasolinerosFacade extends AbstractFacade<Gasolineros> implements Ga
     public GasolinerosFacade() {
         super(Gasolineros.class);
     }
-    
+
+    @Override
+    public List<Gasolineros> findAllNoAceptados() {
+        //get all the gasolineros that are not accepged
+        String consulta = "FROM Gasolineros g WHERE g.aceptado = 0";
+        Query query = em.createQuery(consulta);
+        List<Gasolineros> resultado = query.getResultList();
+
+        return resultado;
+    }
+
 }

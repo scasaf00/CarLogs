@@ -33,4 +33,7 @@ public interface UsuariosFacadeLocal {
     Usuarios validarUsuario(Usuarios usuario);
 
     void insertarUsuario(Usuarios usuario);
+
+    List<Usuarios> getAllNotAdmin();
 }
+

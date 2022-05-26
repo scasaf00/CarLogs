@@ -17,6 +17,7 @@ public class TemplateController implements Serializable {
     private Usuarios usuario;
 
     public void logOut() {
+        System.out.println("Logout");
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         //redireccionar a login
         try {

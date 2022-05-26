@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/admin/indexAdmin.xhtml?faces-redirect=true">
+        </p:menuitem>
+        <p:menuitem value="Peticiones" icon="pi pi-thumbs-up" url="#{request.contextPath}/faces/private/admin/peticionesAdmin.xhtml?faces-redirect=true">
+        </p:menuitem>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+        <h:form>
+            <div class="card">
+                <p:dataTable id="gasolineros" var="g" value="#{peticionesAdminController.gasolineros}">
+                    <f:facet name="header">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Gasolineros pendientes de aprobación
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{g.usuarios.username}" />
+                    </p:column>
+
+                    <p:column headerText="Gasolinera">
+                        <h:outputText value="#{g.gasolineras.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Direccion">
+                        <h:outputText value="#{g.gasolineras.direccion}" />
+                    </p:column>
+
+                    <p:column>
+                        <p:commandButton id="aceptar" value="Aceptar" action="#{peticionesAdminController.enviar(g)}" />
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

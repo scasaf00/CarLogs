@@ -7,8 +7,6 @@ package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Usuarios;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,6 +44,14 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         em.persist(usuario);
     }
 
+    @Override
+    public List<Usuarios> getAllNotAdmin() {
+        String consulta = "FROM Usuarios u WHERE u.tipo != 'ADMIN'";
+        Query query = em.createQuery(consulta);
+        List<Usuarios> resultado = query.getResultList();
+
+        return resultado;
+    }
 
     public UsuariosFacade() {
         super(Usuarios.class);
