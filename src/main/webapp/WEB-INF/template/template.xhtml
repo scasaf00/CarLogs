@@ -16,11 +16,14 @@
 <h:body>
 
     <div id="top">
-        <ui:insert name="top">
+
             <h:form>
                 <p:menubar>
-                    <p:menuitem value="Home" icon="pi pi-home" url="/faces/index.xhtml">
-                    </p:menuitem>
+
+                    <ui:insert name="top">
+                    <!-- Botones de accion -->
+                    </ui:insert>
+
 
                     <f:facet name="options">
                         <p:commandButton type="button" value="Logout" icon="pi pi-sign-out" action="#{templateController.logOut()}"/>
@@ -30,7 +33,6 @@
             </h:form>
             <!-- Uso button porque commandbutton es para forms -->
 
-        </ui:insert>
     </div>
 
     <div id="content" class="center_content">
