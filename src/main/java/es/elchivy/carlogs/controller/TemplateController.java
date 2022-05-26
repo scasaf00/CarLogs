@@ -18,18 +18,18 @@ public class TemplateController implements Serializable {
 
     public void logOut() {
         System.out.println("Logout");
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        //redireccionar a login
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", null);
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
         }
         catch (IOException ex) {
-            Logger.getLogger(TemplateController.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe estar logueado para acceder a esta pagina"));
         }
     }
 
+
     public void verificarYMostrar() {
-        this.usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        this.usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 
         if (this.usuario == null) {
             // TODO aqui que seria lo mejor que se podria hacer??
@@ -41,4 +41,6 @@ public class TemplateController implements Serializable {
             }
         }
     }
+
+
 }

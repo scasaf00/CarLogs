@@ -10,7 +10,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <h:outputStylesheet library="css" name="default.css"/>
     <h:outputStylesheet library="css" name="cssLayout.css"/>
-    <title>Practica Inicial</title>
+    <f:event type="preRenderView" listener="#{templateController.verificarYMostrar()}"/>
+    <title>CarLogs</title>
 </h:head>
 
 <h:body>
@@ -26,7 +27,7 @@
 
 
                     <f:facet name="options">
-                        <p:commandButton type="button" value="Logout" icon="pi pi-sign-out" action="#{templateController.logOut()}"/>
+                        <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{templateController.logOut()}"/>
                     </f:facet>
 
                 </p:menubar>
