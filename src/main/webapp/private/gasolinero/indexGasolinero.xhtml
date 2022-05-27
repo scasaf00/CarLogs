@@ -23,9 +23,14 @@
                 <h:form>
                     <p:growl id="growl" showDetail="true"/>
 
-                    <p:barChart model="#{gasolineroController.barModel}" style="width: 100%; height: 500px;">
-                        <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}" update="growl"/>
-                    </p:barChart>
+                    <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                        <p:barChart model="#{gasolineroController.barModelImporte}" style="width: 100%; height: 500px;">
+                            <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}" update="growl"/>
+                        </p:barChart>
+                        <p:barChart model="#{gasolineroController.barModelLitros}" style="width: 100%; height: 500px;">
+                            <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}" update="growl"/>
+                        </p:barChart>
+                    </p:panelGrid>
                 </h:form>
             </div>
     </ui:define>

@@ -5,10 +5,14 @@
  */
 package es.elchivy.carlogs.ejb;
 
+import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gastos;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -28,5 +32,5 @@ public class GastosFacade extends AbstractFacade<Gastos> implements GastosFacade
     public GastosFacade() {
         super(Gastos.class);
     }
-    
+
 }
