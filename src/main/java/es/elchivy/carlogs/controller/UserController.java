@@ -2,6 +2,7 @@ package es.elchivy.carlogs.controller;
 
 import es.elchivy.carlogs.ejb.GastosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gastos;
+import es.elchivy.carlogs.modelo.Usuarios;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.axes.cartesian.CartesianScales;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
@@ -18,6 +19,7 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -34,12 +36,15 @@ public class UserController implements Serializable {
 
     private List<Gastos> gastos;
 
+    private Usuarios user;
+
     @EJB
     private GastosFacadeLocal ejbGastos;
 
     @PostConstruct
     public void init() {
-        this.gastos = ejbGastos.findAll();
+        user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        this.gastos = ejbGastos.getAllByUser(user);
         createBarModels();
         createDonutModels();
     }

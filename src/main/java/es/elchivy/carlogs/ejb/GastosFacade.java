@@ -6,9 +6,14 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Gastos;
+import es.elchivy.carlogs.modelo.Usuarios;
+import es.elchivy.carlogs.modelo.Vehiculos;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.*;
 
 /**
  *
@@ -28,5 +33,19 @@ public class GastosFacade extends AbstractFacade<Gastos> implements GastosFacade
     public GastosFacade() {
         super(Gastos.class);
     }
+
+    @Override
+    public List<Gastos> getAllByUser(Usuarios usuario) {
+
+        Collection<Vehiculos> vehiculos = usuario.getVehiculosCollection();
+
+        String consulta = "FROM Gastos g WHERE g.matricula IN :param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", vehiculos);
+
+        return query.getResultList();
+    }
+
+
     
 }

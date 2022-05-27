@@ -13,8 +13,6 @@
     <ui:define name="top">
         <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/admin/indexAdmin.xhtml">
         </p:menuitem>
-        <p:menuitem value="Peticiones" icon="pi pi-thumbs-up" url="#{request.contextPath}/faces/private/admin/peticionesAdmin.xhtml?faces-redirect=true">
-        </p:menuitem>
     </ui:define>
 
     <ui:define name="content">
@@ -22,11 +20,13 @@
             <p:autoUpdate/>
         </p:messages>
         <h:form>
-            <div class="card">
-                <p:panelGrid columns="3" layout="grid" styleClass="showcase-text-align-center">
-                    <p:barChart model="#{userController.barModel}" style="width: 100%; height: 500px"/>
-                    <p:donutChart model="#{userController.donutModel}" style="width: 100%; height: 500px;"/>
-                </p:panelGrid>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                    <p:barChart model="#{userController.barModel}"/>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3 xl:col-2" style="width: 50%">
+                    <p:donutChart model="#{userController.donutModel}"/>
+                </div>
             </div>
         </h:form>
     </ui:define>
