@@ -1,5 +1,6 @@
 package es.elchivy.carlogs.controller;
 
+import com.google.common.hash.Hashing;
 import es.elchivy.carlogs.ejb.UsuariosFacade;
 import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
@@ -15,6 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 @ManagedBean(name = "loginController")
 @Named
@@ -41,7 +43,9 @@ public class LoginController implements Serializable {
 
     //Validate Login
     public String validateLogin() {
+        user.setPassword(Hashing.crc32().hashString(user.getPassword(), StandardCharsets.UTF_8).toString());
         user = ejb.validarUsuario(user);
+        System.out.println(user);
 
         if(user != null){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user",user);
