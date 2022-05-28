@@ -146,15 +146,12 @@ public class Viajes implements Serializable {
             return false;
         }
         Viajes other = (Viajes) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Viajes[ id=" + id + " ]";
+        return "es.elchivy.mavenproject1.Viajes[ id=" + id + " ]";
     }
     
 }
