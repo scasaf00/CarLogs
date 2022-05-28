@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Sergio
+ * @author sfcmm
  */
 @Stateless
 public class RepostajesFacade extends AbstractFacade<Repostajes> implements RepostajesFacadeLocal {

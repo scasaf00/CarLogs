@@ -5,13 +5,15 @@
  */
 package es.elchivy.carlogs.ejb;
 
-import es.elchivy.carlogs.modelo.Gasolineros;
+import es.elchivy.carlogs.modelo.Gastos;
 import es.elchivy.carlogs.modelo.Usuarios;
+import es.elchivy.carlogs.modelo.Vehiculos;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ import java.util.List;
  * @author sfcmm
  */
 @Stateless
-public class GasolinerosFacade extends AbstractFacade<Gasolineros> implements GasolinerosFacadeLocal {
+public class GastosFacade extends AbstractFacade<Gastos> implements GastosFacadeLocal {
 
     @PersistenceContext(unitName = "CarLogsPU")
     private EntityManager em;
@@ -29,18 +31,20 @@ public class GasolinerosFacade extends AbstractFacade<Gasolineros> implements Ga
         return em;
     }
 
-    public GasolinerosFacade() {
-        super(Gasolineros.class);
+    public GastosFacade() {
+        super(Gastos.class);
     }
 
     @Override
-    public List<Gasolineros> findAllNoAceptados() {
-        //get all the gasolineros that are not accepged
-        String consulta = "FROM Gasolineros g WHERE g.aceptado = false";
+    public List<Gastos> getAllByUser(Usuarios usuario) {
+
+        Collection<Vehiculos> vehiculos = usuario.getVehiculosCollection();
+
+        String consulta = "FROM Gastos g WHERE g.matricula IN :param1";
         Query query = em.createQuery(consulta);
-        List<Gasolineros> resultado = query.getResultList();
+        query.setParameter("param1", vehiculos);
 
-        return resultado;
+        return query.getResultList();
     }
-
+    
 }
