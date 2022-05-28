@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author scfmm
+ * @author Sergio
  */
 @Entity
 @Table(name = "gasolineros")
