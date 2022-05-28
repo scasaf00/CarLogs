@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "vehiculos")
@@ -35,14 +35,15 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Vehiculos.findByModelo", query = "SELECT v FROM Vehiculos v WHERE v.modelo = :modelo"),
     @NamedQuery(name = "Vehiculos.findByColor", query = "SELECT v FROM Vehiculos v WHERE v.color = :color"),
     @NamedQuery(name = "Vehiculos.findByGastoKm", query = "SELECT v FROM Vehiculos v WHERE v.gastoKm = :gastoKm"),
-    @NamedQuery(name = "Vehiculos.findByKmActual", query = "SELECT v FROM Vehiculos v WHERE v.kmActual = :kmActual")})
+    @NamedQuery(name = "Vehiculos.findByKmActual", query = "SELECT v FROM Vehiculos v WHERE v.kmActual = :kmActual"),
+    @NamedQuery(name = "Vehiculos.findByTipoCombustible", query = "SELECT v FROM Vehiculos v WHERE v.tipoCombustible = :tipoCombustible")})
 public class Vehiculos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 7)
+    @Size(min = 1, max = 8)
     @Column(name = "matricula")
     private String matricula;
     @Basic(optional = false)
@@ -69,6 +70,11 @@ public class Vehiculos implements Serializable {
     @NotNull
     @Column(name = "km_actual")
     private BigDecimal kmActual;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "tipo_combustible")
+    private String tipoCombustible;
     @JoinColumn(name = "usuario", referencedColumnName = "username")
     @ManyToOne(optional = false)
     private Usuarios usuario;
@@ -82,13 +88,14 @@ public class Vehiculos implements Serializable {
         this.matricula = matricula;
     }
 
-    public Vehiculos(String matricula, String marca, String modelo, String color, BigDecimal gastoKm, BigDecimal kmActual) {
+    public Vehiculos(String matricula, String marca, String modelo, String color, BigDecimal gastoKm, BigDecimal kmActual, String tipoCombustible) {
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
         this.gastoKm = gastoKm;
         this.kmActual = kmActual;
+        this.tipoCombustible = tipoCombustible;
     }
 
     public String getMatricula() {
@@ -139,6 +146,14 @@ public class Vehiculos implements Serializable {
         this.kmActual = kmActual;
     }
 
+    public String getTipoCombustible() {
+        return tipoCombustible;
+    }
+
+    public void setTipoCombustible(String tipoCombustible) {
+        this.tipoCombustible = tipoCombustible;
+    }
+
     public Usuarios getUsuario() {
         return usuario;
     }
@@ -169,15 +184,12 @@ public class Vehiculos implements Serializable {
             return false;
         }
         Vehiculos other = (Vehiculos) object;
-        if ((this.matricula == null && other.matricula != null) || (this.matricula != null && !this.matricula.equals(other.matricula))) {
-            return false;
-        }
-        return true;
+        return (this.matricula != null || other.matricula == null) && (this.matricula == null || this.matricula.equals(other.matricula));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Vehiculos[ matricula=" + matricula + " ]";
+        return "es.elchivy.mavenproject1.Vehiculos[ matricula=" + matricula + " ]";
     }
     
 }

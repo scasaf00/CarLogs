@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "usuarios")
@@ -121,15 +121,12 @@ public class Usuarios implements Serializable {
             return false;
         }
         Usuarios other = (Usuarios) object;
-        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
-            return false;
-        }
-        return true;
+        return (this.username != null || other.username == null) && (this.username == null || this.username.equals(other.username));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Usuarios[ username=" + username + " ]";
+        return "es.elchivy.mavenproject1.Usuarios[ username=" + username + " ]";
     }
     
 }

@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "gasolineras")
@@ -31,7 +31,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Gasolineras.findAll", query = "SELECT g FROM Gasolineras g"),
     @NamedQuery(name = "Gasolineras.findById", query = "SELECT g FROM Gasolineras g WHERE g.id = :id"),
     @NamedQuery(name = "Gasolineras.findByNombre", query = "SELECT g FROM Gasolineras g WHERE g.nombre = :nombre"),
-    @NamedQuery(name = "Gasolineras.findByDireccion", query = "SELECT g FROM Gasolineras g WHERE g.direccion = :direccion")})
+    @NamedQuery(name = "Gasolineras.findByDireccion", query = "SELECT g FROM Gasolineras g WHERE g.direccion = :direccion"),
+    @NamedQuery(name = "Gasolineras.findByPrecioGasolina", query = "SELECT g FROM Gasolineras g WHERE g.precioGasolina = :precioGasolina"),
+    @NamedQuery(name = "Gasolineras.findByPrecioGasoil", query = "SELECT g FROM Gasolineras g WHERE g.precioGasoil = :precioGasoil")})
 public class Gasolineras implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,6 +52,14 @@ public class Gasolineras implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "direccion")
     private String direccion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "precio_gasolina")
+    private float precioGasolina;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "precio_gasoil")
+    private float precioGasoil;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolinera")
     private Collection<Repostajes> repostajesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolineras")
@@ -62,10 +72,12 @@ public class Gasolineras implements Serializable {
         this.id = id;
     }
 
-    public Gasolineras(Integer id, String nombre, String direccion) {
+    public Gasolineras(Integer id, String nombre, String direccion, float precioGasolina, float precioGasoil) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
+        this.precioGasolina = precioGasolina;
+        this.precioGasoil = precioGasoil;
     }
 
     public Integer getId() {
@@ -90,6 +102,22 @@ public class Gasolineras implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public float getPrecioGasolina() {
+        return precioGasolina;
+    }
+
+    public void setPrecioGasolina(float precioGasolina) {
+        this.precioGasolina = precioGasolina;
+    }
+
+    public float getPrecioGasoil() {
+        return precioGasoil;
+    }
+
+    public void setPrecioGasoil(float precioGasoil) {
+        this.precioGasoil = precioGasoil;
     }
 
     public Collection<Repostajes> getRepostajesCollection() {
@@ -122,15 +150,12 @@ public class Gasolineras implements Serializable {
             return false;
         }
         Gasolineras other = (Gasolineras) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Gasolineras[ id=" + id + " ]";
+        return "es.elchivy.mavenproject1.Gasolineras[ id=" + id + " ]";
     }
     
 }

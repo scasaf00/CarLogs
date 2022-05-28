@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "gasolineros")
@@ -106,15 +106,12 @@ public class Gasolineros implements Serializable {
             return false;
         }
         Gasolineros other = (Gasolineros) object;
-        if ((this.gasolinerosPK == null && other.gasolinerosPK != null) || (this.gasolinerosPK != null && !this.gasolinerosPK.equals(other.gasolinerosPK))) {
-            return false;
-        }
-        return true;
+        return (this.gasolinerosPK != null || other.gasolinerosPK == null) && (this.gasolinerosPK == null || this.gasolinerosPK.equals(other.gasolinerosPK));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Gasolineros[ gasolinerosPK=" + gasolinerosPK + " ]";
+        return "es.elchivy.mavenproject1.Gasolineros[ gasolinerosPK=" + gasolinerosPK + " ]";
     }
     
 }

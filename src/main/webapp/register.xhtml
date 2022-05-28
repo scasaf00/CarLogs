@@ -27,8 +27,8 @@
                 <p:message for="password_again"/>
                 <p:outputLabel for="@next" value="Tipo de usuario"/>
                 <p:selectOneMenu id="tipo" value="#{registerController.userType}">
-                    <f:selectItem itemLabel="Normal" itemValue="normal"/>
-                    <f:selectItem itemLabel="Gasolinero" itemValue="gasolinero"/>
+                    <f:selectItem itemLabel="Normal" itemValue="USER"/>
+                    <f:selectItem itemLabel="Gasolinero" itemValue="GASOLINERO"/>
                     <f:ajax render="contenedorGasolinera" />
                 </p:selectOneMenu>
                 <p:message for="tipo"/>
