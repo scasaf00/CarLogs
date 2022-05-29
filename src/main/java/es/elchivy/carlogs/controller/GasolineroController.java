@@ -64,8 +64,8 @@ public class GasolineroController implements Serializable {
     public void init(){
 
         this.user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        this.gasolinero = user.getGasolinerosCollection().iterator().next();
-        this.gasolinera = gasolinero.getGasolineras();
+        this.gasolinero = user.getGasolineros();
+        this.gasolinera = gasolinero.getGasolinera();
         this.repostajes = (List<Repostajes>) gasolinera.getRepostajesCollection();
         this.precioGasolina = gasolinera.getPrecioGasolina();
         this.precioGasoil = gasolinera.getPrecioGasoil();
