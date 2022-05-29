@@ -31,6 +31,38 @@
                             <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}" update="growl"/>
                         </p:barChart>
                     </p:panelGrid>
+                    <div class="grid">
+                        <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-900 font-medium text-xl mb-3">Precio Gasolina</span>
+                                        <div><p:inputNumber value="#{gasolineroController.precioGasolina}" decimalPlaces="4"/></div>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                         style="width:2.5rem;height:2.5rem">
+                                        <i class="pi pi-car text-blue-500 text-xl"/>
+                                    </div>
+                                </div>
+                                <p:commandButton value="Cambiar precio" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gasolineroController.cambiarPrecioGasolina}"/>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-900 font-medium text-xl mb-3">Precio Gasoil</span>
+                                        <div><p:inputNumber value="#{gasolineroController.precioGasoil}" decimalPlaces="4"/></div>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                         style="width:2.5rem;height:2.5rem">
+                                        <i class="pi pi-car text-blue-500 text-xl"/>
+                                    </div>
+                                </div>
+                                <p:commandButton value="Cambiar precio" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gasolineroController.cambiarPrecioGasoil}"/>
+                            </div>
+                        </div>
+                    </div>
                 </h:form>
             </div>
     </ui:define>

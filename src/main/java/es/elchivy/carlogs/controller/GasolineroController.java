@@ -1,7 +1,9 @@
 package es.elchivy.carlogs.controller;
 
 
+import es.elchivy.carlogs.ejb.GasolinerasFacadeLocal;
 import es.elchivy.carlogs.ejb.RepostajesFacadeLocal;
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gasolineros;
 import es.elchivy.carlogs.modelo.Repostajes;
@@ -40,20 +42,33 @@ public class GasolineroController implements Serializable {
 
     private List<Repostajes> repostajes;
 
+    private float precioGasolina;
+
+    private float precioGasoil;
+
     private Usuarios user;
 
     private Gasolineros gasolinero;
 
     private Gasolineras gasolinera;
 
+    private int litrosGasolina;
+
+    private int litrosGasoil;
+
+    @EJB
+    private GasolinerasFacadeLocal ejbGasolineras;
+
 
     @PostConstruct
     public void init(){
 
-        user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        gasolinero = user.getGasolinerosCollection().iterator().next();
-        gasolinera = gasolinero.getGasolineras();
+        this.user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        this.gasolinero = user.getGasolinerosCollection().iterator().next();
+        this.gasolinera = gasolinero.getGasolineras();
         this.repostajes = (List<Repostajes>) gasolinera.getRepostajesCollection();
+        this.precioGasolina = gasolinera.getPrecioGasolina();
+        this.precioGasoil = gasolinera.getPrecioGasoil();
         createBarModelImporte();
         createBarModelLitros();
     }
@@ -63,12 +78,20 @@ public class GasolineroController implements Serializable {
 
         BarChartDataSet totalDataset = new BarChartDataSet();
         totalDataset.setLabel("Importe");
-        List<Number> values = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            values.add(getRepostajesByMesPrecio(i));
-        }
-        totalDataset.setData(values);
+        List<Number> valuesGasolina = new ArrayList<>();
+        List<Number> valuesGasoil = new ArrayList<>();
 
+        //Importe tipo gasolina
+        for (int i = 0; i < 12; i++) {
+            valuesGasolina.add(getRepostajesByMesPrecio(i,getRepostajesGasolina()));
+        }
+        totalDataset.setData(valuesGasolina);
+
+        //Importe tipo gasoil
+        for (int i = 0; i < 12; i++) {
+            valuesGasoil.add(getRepostajesByMesPrecio(i,getRepostajesGasoil()));
+        }
+        totalDataset.setData(valuesGasoil);
 
         List<String> bgColorTotal = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -105,11 +128,20 @@ public class GasolineroController implements Serializable {
 
         BarChartDataSet litrosDataset = new BarChartDataSet();
         litrosDataset.setLabel("Litros");
-        List<Number> valuesLitros = new ArrayList<>();
+        List<Number> valuesGasolina = new ArrayList<>();
+        List<Number> valuesGasoil = new ArrayList<>();
+
+        //Litros tipo gasolina
         for (int i = 0; i < 12; i++) {
-            valuesLitros.add(getRepostajesByMesLitros(i));
+            valuesGasolina.add(getRepostajesByMesLitros(i, getRepostajesGasolina()));
         }
-        litrosDataset.setData(valuesLitros);
+        litrosDataset.setData(valuesGasolina);
+
+        //Litros tipo gasoil
+        for (int i = 0; i < 12; i++) {
+            valuesGasoil.add(getRepostajesByMesLitros(i, getRepostajesGasoil()));
+        }
+        litrosDataset.setData(valuesGasoil);
 
         List<String> bgColorLitros = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -199,6 +231,61 @@ public class GasolineroController implements Serializable {
     }
 
 
+    private float getRepostajesByMesPrecio(int mes, List<Repostajes> repostajesCombustible) {
+        float total = 0;
+        for (Repostajes r : repostajesCombustible) {
+            if((r.getFecha().getYear() + 1900) == Calendar.getInstance().get(Calendar.YEAR) && r.getFecha().getMonth() == mes){
+                total += Float.parseFloat(r.getGastoId().getPrecio().toString());
+            }
+        }
+        return total;
+    }
+
+    private float getRepostajesByMesLitros(int mes, List<Repostajes> repostajesCombustible) {
+        float total = 0;
+        for (Repostajes r : repostajesCombustible) {
+            if((r.getFecha().getYear() + 1900) == Calendar.getInstance().get(Calendar.YEAR) && r.getFecha().getMonth() == mes){
+                total += Float.parseFloat(r.getLitros().toString());
+            }
+        }
+        return total;
+    }
+
+    public void cambiarPrecioGasolina(){
+        this.gasolinera.setPrecioGasolina(this.precioGasolina);
+        this.ejbGasolineras.edit(this.gasolinera);
+
+    }
+
+    public void cambiarPrecioGasoil(){
+        this.gasolinera.setPrecioGasoil(this.precioGasoil);
+        this.ejbGasolineras.edit(this.gasolinera);
+    }
+
+    public List<Repostajes> getRepostajesGasolina() {
+        List<Repostajes> importesGasolina = new ArrayList<>();
+        for(Repostajes r : repostajes){
+            if(r.getGastoId().getMatricula().getTipoCombustible() == "GASOLINA"){
+                importesGasolina.add(r);
+            }
+        }
+
+        return importesGasolina;
+    }
+
+    public List<Repostajes> getRepostajesGasoil() {
+        List<Repostajes> importesGasoil = new ArrayList<>();
+        for(Repostajes r : repostajes){
+            if(r.getGastoId().getMatricula().getTipoCombustible() == "GASOLINA"){
+                importesGasoil.add(r);
+            }
+        }
+
+        return importesGasoil;
+
+    }
+
+
     public BarChartModel getBarModelImporte() { return barModelImporte; }
 
     public void setBarModelImporte(BarChartModel barModelImporte) { this.barModelImporte = barModelImporte;}
@@ -207,26 +294,13 @@ public class GasolineroController implements Serializable {
 
     public void setBarModelLitros(BarChartModel barModelLitros) { this.barModelLitros = barModelLitros;}
 
+    public float getPrecioGasolina() { return precioGasolina; }
 
+    public void setPrecioGasolina(float precioGasolina) { this.precioGasolina = precioGasolina;}
 
-    private float getRepostajesByMesPrecio(int mes) {
-        float total = 0;
-        for (Repostajes r : repostajes) {
-            if((r.getFecha().getYear() + 1900) == Calendar.getInstance().get(Calendar.YEAR) && r.getFecha().getMonth() == mes){
-                total += Float.parseFloat(r.getGastoId().getPrecio().toString());
-            }
-        }
-        return total;
-    }
+    public float getPrecioGasoil() { return precioGasoil;}
 
-    private float getRepostajesByMesLitros(int mes) {
-        float total = 0;
-        for (Repostajes r : repostajes) {
-            if((r.getFecha().getYear() + 1900) == Calendar.getInstance().get(Calendar.YEAR) && r.getFecha().getMonth() == mes){
-                total += Float.parseFloat(r.getLitros().toString());
-            }
-        }
-        return total;
-    }
+    public void setPrecioGasoil(float precioGasoil) { this.precioGasoil = precioGasoil; }
+
 
 }
