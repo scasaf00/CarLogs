@@ -305,4 +305,8 @@ public class UserController implements Serializable {
         }
         return total;
     }
+
+    public Integer getVehiculos() {
+        return user.getVehiculosCollection().size();
+    }
 }
