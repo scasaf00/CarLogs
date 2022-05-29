@@ -29,14 +29,14 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "vehiculos")
 @NamedQueries({
-    @NamedQuery(name = "Vehiculos.findAll", query = "SELECT v FROM Vehiculos v"),
-    @NamedQuery(name = "Vehiculos.findByMatricula", query = "SELECT v FROM Vehiculos v WHERE v.matricula = :matricula"),
-    @NamedQuery(name = "Vehiculos.findByMarca", query = "SELECT v FROM Vehiculos v WHERE v.marca = :marca"),
-    @NamedQuery(name = "Vehiculos.findByModelo", query = "SELECT v FROM Vehiculos v WHERE v.modelo = :modelo"),
-    @NamedQuery(name = "Vehiculos.findByColor", query = "SELECT v FROM Vehiculos v WHERE v.color = :color"),
-    @NamedQuery(name = "Vehiculos.findByGastoKm", query = "SELECT v FROM Vehiculos v WHERE v.gastoKm = :gastoKm"),
-    @NamedQuery(name = "Vehiculos.findByKmActual", query = "SELECT v FROM Vehiculos v WHERE v.kmActual = :kmActual"),
-    @NamedQuery(name = "Vehiculos.findByTipoCombustible", query = "SELECT v FROM Vehiculos v WHERE v.tipoCombustible = :tipoCombustible")})
+        @NamedQuery(name = "Vehiculos.findAll", query = "SELECT v FROM Vehiculos v"),
+        @NamedQuery(name = "Vehiculos.findByMatricula", query = "SELECT v FROM Vehiculos v WHERE v.matricula = :matricula"),
+        @NamedQuery(name = "Vehiculos.findByMarca", query = "SELECT v FROM Vehiculos v WHERE v.marca = :marca"),
+        @NamedQuery(name = "Vehiculos.findByModelo", query = "SELECT v FROM Vehiculos v WHERE v.modelo = :modelo"),
+        @NamedQuery(name = "Vehiculos.findByColor", query = "SELECT v FROM Vehiculos v WHERE v.color = :color"),
+        @NamedQuery(name = "Vehiculos.findByGastoKm", query = "SELECT v FROM Vehiculos v WHERE v.gastoKm = :gastoKm"),
+        @NamedQuery(name = "Vehiculos.findByKmActual", query = "SELECT v FROM Vehiculos v WHERE v.kmActual = :kmActual"),
+        @NamedQuery(name = "Vehiculos.findByTipoCombustible", query = "SELECT v FROM Vehiculos v WHERE v.tipoCombustible = :tipoCombustible")})
 public class Vehiculos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -189,7 +189,7 @@ public class Vehiculos implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Vehiculos[ matricula=" + matricula + " ]";
+        return "es.elchivy.carlogs.modelo.Vehiculos[ matricula=" + matricula + " ]";
     }
-    
+
 }

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,10 +27,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
-    @NamedQuery(name = "Usuarios.findByUsername", query = "SELECT u FROM Usuarios u WHERE u.username = :username"),
-    @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password"),
-    @NamedQuery(name = "Usuarios.findByTipo", query = "SELECT u FROM Usuarios u WHERE u.tipo = :tipo")})
+        @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
+        @NamedQuery(name = "Usuarios.findByUsername", query = "SELECT u FROM Usuarios u WHERE u.username = :username"),
+        @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password"),
+        @NamedQuery(name = "Usuarios.findByTipo", query = "SELECT u FROM Usuarios u WHERE u.tipo = :tipo")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +52,8 @@ public class Usuarios implements Serializable {
     private String tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Vehiculos> vehiculosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
-    private Collection<Gasolineros> gasolinerosCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarios")
+    private Gasolineros gasolineros;
 
     public Usuarios() {
     }
@@ -99,12 +100,12 @@ public class Usuarios implements Serializable {
         this.vehiculosCollection = vehiculosCollection;
     }
 
-    public Collection<Gasolineros> getGasolinerosCollection() {
-        return gasolinerosCollection;
+    public Gasolineros getGasolineros() {
+        return gasolineros;
     }
 
-    public void setGasolinerosCollection(Collection<Gasolineros> gasolinerosCollection) {
-        this.gasolinerosCollection = gasolinerosCollection;
+    public void setGasolineros(Gasolineros gasolineros) {
+        this.gasolineros = gasolineros;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Usuarios[ username=" + username + " ]";
+        return "es.elchivy.carlogs.modelo.Usuarios[ username=" + username + " ]";
     }
-    
+
 }

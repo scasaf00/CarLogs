@@ -28,12 +28,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "gasolineras")
 @NamedQueries({
-    @NamedQuery(name = "Gasolineras.findAll", query = "SELECT g FROM Gasolineras g"),
-    @NamedQuery(name = "Gasolineras.findById", query = "SELECT g FROM Gasolineras g WHERE g.id = :id"),
-    @NamedQuery(name = "Gasolineras.findByNombre", query = "SELECT g FROM Gasolineras g WHERE g.nombre = :nombre"),
-    @NamedQuery(name = "Gasolineras.findByDireccion", query = "SELECT g FROM Gasolineras g WHERE g.direccion = :direccion"),
-    @NamedQuery(name = "Gasolineras.findByPrecioGasolina", query = "SELECT g FROM Gasolineras g WHERE g.precioGasolina = :precioGasolina"),
-    @NamedQuery(name = "Gasolineras.findByPrecioGasoil", query = "SELECT g FROM Gasolineras g WHERE g.precioGasoil = :precioGasoil")})
+        @NamedQuery(name = "Gasolineras.findAll", query = "SELECT g FROM Gasolineras g"),
+        @NamedQuery(name = "Gasolineras.findById", query = "SELECT g FROM Gasolineras g WHERE g.id = :id"),
+        @NamedQuery(name = "Gasolineras.findByNombre", query = "SELECT g FROM Gasolineras g WHERE g.nombre = :nombre"),
+        @NamedQuery(name = "Gasolineras.findByDireccion", query = "SELECT g FROM Gasolineras g WHERE g.direccion = :direccion"),
+        @NamedQuery(name = "Gasolineras.findByPrecioGasolina", query = "SELECT g FROM Gasolineras g WHERE g.precioGasolina = :precioGasolina"),
+        @NamedQuery(name = "Gasolineras.findByPrecioGasoil", query = "SELECT g FROM Gasolineras g WHERE g.precioGasoil = :precioGasoil")})
 public class Gasolineras implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,7 +62,7 @@ public class Gasolineras implements Serializable {
     private float precioGasoil;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolinera")
     private Collection<Repostajes> repostajesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolineras")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasolinera")
     private Collection<Gasolineros> gasolinerosCollection;
 
     public Gasolineras() {
@@ -155,7 +155,7 @@ public class Gasolineras implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Gasolineras[ id=" + id + " ]";
+        return "es.elchivy.carlogs.modelo.Gasolineras[ id=" + id + " ]";
     }
-    
+
 }

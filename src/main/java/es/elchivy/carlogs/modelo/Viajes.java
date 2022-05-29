@@ -26,17 +26,17 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "viajes")
 @NamedQueries({
-    @NamedQuery(name = "Viajes.findAll", query = "SELECT v FROM Viajes v"),
-    @NamedQuery(name = "Viajes.findById", query = "SELECT v FROM Viajes v WHERE v.id = :id"),
-    @NamedQuery(name = "Viajes.findByFecha", query = "SELECT v FROM Viajes v WHERE v.fecha = :fecha"),
-    @NamedQuery(name = "Viajes.findByDistancia", query = "SELECT v FROM Viajes v WHERE v.distancia = :distancia"),
-    @NamedQuery(name = "Viajes.findByOrigen", query = "SELECT v FROM Viajes v WHERE v.origen = :origen"),
-    @NamedQuery(name = "Viajes.findByDestino", query = "SELECT v FROM Viajes v WHERE v.destino = :destino")})
+        @NamedQuery(name = "Viajes.findAll", query = "SELECT v FROM Viajes v"),
+        @NamedQuery(name = "Viajes.findById", query = "SELECT v FROM Viajes v WHERE v.id = :id"),
+        @NamedQuery(name = "Viajes.findByFecha", query = "SELECT v FROM Viajes v WHERE v.fecha = :fecha"),
+        @NamedQuery(name = "Viajes.findByDistancia", query = "SELECT v FROM Viajes v WHERE v.distancia = :distancia"),
+        @NamedQuery(name = "Viajes.findByOrigen", query = "SELECT v FROM Viajes v WHERE v.origen = :origen"),
+        @NamedQuery(name = "Viajes.findByDestino", query = "SELECT v FROM Viajes v WHERE v.destino = :destino")})
 public class Viajes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -151,7 +151,7 @@ public class Viajes implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Viajes[ id=" + id + " ]";
+        return "es.elchivy.carlogs.modelo.Viajes[ id=" + id + " ]";
     }
-    
+
 }
