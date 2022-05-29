@@ -30,10 +30,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "mantenimientos")
 @NamedQueries({
-    @NamedQuery(name = "Mantenimientos.findAll", query = "SELECT m FROM Mantenimientos m"),
-    @NamedQuery(name = "Mantenimientos.findById", query = "SELECT m FROM Mantenimientos m WHERE m.id = :id"),
-    @NamedQuery(name = "Mantenimientos.findByFecha", query = "SELECT m FROM Mantenimientos m WHERE m.fecha = :fecha"),
-    @NamedQuery(name = "Mantenimientos.findByDescripcion", query = "SELECT m FROM Mantenimientos m WHERE m.descripcion = :descripcion")})
+        @NamedQuery(name = "Mantenimientos.findAll", query = "SELECT m FROM Mantenimientos m"),
+        @NamedQuery(name = "Mantenimientos.findById", query = "SELECT m FROM Mantenimientos m WHERE m.id = :id"),
+        @NamedQuery(name = "Mantenimientos.findByFecha", query = "SELECT m FROM Mantenimientos m WHERE m.fecha = :fecha"),
+        @NamedQuery(name = "Mantenimientos.findByDescripcion", query = "SELECT m FROM Mantenimientos m WHERE m.descripcion = :descripcion")})
 public class Mantenimientos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -120,7 +120,7 @@ public class Mantenimientos implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Mantenimientos[ id=" + id + " ]";
+        return "es.elchivy.carlogs.modelo.Mantenimientos[ id=" + id + " ]";
     }
-    
+
 }

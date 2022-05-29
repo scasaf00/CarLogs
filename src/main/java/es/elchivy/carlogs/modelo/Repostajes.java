@@ -30,10 +30,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "repostajes")
 @NamedQueries({
-    @NamedQuery(name = "Repostajes.findAll", query = "SELECT r FROM Repostajes r"),
-    @NamedQuery(name = "Repostajes.findById", query = "SELECT r FROM Repostajes r WHERE r.id = :id"),
-    @NamedQuery(name = "Repostajes.findByFecha", query = "SELECT r FROM Repostajes r WHERE r.fecha = :fecha"),
-    @NamedQuery(name = "Repostajes.findByLitros", query = "SELECT r FROM Repostajes r WHERE r.litros = :litros")})
+        @NamedQuery(name = "Repostajes.findAll", query = "SELECT r FROM Repostajes r"),
+        @NamedQuery(name = "Repostajes.findById", query = "SELECT r FROM Repostajes r WHERE r.id = :id"),
+        @NamedQuery(name = "Repostajes.findByFecha", query = "SELECT r FROM Repostajes r WHERE r.fecha = :fecha"),
+        @NamedQuery(name = "Repostajes.findByLitros", query = "SELECT r FROM Repostajes r WHERE r.litros = :litros")})
 public class Repostajes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -131,7 +131,7 @@ public class Repostajes implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Repostajes[ id=" + id + " ]";
+        return "es.elchivy.carlogs.modelo.Repostajes[ id=" + id + " ]";
     }
-    
+
 }
