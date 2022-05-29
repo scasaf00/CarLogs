@@ -34,7 +34,7 @@ public class UserController implements Serializable {
 
     private DonutChartModel donutModel;
 
-    private List<Gastos> gastos;
+    private List<Gastos> gastos = new ArrayList<>();
 
     private Usuarios user;
 
@@ -45,6 +45,15 @@ public class UserController implements Serializable {
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         this.gastos = ejbGastos.getAllByUser(user);
+        /*
+        List<Gastos> allGastos = ejbGastos.findAll();
+        for (Gastos gasto : allGastos) {
+            if (gasto.getMatricula().getUsuario() == user) {
+                this.gastos.add(gasto);
+            }
+        }
+
+         */
         createBarModels();
         createDonutModels();
     }
