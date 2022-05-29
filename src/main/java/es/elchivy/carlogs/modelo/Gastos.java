@@ -34,12 +34,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "gastos")
 @NamedQueries({
-    @NamedQuery(name = "Gastos.findAll", query = "SELECT g FROM Gastos g"),
-    @NamedQuery(name = "Gastos.findById", query = "SELECT g FROM Gastos g WHERE g.id = :id"),
-    @NamedQuery(name = "Gastos.findByFecha", query = "SELECT g FROM Gastos g WHERE g.fecha = :fecha"),
-    @NamedQuery(name = "Gastos.findByPrecio", query = "SELECT g FROM Gastos g WHERE g.precio = :precio"),
-    @NamedQuery(name = "Gastos.findByKm", query = "SELECT g FROM Gastos g WHERE g.km = :km"),
-    @NamedQuery(name = "Gastos.findByTipo", query = "SELECT g FROM Gastos g WHERE g.tipo = :tipo")})
+        @NamedQuery(name = "Gastos.findAll", query = "SELECT g FROM Gastos g"),
+        @NamedQuery(name = "Gastos.findById", query = "SELECT g FROM Gastos g WHERE g.id = :id"),
+        @NamedQuery(name = "Gastos.findByFecha", query = "SELECT g FROM Gastos g WHERE g.fecha = :fecha"),
+        @NamedQuery(name = "Gastos.findByPrecio", query = "SELECT g FROM Gastos g WHERE g.precio = :precio"),
+        @NamedQuery(name = "Gastos.findByKm", query = "SELECT g FROM Gastos g WHERE g.km = :km"),
+        @NamedQuery(name = "Gastos.findByTipo", query = "SELECT g FROM Gastos g WHERE g.tipo = :tipo")})
 public class Gastos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -183,7 +183,7 @@ public class Gastos implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.mavenproject1.Gastos[ id=" + id + " ]";
+        return "es.elchivy.carlogs.modelo.Gastos[ id=" + id + " ]";
     }
-    
+
 }
