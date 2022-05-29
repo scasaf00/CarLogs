@@ -14,8 +14,9 @@
     <class>es.elchivy.carlogs.modelo.Vehiculos</class>
     <class>es.elchivy.carlogs.modelo.Mantenimientos</class>
     <class>es.elchivy.carlogs.modelo.Gasolineras</class>
-    <properties>
+      <class>es.elchivy.carlogs.modelo.Gasolineros</class>
+      <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-    </properties>
+      </properties>
   </persistence-unit>
 </persistence>

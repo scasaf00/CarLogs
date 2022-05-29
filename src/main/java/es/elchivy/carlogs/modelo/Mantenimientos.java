@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "mantenimientos")
@@ -115,15 +115,12 @@ public class Mantenimientos implements Serializable {
             return false;
         }
         Mantenimientos other = (Mantenimientos) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Mantenimientos[ id=" + id + " ]";
+        return "es.elchivy.mavenproject1.Mantenimientos[ id=" + id + " ]";
     }
     
 }

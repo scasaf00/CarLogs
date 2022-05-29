@@ -1,5 +1,6 @@
 package es.elchivy.carlogs.controller;
 
+import com.google.common.hash.Hashing;
 import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
 
@@ -8,6 +9,7 @@ import javax.faces.annotation.ManagedProperty;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 @ManagedBean(name = "registerController")
 @ViewScoped
@@ -60,10 +62,10 @@ public class RegisterController implements Serializable {
     public void insertUser() {
         Usuarios user = new Usuarios();
         user.setUsername(uname);
-        user.setPassword(password);
+        user.setPassword(Hashing.crc32().hashString(password, StandardCharsets.UTF_8).toString());
         user.setTipo(userType);
         System.out.println(user);
-        ejb.insertarUsuario(user);
+        ejb.create(user);
     }
 
 

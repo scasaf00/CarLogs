@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  *
- * @author Sergio
+ * @author sfcmm
  */
 @Stateless
 public class RepostajesFacade extends AbstractFacade<Repostajes> implements RepostajesFacadeLocal {

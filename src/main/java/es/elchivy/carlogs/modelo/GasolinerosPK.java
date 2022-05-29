@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Embeddable
 public class GasolinerosPK implements Serializable {
@@ -56,7 +56,7 @@ public class GasolinerosPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) gasolinera;
+        hash += gasolinera;
         hash += (usuario != null ? usuario.hashCode() : 0);
         return hash;
     }
@@ -71,15 +71,12 @@ public class GasolinerosPK implements Serializable {
         if (this.gasolinera != other.gasolinera) {
             return false;
         }
-        if ((this.usuario == null && other.usuario != null) || (this.usuario != null && !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        return true;
+        return (this.usuario != null || other.usuario == null) && (this.usuario == null || this.usuario.equals(other.usuario));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.GasolinerosPK[ gasolinera=" + gasolinera + ", usuario=" + usuario + " ]";
+        return "es.elchivy.mavenproject1.GasolinerosPK[ gasolinera=" + gasolinera + ", usuario=" + usuario + " ]";
     }
     
 }

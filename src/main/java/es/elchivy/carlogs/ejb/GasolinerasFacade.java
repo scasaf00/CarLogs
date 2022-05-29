@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Sergio
+ * @author sfcmm
  */
 @Stateless
 public class GasolinerasFacade extends AbstractFacade<Gasolineras> implements GasolinerasFacadeLocal {

@@ -23,7 +23,7 @@ public class TemplateController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
         }
         catch (IOException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe estar logueado para acceder a esta pagina"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ha ocurrido un error insperado"));
         }
     }
 
@@ -32,10 +32,10 @@ public class TemplateController implements Serializable {
         this.usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 
         if (this.usuario == null) {
-            // TODO aqui que seria lo mejor que se podria hacer??
             try {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe estar logueado para acceder a esta pagina"));
-                FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe estar logueado para acceder a esta pagina"));
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml?faces-redirect=true ");
+
             } catch (IOException ex) {
                 Logger.getLogger(TemplateController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author Sergio
+ * @author sfcmm
  */
 @Stateless
 public class UsuariosFacade extends AbstractFacade<Usuarios> implements UsuariosFacadeLocal {

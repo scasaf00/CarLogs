@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Sergio
+ * @author scfmm
  */
 @Entity
 @Table(name = "repostajes")
@@ -126,15 +126,12 @@ public class Repostajes implements Serializable {
             return false;
         }
         Repostajes other = (Repostajes) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Repostajes[ id=" + id + " ]";
+        return "es.elchivy.mavenproject1.Repostajes[ id=" + id + " ]";
     }
     
 }

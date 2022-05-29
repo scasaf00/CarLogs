@@ -13,7 +13,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Sergio
+ * @author sfcmm
  */
 @Local
 public interface RepostajesFacadeLocal {
