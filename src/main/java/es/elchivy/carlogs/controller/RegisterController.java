@@ -1,72 +1,93 @@
 package es.elchivy.carlogs.controller;
 
 import com.google.common.hash.Hashing;
+import es.elchivy.carlogs.ejb.GasolinerasFacadeLocal;
+import es.elchivy.carlogs.ejb.GasolinerosFacadeLocal;
 import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
+import es.elchivy.carlogs.modelo.Gasolineras;
+import es.elchivy.carlogs.modelo.Gasolineros;
 import es.elchivy.carlogs.modelo.Usuarios;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.annotation.ManagedProperty;
-import javax.faces.bean.ManagedBean;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 
-@ManagedBean(name = "registerController")
+
+@Named
 @ViewScoped
 public class RegisterController implements Serializable {
 
     @EJB
-    private UsuariosFacadeLocal ejb;
+    private UsuariosFacadeLocal ejbUser;
 
-    private static final long serialVersionUID = 1L;
-    @ManagedProperty("#{registerController.uname}")
-    private String uname;
+    @EJB
+    private GasolinerosFacadeLocal ejbGasolinero;
 
-    @ManagedProperty("#{registerController.password}")
+    @EJB
+    private GasolinerasFacadeLocal ejbGasolinera;
+
+    private Usuarios user;
+    private Gasolineras gasolinera;
+
     private String password;
 
-    @ManagedProperty("#{registerController.userType}")
-    private String userType;
+    public Usuarios getUser() {
+        return user;
+    }
 
-    @ManagedProperty("#{registerController.gasolinera}")
-    private String gasolinera;
+    public void setUser(Usuarios user) {
+        this.user = user;
+    }
 
-    public String getUname() {
-        return this.uname;
+    public Gasolineras getGasolinera() {
+        return gasolinera;
+    }
+
+    public void setGasolinera(Gasolineras gasolinera) {
+        this.gasolinera = gasolinera;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String getUserType() {
-        return this.userType;
-    }
-
-    public String getGasolinera() {return this.gasolinera;}
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    @PostConstruct
+    public void init(){
+        user = new Usuarios();
+        gasolinera = new Gasolineras();
     }
-
-    public void setGasolinera(String gasolinera) {this.gasolinera = gasolinera;}
 
     public void insertUser() {
-        Usuarios user = new Usuarios();
-        user.setUsername(uname);
-        user.setPassword(Hashing.crc32().hashString(password, StandardCharsets.UTF_8).toString());
-        user.setTipo(userType);
-        System.out.println(user);
-        ejb.create(user);
+        if (user.getPassword().equals(password)) {
+            if (user.getTipo().equals("GASOLINERO")) {
+                ejbGasolinera.create(gasolinera);
+
+                Gasolineros gasolinero = new Gasolineros();
+                gasolinero.setGasolinera(ejbGasolinera.findGasolinera(gasolinera));
+                gasolinero.setUsuario(user.getUsername());
+                gasolinero.setUsuarios(user);
+                user.setGasolineros(gasolinero);
+            }
+
+            try {
+                user.setPassword(Hashing.crc32().hashString(user.getPassword(), StandardCharsets.UTF_8).toString());
+                ejbUser.create(user);
+            } catch (Exception e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El usuario ya existe"));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden"));
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario creado correctamente"));
     }
-
-
 }

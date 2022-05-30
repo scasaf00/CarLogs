@@ -29,5 +29,6 @@ public interface GasolinerasFacadeLocal {
     List<Gasolineras> findRange(int[] range);
 
     int count();
-    
+
+    Gasolineras findGasolinera(Gasolineras gasolineras);
 }
