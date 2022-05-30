@@ -16,27 +16,35 @@
         </p:messages>
         <p:panel header="Resgistro" style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
             <h:panelGrid id ="grid" class="panel" columns="3" cellpadding="10">
+
                 <h:outputText value="Usuario: " />
-                <p:inputText id="usuario" required="true" value="#{registerController.uname}"/>
+                <p:inputText id="usuario" required="true" value="#{registerController.user.username}"/>
                 <p:message for="usuario"/>
+
                 <h:outputText value="Contraseña: "/>
-                <p:password id="password" required="true" value="#{registerController.password}" match="password_again"/>
+                <p:password id="password" required="true" value="#{registerController.user.password}" match="password_again"/>
                 <p:message for="password"/>
+
                 <h:outputText value="Repetir Contraseña: "/>
                 <p:password id="password_again" required="true" value="#{registerController.password}"/>
                 <p:message for="password_again"/>
+
                 <p:outputLabel for="@next" value="Tipo de usuario"/>
-                <p:selectOneMenu id="tipo" value="#{registerController.userType}">
+                <p:selectOneMenu id="tipo" value="#{registerController.user.tipo}">
                     <f:selectItem itemLabel="Normal" itemValue="USER"/>
                     <f:selectItem itemLabel="Gasolinero" itemValue="GASOLINERO"/>
-                    <f:ajax render="contenedorGasolinera" />
+                    <f:ajax render="@all" />
                 </p:selectOneMenu>
                 <p:message for="tipo"/>
-                <h:panelGroup id="contenedorGasolinera">
-                    <p:outputLabel  value="Gasolinera:" for="gasolinera" rendered="#{registerController.userType == 'gasolinero' ? true:false}"/>
-                    <p:inputText  id="gasolinera" rendered="#{registerController.userType == 'gasolinero' ? true:false}" value="#{registerController.gasolinera}"/>
-                    <p:message for="gasolinera"/>
-                </h:panelGroup>
+
+                <p:outputLabel  value="Gasolinera:" for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" />
+                <p:inputText  id="nombreGasolinera" value="#{registerController.gasolinera.nombre}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:message for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+
+                <p:outputLabel  value="Dirección:" for="direccion" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:inputText  id="direccion" value="#{registerController.gasolinera.direccion}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:message for="direccion" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+
                 <p:commandButton value="Registrar" update="grid" action="#{registerController.insertUser}"/>
             </h:panelGrid>
         </p:panel>

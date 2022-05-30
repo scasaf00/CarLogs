@@ -60,11 +60,16 @@ public class LoginController implements Serializable {
                     rutaIndex = "/private/user/indexUser.xhtml?faces-redirect=true";
                     break;
                 case "GASOLINERO":
-                    rutaIndex = "/private/gasolinero/indexGasolinero.xhtml?faces-redirect=true";
-                    break;
+                    if(user.getGasolineros().getAceptado()){
+                        rutaIndex = "/private/gasolinero/indexGasolinero.xhtml";
+                        break;
+                    }else {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El gasolinero no ha sido aceptado"));
+                        break;
+                    }
 
                 default:
-                    FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR","Usuario no valido"));
+                    FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR","Usuario no es correcto"));
             }
 
             return rutaIndex;
