@@ -16,7 +16,7 @@ import java.util.List;
 
 @Named
 @ViewScoped
-public class vehiculosController implements Serializable {
+public class VehiculosController implements Serializable {
 
     private List<Vehiculos> vehiculos = new ArrayList<>();
 

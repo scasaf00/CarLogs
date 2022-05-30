@@ -21,6 +21,7 @@
                 <div class="col-12 md:col-6 lg:col-6 xl:col-12">
                     <div class="surface-card shadow-2 p-3 border-round">
                         <p:dataTable id="vehiculos" var="v" value="#{vehiculosController.vehiculos}">
+                            <p:autoUpdate/>
                             <f:facet name="header">
                                 <div class="grid">
                                     <div class="col-12 md:col-6 lg:col-3 xl:col-6" style="left: 0">
@@ -62,39 +63,37 @@
                         </p:dataTable>
                         <p:dialog header="Añadir Vehiculo" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">
 
-                            <h:panelGrid columns="3" cellpadding="5">
-
-                                <p:messages id="messages" showDetail="true" closable="true">
-                                    <p:autoUpdate/>
-                                </p:messages>
-
+                            <h:panelGrid id="grid" columns="3" cellpadding="5">
+                                <p:autoUpdate/>
                                 <h:outputLabel for="matricula" value="Matricula: " />
-                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" required="true"/>
-                                <p:message for="matricula" />
+                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" required="true" requiredMessage="Introduce Matricula"/>
+                                <p:message for="matricula"/>
 
                                 <h:outputLabel for="marca" value="Marca: " />
-                                <p:inputText id="marca" label="marca" value="#{vehiculosController.vehiculo.marca}" required="true"/>
-                                <p:message for="marca" />
+                                <p:inputText id="marca" label="marca" value="#{vehiculosController.vehiculo.marca}" required="true" requiredMessage="Introduce Marca"/>
+                                <p:message for="marca"/>
 
                                 <h:outputLabel for="modelo" value="Modelo: " />
-                                <p:inputText id="modelo" label="modelo" value="#{vehiculosController.vehiculo.modelo}" required="true"/>
-                                <p:message for="modelo" />
+                                <p:inputText id="modelo" label="modelo" value="#{vehiculosController.vehiculo.modelo}" required="true" requiredMessage="Introduce Modelo"/>
+                                <p:message for="modelo"/>
 
                                 <h:outputLabel for="color" value="Color: " />
-                                <p:inputText id="color" label="color" value="#{vehiculosController.vehiculo.color}" required="true"/>
-                                <p:message for="color" />
+                                <p:inputText id="color" label="color" value="#{vehiculosController.vehiculo.color}" required="true" requiredMessage="Introduce Color"/>
+                                <p:message for="color"/>
 
                                 <h:outputLabel for="gastoKM" value="Consumo por KM: " />
-                                <p:inputText id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" required="true"/>
-                                <p:message for="gastoKM" />
+                                <p:inputText id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" required="true" requiredMessage="Introduce Consumo por KM"/>
+                                <p:message for="gastoKM"/>
 
                                 <h:outputLabel for="kmActual" value="KM Actuales: " />
-                                <p:inputText id="kmActual" label="kmActual" value="#{vehiculosController.vehiculo.kmActual}" required="true"/>
-                                <p:message for="kmActual" />
+                                <p:inputText id="kmActual" label="kmActual" value="#{vehiculosController.vehiculo.kmActual}" required="true" requiredMessage="Introduce KM actuales"/>
+                                <p:message for="kmActual"/>
 
                                 <h:outputLabel for="tipoComb" value="Tipo Combustible: " />
-                                <p:inputText id="tipoComb" label="tipoComb" value="#{vehiculosController.vehiculo.tipoCombustible}" required="true"/>
-                                <p:message for="tipoComb" />
+                                <p:selectOneMenu id="tipoComb" label="tipoComb" value="#{vehiculosController.vehiculo.tipoCombustible}" required="true">
+                                    <f:selectItem itemLabel="Gasolina" itemValue="GASOLINA"/>
+                                    <f:selectItem itemLabel="Gasoil" itemValue="GASOIL"/>
+                                </p:selectOneMenu>
 
                                 <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{vehiculosController.insertVehiculo}"/>
                             </h:panelGrid>
