@@ -30,6 +30,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 @Named
@@ -40,7 +41,7 @@ public class GasolineroController implements Serializable {
 
     private BarChartModel barModelLitros;
 
-    private List<Repostajes> repostajes;
+    private Collection<Repostajes> repostajes;
 
     private float precioGasolina;
 
@@ -52,10 +53,6 @@ public class GasolineroController implements Serializable {
 
     private Gasolineras gasolinera;
 
-    private int litrosGasolina;
-
-    private int litrosGasoil;
-
     @EJB
     private GasolinerasFacadeLocal ejbGasolineras;
 
@@ -66,57 +63,83 @@ public class GasolineroController implements Serializable {
         this.user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         this.gasolinero = user.getGasolineros();
         this.gasolinera = gasolinero.getGasolinera();
-        this.repostajes = (List<Repostajes>) gasolinera.getRepostajesCollection();
+        this.repostajes = new ArrayList<>(gasolinera.getRepostajesCollection());
         this.precioGasolina = gasolinera.getPrecioGasolina();
         this.precioGasoil = gasolinera.getPrecioGasoil();
         createBarModelImporte();
         createBarModelLitros();
     }
     public void createBarModelImporte() {
+
         barModelImporte = new BarChartModel();
         ChartData data = new ChartData();
 
         BarChartDataSet totalDataset = new BarChartDataSet();
-        totalDataset.setLabel("Importe");
+        BarChartDataSet gasolinaDataset = new BarChartDataSet();
+        BarChartDataSet gasoilDataset = new BarChartDataSet();
+        totalDataset.setLabel("Total");
+        gasolinaDataset.setLabel("Gasolina");
+        gasoilDataset.setLabel("Gasoil");
         List<Number> valuesGasolina = new ArrayList<>();
         List<Number> valuesGasoil = new ArrayList<>();
+        List<Repostajes> repostajesGasolina = getRepostajesGasolina();
+        List<Repostajes> repostajesGasoil = getRepostajesGasoil();
+
 
         //Importe tipo gasolina
         for (int i = 0; i < 12; i++) {
-            valuesGasolina.add(getRepostajesByMesPrecio(i,getRepostajesGasolina()));
+            valuesGasolina.add(getRepostajesByMesPrecio(i,repostajesGasolina));
         }
-        totalDataset.setData(valuesGasolina);
+        System.out.println("Importe Gasolina: " + valuesGasolina);
+        gasolinaDataset.setData(valuesGasolina);
 
         //Importe tipo gasoil
-        for (int i = 0; i < 12; i++) {
-            valuesGasoil.add(getRepostajesByMesPrecio(i,getRepostajesGasoil()));
-        }
-        totalDataset.setData(valuesGasoil);
 
-        List<String> bgColorTotal = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            bgColorTotal.add("rgba(255, 99, 132, 0.2)");
+            valuesGasoil.add(getRepostajesByMesPrecio(i,repostajesGasoil));
         }
-        totalDataset.setBackgroundColor(bgColorTotal);
+        gasoilDataset.setData(valuesGasoil);
+
+        List<String> bgColorImporte = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            bgColorImporte.add("rgba(255, 99, 132, 0.2)");
+        }
+        gasolinaDataset.setBackgroundColor(bgColorImporte);
+        gasoilDataset.setBackgroundColor("rgba(255, 159, 64, 0.2)");
+
+        //Sumar lista valuesGasolina y valuesGasoil
+        List<Number> valuesTotal = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            valuesTotal.add(valuesGasolina.get(i).floatValue() + valuesGasoil.get(i).floatValue());
+        }
+        totalDataset.setData(valuesTotal);
+
 
         // Colores border
 
-        List<String> borderColorTotal = new ArrayList<>();
+        List<String> borderColorLitros = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            borderColorTotal.add("rgba(255,99,132,1)");
+            borderColorLitros.add("rgba(255,99,132,1)");
         }
-        totalDataset.setBorderColor(borderColorTotal);
-        totalDataset.setBorderWidth(1);
+        gasolinaDataset.setBorderColor(borderColorLitros);
+        gasolinaDataset.setBorderWidth(1);
 
+        gasoilDataset.setBorderColor("rgb(255, 159, 64)");
+        gasoilDataset.setBorderWidth(1);
+        
         // Añadir los datasets al data
 
+
+
         data.addChartDataSet(totalDataset);
+        data.addChartDataSet(gasolinaDataset);
+        data.addChartDataSet(gasoilDataset);
 
         List<String> labels = getMonths();
         data.setLabels(labels);
         barModelImporte.setData(data);
 
-        BarChartOptions options = getBarChartOptions();
+        BarChartOptions options = getBarChartOptions("Importe");
 
         barModelImporte.setOptions(options);
     }
@@ -126,53 +149,73 @@ public class GasolineroController implements Serializable {
         barModelLitros = new BarChartModel();
         ChartData data = new ChartData();
 
-        BarChartDataSet litrosDataset = new BarChartDataSet();
-        litrosDataset.setLabel("Litros");
+        BarChartDataSet totalDataset = new BarChartDataSet();
+        BarChartDataSet gasolinaDataset = new BarChartDataSet();
+        BarChartDataSet gasoilDataset = new BarChartDataSet();
+        totalDataset.setLabel("Total");
+        gasolinaDataset.setLabel("Gasolina");
+        gasoilDataset.setLabel("Gasoil");
         List<Number> valuesGasolina = new ArrayList<>();
         List<Number> valuesGasoil = new ArrayList<>();
+        List<Repostajes> repostajesGasolina = getRepostajesGasolina();
+        List<Repostajes> repostajesGasoil = getRepostajesGasoil();
 
         //Litros tipo gasolina
         for (int i = 0; i < 12; i++) {
-            valuesGasolina.add(getRepostajesByMesLitros(i, getRepostajesGasolina()));
+            valuesGasolina.add(getRepostajesByMesLitros(i, repostajesGasolina));
         }
-        litrosDataset.setData(valuesGasolina);
+        gasolinaDataset.setData(valuesGasolina);
 
         //Litros tipo gasoil
         for (int i = 0; i < 12; i++) {
-            valuesGasoil.add(getRepostajesByMesLitros(i, getRepostajesGasoil()));
+            valuesGasoil.add(getRepostajesByMesLitros(i,repostajesGasoil));
         }
-        litrosDataset.setData(valuesGasoil);
+        gasoilDataset.setData(valuesGasoil);
 
         List<String> bgColorLitros = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            bgColorLitros.add("rgba(54, 162, 235, 0.2)");
+            bgColorLitros.add("rgba(0,0,255,0.2)");
         }
-        litrosDataset.setBackgroundColor(bgColorLitros);
+        gasolinaDataset.setBackgroundColor(bgColorLitros);
+        gasoilDataset.setBackgroundColor("rgba(128, 0, 128, 0.2 )");
+
+        //Sumar lista valuesGasolina y valuesGasoil
+        List<Number> valuesTotal = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            valuesTotal.add(valuesGasolina.get(i).floatValue() + valuesGasoil.get(i).floatValue());
+        }
+        totalDataset.setData(valuesTotal);
+
 
         // Colores border
 
-        List<String> borderColorRepostajes = new ArrayList<>();
+        List<String> borderColorLitros = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            borderColorRepostajes.add("rgb(54, 162, 235, 1)");
+            borderColorLitros.add("rgba(0,0,255,0.6)");
         }
-        litrosDataset.setBorderColor(borderColorRepostajes);
-        litrosDataset.setBorderWidth(1);
+        gasolinaDataset.setBorderColor(borderColorLitros);
+        gasolinaDataset.setBorderWidth(1);
+
+        gasoilDataset.setBorderColor("rgba(128, 0, 128, 1 )");
+        gasoilDataset.setBorderWidth(1);
 
         // Añadir los datasets al data
 
-        data.addChartDataSet(litrosDataset);
+        data.addChartDataSet(totalDataset);
+        data.addChartDataSet(gasolinaDataset);
+        data.addChartDataSet(gasoilDataset);
 
         List<String> labels = getMonths();
         data.setLabels(labels);
         barModelLitros.setData(data);
 
-        BarChartOptions options = getBarChartOptions();
+        BarChartOptions options = getBarChartOptions("Litros");
 
         barModelLitros.setOptions(options);
 
     }
 
-    private BarChartOptions getBarChartOptions() {
+    private BarChartOptions getBarChartOptions(String tipo) {
         //Options
         BarChartOptions options = new BarChartOptions();
         CartesianScales cScales = new CartesianScales();
@@ -186,7 +229,7 @@ public class GasolineroController implements Serializable {
 
         Title title = new Title();
         title.setDisplay(true);
-        title.setText("Gastos");
+        title.setText(tipo);
         options.setTitle(title);
 
         Legend legend = new Legend();
@@ -224,7 +267,7 @@ public class GasolineroController implements Serializable {
 
 
     public void itemSelect(ItemSelectEvent event) {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected",
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Numero de repostajes este mes: ",
                 "Item Index: " + event.getItemIndex() + ", DataSet Index:" + event.getDataSetIndex());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -265,7 +308,7 @@ public class GasolineroController implements Serializable {
     public List<Repostajes> getRepostajesGasolina() {
         List<Repostajes> importesGasolina = new ArrayList<>();
         for(Repostajes r : repostajes){
-            if(r.getGastoId().getMatricula().getTipoCombustible() == "GASOLINA"){
+            if(r.getGastoId().getMatricula().getTipoCombustible().equals("GASOLINA")){
                 importesGasolina.add(r);
             }
         }
@@ -276,7 +319,7 @@ public class GasolineroController implements Serializable {
     public List<Repostajes> getRepostajesGasoil() {
         List<Repostajes> importesGasoil = new ArrayList<>();
         for(Repostajes r : repostajes){
-            if(r.getGastoId().getMatricula().getTipoCombustible() == "GASOLINA"){
+            if(r.getGastoId().getMatricula().getTipoCombustible().equals("GASOIL")){
                 importesGasoil.add(r);
             }
         }
