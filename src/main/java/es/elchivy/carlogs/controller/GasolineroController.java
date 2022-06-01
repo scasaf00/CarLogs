@@ -265,10 +265,15 @@ public class GasolineroController implements Serializable {
         return labels;
     }
 
-
     public void itemSelect(ItemSelectEvent event) {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Numero de repostajes este mes: ",
-                "Item Index: " + event.getItemIndex() + ", DataSet Index:" + event.getDataSetIndex());
+        String mes = getMonths().get(event.getItemIndex());
+        int numeroRepostajesGasolina = getNumeroDeRepostajesCombustible(getRepostajesGasolina(), event.getItemIndex());
+        int numeroRepostajesGasoil = getNumeroDeRepostajesCombustible(getRepostajesGasoil(),event.getItemIndex());
+        int totalRepostajes = numeroRepostajesGasolina + numeroRepostajesGasoil;
+
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Numero de repostajes: ",
+                "En el mes de " + mes + ", se repostó un número de " +totalRepostajes+ " repostajes." +
+                        " De los cuales "+numeroRepostajesGasolina+" fueron de gasolina y "+numeroRepostajesGasoil+" fueron de gasoil.");
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -284,11 +289,23 @@ public class GasolineroController implements Serializable {
         return total;
     }
 
+
     private float getRepostajesByMesLitros(int mes, List<Repostajes> repostajesCombustible) {
         float total = 0;
         for (Repostajes r : repostajesCombustible) {
             if((r.getFecha().getYear() + 1900) == Calendar.getInstance().get(Calendar.YEAR) && r.getFecha().getMonth() == mes){
                 total += Float.parseFloat(r.getLitros().toString());
+            }
+        }
+        return total;
+    }
+
+    private int getNumeroDeRepostajesCombustible(List<Repostajes> repostajesCombustible, int mes) {
+        int total = 0;
+
+        for (Repostajes r : repostajesCombustible) {
+            if((r.getFecha().getYear() + 1900) == Calendar.getInstance().get(Calendar.YEAR) && r.getFecha().getMonth() == mes){
+                total ++;
             }
         }
         return total;
