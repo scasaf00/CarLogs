@@ -51,6 +51,8 @@ public class Usuarios implements Serializable {
     @Column(name = "tipo")
     private String tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<Viajes> viajesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Vehiculos> vehiculosCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarios")
     private Gasolineros gasolineros;
@@ -90,6 +92,14 @@ public class Usuarios implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Collection<Viajes> getViajesCollection() {
+        return viajesCollection;
+    }
+
+    public void setViajesCollection(Collection<Viajes> viajesCollection) {
+        this.viajesCollection = viajesCollection;
     }
 
     public Collection<Vehiculos> getVehiculosCollection() {
