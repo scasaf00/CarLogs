@@ -7,6 +7,7 @@ package es.elchivy.carlogs.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,10 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,9 +65,8 @@ public class Viajes implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "destino")
     private String destino;
-    @JoinColumn(name = "gasto_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Gastos gastoId;
+    @OneToMany(mappedBy = "viaje")
+    private Collection<Gastos> gastosCollection;
 
     public Viajes() {
     }
@@ -124,12 +123,12 @@ public class Viajes implements Serializable {
         this.destino = destino;
     }
 
-    public Gastos getGastoId() {
-        return gastoId;
+    public Collection<Gastos> getGastosCollection() {
+        return gastosCollection;
     }
 
-    public void setGastoId(Gastos gastoId) {
-        this.gastoId = gastoId;
+    public void setGastosCollection(Collection<Gastos> gastosCollection) {
+        this.gastosCollection = gastosCollection;
     }
 
     @Override

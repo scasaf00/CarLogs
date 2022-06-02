@@ -112,7 +112,7 @@ public class Gasolineros implements Serializable {
 
     @Override
     public String toString() {
-        return "Gasolineros{ " + "usuario=" + usuario + ", aceptado=" + aceptado + ", gasolinera=" + gasolinera + ", usuarios=" + usuarios + '}';
+        return "es.elchivy.carlogs.modelo.Gasolineros[ usuario=" + usuario + " ]";
     }
 
 }
