@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -65,6 +67,9 @@ public class Viajes implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "destino")
     private String destino;
+    @JoinColumn(name = "usuario", referencedColumnName = "username")
+    @ManyToOne(optional = false)
+    private Usuarios usuario;
     @OneToMany(mappedBy = "viaje")
     private Collection<Gastos> gastosCollection;
 
@@ -121,6 +126,14 @@ public class Viajes implements Serializable {
 
     public void setDestino(String destino) {
         this.destino = destino;
+    }
+
+    public Usuarios getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
     }
 
     public Collection<Gastos> getGastosCollection() {
