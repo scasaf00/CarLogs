@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml">
+        </p:menuitem>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-6 xl:col-12">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <p:dataTable id="gastos" var="g" value="#{gastosController.gastos}">
+                            <p:autoUpdate/>
+                            <f:facet name="header">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:outputLabel class="text-900 font-medium text-xl" value="Gastos"/>
+                                    </div>
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" type="button" onclick="PF('dlg').show();"/>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Matricula">
+                                <h:outputText value="#{g.matricula.matricula}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha">
+                                <p:datePicker value="#{g.fecha}" readonly="true"/>
+                            </p:column>
+
+                            <p:column headerText="Importe">
+                                <h:outputText value="#{g.precio}" />
+                            </p:column>
+
+                            <p:column headerText="KM">
+                                <h:outputText value="#{g.km}" />
+                            </p:column>
+
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{g.tipo}" />
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton value="Eliminar" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.delete(g)}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dialog header="Añadir Gasto" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">
+
+                            <h:panelGrid id="grid" columns="3" cellpadding="5">
+                                <p:autoUpdate/>
+                                <h:outputLabel for="matricula" value="Matricula: " />
+                                <p:selectOneMenu id="matricula" label="matricula" value="#{gastosController.matricula}" required="true" requiredMessage="Introduce Matricula">
+                                    <f:selectItems value="#{gastosController.matriculas}"/>
+                                </p:selectOneMenu>
+                                <p:message for="matricula" />
+
+                                <h:outputLabel for="fecha" value="Fecha: " />
+                                <p:datePicker id="fecha" label="fecha" value="#{gastosController.gasto.fecha}" required="true" requiredMessage="Introduce Fecha"/>
+                                <p:message for="fecha"/>
+
+                                <h:outputLabel for="importe" value="Importe: " />
+                                <p:inputText id="importe" label="importe" value="#{gastosController.gasto.precio}" required="true" requiredMessage="Introduce Importe"/>
+                                <p:message for="importe"/>
+
+                                <h:outputLabel for="km" value="KM: " />
+                                <p:inputText id="km" label="km" value="#{gastosController.gasto.km}" required="true" requiredMessage="Introduce KM"/>
+                                <p:message for="km"/>
+
+                                <h:outputLabel for="tipoComb" value="Tipo Combustible: " />
+                                <p:selectOneMenu id="tipoComb" label="tipoComb" value="#{gastosController.gasto.tipo}" required="true">
+                                    <f:selectItem itemLabel="REPOSTAJE" itemValue="REPOSTAJE"/>
+                                    <f:selectItem itemLabel="MANTENIMIENTO" itemValue="MANTENIMIENTO"/>
+                                    <f:selectItem itemLabel="OTRO" itemValue="OTRO"/>
+                                </p:selectOneMenu>
+
+                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.insertGasto}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

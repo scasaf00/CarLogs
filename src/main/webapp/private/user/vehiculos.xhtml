@@ -11,7 +11,7 @@
 <ui:composition template="./../../WEB-INF/template/template.xhtml">
 
     <ui:define name="top">
-        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/admin/indexAdmin.xhtml">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml">
         </p:menuitem>
     </ui:define>
 
@@ -24,10 +24,10 @@
                             <p:autoUpdate/>
                             <f:facet name="header">
                                 <div class="grid">
-                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6" style="left: 0">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
                                         <p:outputLabel class="text-900 font-medium text-xl" value="Vehiculos"/>
                                     </div>
-                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6" style="right: 0">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
                                         <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" type="button" onclick="PF('dlg').show();"/>
                                     </div>
                                 </div>
@@ -59,6 +59,10 @@
 
                             <p:column headerText="Tipo de Combustible">
                                 <h:outputText value="#{v.tipoCombustible}" />
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton value="Eliminar" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{vehiculosController.deleteVehiculo(v)}"/>
                             </p:column>
                         </p:dataTable>
                         <p:dialog header="Añadir Vehiculo" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">

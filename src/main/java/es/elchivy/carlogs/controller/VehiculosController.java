@@ -6,7 +6,6 @@ import es.elchivy.carlogs.modelo.Vehiculos;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.el.MethodExpression;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -53,5 +52,10 @@ public class VehiculosController implements Serializable {
     public void insertVehiculo(){
         vehiculo.setUsuario(user);
         ejbVehiculos.create(vehiculo);
+    }
+
+    public void deleteVehiculo(Vehiculos v){
+        ejbVehiculos.remove(v);
+        vehiculos.remove(v);
     }
 }

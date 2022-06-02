@@ -45,15 +45,6 @@ public class UserController implements Serializable {
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         this.gastos = ejbGastos.getAllByUser(user);
-        /*
-        List<Gastos> allGastos = ejbGastos.findAll();
-        for (Gastos gasto : allGastos) {
-            if (gasto.getMatricula().getUsuario() == user) {
-                this.gastos.add(gasto);
-            }
-        }
-
-         */
         createBarModels();
         createDonutModels();
     }
@@ -306,7 +297,21 @@ public class UserController implements Serializable {
         return total;
     }
 
+    private float getGastosbyYear(int year) {
+        float total = 0;
+        for (Gastos g : gastos) {
+            if((g.getFecha().getYear() + 1900) == year) {
+                total += Float.parseFloat(g.getPrecio().toString());
+            }
+        }
+        return total;
+    }
+
     public Integer getVehiculos() {
         return user.getVehiculosCollection().size();
+    }
+
+    public String getTotalG() {
+        return String.valueOf(getGastosbyYear(Calendar.getInstance().get(Calendar.YEAR)));
     }
 }
