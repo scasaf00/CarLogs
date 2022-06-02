@@ -53,6 +53,10 @@
                                 <h:outputText value="#{g.tipo}" />
                             </p:column>
 
+                            <p:column headerText="Viaje">
+                                <h:outputText value="#{g.viaje}" />
+                            </p:column>
+
                             <p:column>
                                 <p:commandButton value="Eliminar" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.delete(g)}"/>
                             </p:column>
@@ -62,7 +66,7 @@
                             <h:panelGrid id="grid" columns="3" cellpadding="5">
                                 <p:autoUpdate/>
                                 <h:outputLabel for="matricula" value="Matricula: " />
-                                <p:selectOneMenu id="matricula" label="matricula" value="#{gastosController.matricula}" required="true" requiredMessage="Introduce Matricula">
+                                <p:selectOneMenu id="matricula" label="matricula" value="#{gastosController.matricula}" required="true">
                                     <f:selectItems value="#{gastosController.matriculas}"/>
                                 </p:selectOneMenu>
                                 <p:message for="matricula" />
@@ -85,6 +89,13 @@
                                     <f:selectItem itemLabel="MANTENIMIENTO" itemValue="MANTENIMIENTO"/>
                                     <f:selectItem itemLabel="OTRO" itemValue="OTRO"/>
                                 </p:selectOneMenu>
+                                <p:message for="tipoComb"/>
+
+                                <h:outputLabel for="viaje" value="Viaje: " />
+                                <p:selectOneMenu id="viaje" label="viaje" value="#{gastosController.viaje}" required="true">
+                                    <f:selectItems value="#{gastosController.viajes}"/>
+                                </p:selectOneMenu>
+                                <p:message for="viaje" />
 
                                 <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.insertGasto}"/>
                             </h:panelGrid>

@@ -34,6 +34,10 @@ public class GastosController implements Serializable {
 
     private String matricula;
 
+    private List<String> viajes;
+
+    private String viaje;
+
     @EJB
     private GastosFacadeLocal ejbGastos;
 
@@ -95,4 +99,17 @@ public class GastosController implements Serializable {
     public String getMatricula() {
         return matricula;
     }
+
+    public List<String> getViajes() {
+        return viajes;
+    }
+
+    public void setViaje(String viaje) {
+        this.viaje = viaje;
+    }
+
+    public String getViaje() {
+        return viaje;
+    }
+
 }

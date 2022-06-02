@@ -3,6 +3,7 @@ package es.elchivy.carlogs.controller;
 import es.elchivy.carlogs.ejb.GastosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gastos;
 import es.elchivy.carlogs.modelo.Usuarios;
+import es.elchivy.carlogs.modelo.Viajes;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.axes.cartesian.CartesianScales;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
@@ -38,6 +39,8 @@ public class UserController implements Serializable {
 
     private Usuarios user;
 
+    private List<Viajes> viajes;
+
     @EJB
     private GastosFacadeLocal ejbGastos;
 
@@ -45,6 +48,7 @@ public class UserController implements Serializable {
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         this.gastos = ejbGastos.getAllByUser(user);
+        this.viajes = user.getViajesCollection();
         createBarModels();
         createDonutModels();
     }
@@ -313,5 +317,9 @@ public class UserController implements Serializable {
 
     public String getTotalG() {
         return String.valueOf(getGastosbyYear(Calendar.getInstance().get(Calendar.YEAR)));
+    }
+
+    public List<Viajes> getViajes() {
+        return viajes;
     }
 }

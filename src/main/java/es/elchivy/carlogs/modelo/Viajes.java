@@ -150,7 +150,7 @@ public class Viajes implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Viajes[ id=" + id + " ]";
+        return origen + " - " + destino;
     }
 
 }

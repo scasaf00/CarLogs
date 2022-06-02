@@ -17,7 +17,7 @@ import java.util.List;
 @ViewScoped
 public class VehiculosController implements Serializable {
 
-    private List<Vehiculos> vehiculos = new ArrayList<>();
+    private List<Vehiculos> vehiculos;
 
     private Vehiculos vehiculo;
 
@@ -52,10 +52,12 @@ public class VehiculosController implements Serializable {
     public void insertVehiculo(){
         vehiculo.setUsuario(user);
         ejbVehiculos.create(vehiculo);
+        init();
     }
 
     public void deleteVehiculo(Vehiculos v){
         ejbVehiculos.remove(v);
         vehiculos.remove(v);
+        init();
     }
 }
