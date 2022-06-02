@@ -12,7 +12,6 @@
 <h:body>
 
     <h:form id="loginForm">
-
         <p:messages id="messages" showDetail="true" closable="true">
             <p:autoUpdate/>
         </p:messages>
@@ -37,7 +36,7 @@
                                  value="Login" update="loginGrid" ajax="true" style="float: right;">
                 </p:commandButton>
                 <p:commandLink action="register?faces-redirect=true"
-                               value="Register" style="float: right;"/>
+                               value="Register" immediate="true" style="float: right;"/>
             </h:panelGrid>
         </p:panel>
     </h:form>
