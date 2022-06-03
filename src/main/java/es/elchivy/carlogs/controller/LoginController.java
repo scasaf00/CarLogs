@@ -62,11 +62,10 @@ public class LoginController implements Serializable {
                 case "GASOLINERO":
                     if(user.getGasolineros().getAceptado()){
                         rutaIndex = "/private/gasolinero/indexGasolinero.xhtml";
-                        break;
                     }else {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El gasolinero no ha sido aceptado"));
-                        break;
                     }
+                    break;
 
                 default:
                     FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR","Usuario no es correcto"));
