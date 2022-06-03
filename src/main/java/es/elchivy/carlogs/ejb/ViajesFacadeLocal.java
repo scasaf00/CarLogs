@@ -6,6 +6,8 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Viajes;
+
+import java.text.ParseException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +31,6 @@ public interface ViajesFacadeLocal {
     List<Viajes> findRange(int[] range);
 
     int count();
-    
+
+    Viajes findByOrDesDate(String viaje) throws ParseException;
 }

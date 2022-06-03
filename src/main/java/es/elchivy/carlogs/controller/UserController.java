@@ -39,7 +39,7 @@ public class UserController implements Serializable {
 
     private Usuarios user;
 
-    private List<Viajes> viajes;
+    private List<Viajes> viajes = new ArrayList<>();
 
     @EJB
     private GastosFacadeLocal ejbGastos;
@@ -48,7 +48,8 @@ public class UserController implements Serializable {
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         this.gastos = ejbGastos.getAllByUser(user);
-        this.viajes = user.getViajesCollection();
+        this.viajes = new ArrayList<>();
+        this.viajes = (List<Viajes>) user.getViajesCollection();
         createBarModels();
         createDonutModels();
     }

@@ -7,6 +7,7 @@ package es.elchivy.carlogs.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -163,7 +164,12 @@ public class Viajes implements Serializable {
 
     @Override
     public String toString() {
-        return origen + " - " + destino;
+        return origen + " - " + destino + " - " + new SimpleDateFormat("dd/MM/yyyy").format(fecha);
+    }
+
+    public String dateToString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(fecha);
     }
 
 }

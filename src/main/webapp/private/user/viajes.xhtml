@@ -1,1 +1,82 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml">
+        </p:menuitem>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-6 xl:col-12">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <p:dataTable id="gastos" var="vh" value="#{viajesController.viajes}">
+                            <p:autoUpdate/>
+                            <f:facet name="header">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:outputLabel class="text-900 font-medium text-xl" value="Viajes"/>
+                                    </div>
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" type="button" onclick="PF('dlg').show();"/>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{vh.dateToString()}"/>
+                            </p:column>
+
+                            <p:column headerText="Distancia">
+                                <h:outputLabel value="#{vh.distancia}"/>
+                            </p:column>
+
+                            <p:column headerText="Origen">
+                                <h:outputText value="#{vh.origen}" />
+                            </p:column>
+
+                            <p:column headerText="Destino">
+                                <h:outputText value="#{vh.destino}" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:dialog header="Añadir Viaje" widgetVar="dlg" focus="fecha" hideEffect="clip" resizable="false">
+                            <h:panelGrid>
+                                <p:autoUpdate/>
+                                <h:outputLabel for="fecha" value="Fecha: " />
+                                <p:datePicker id="fecha" label="fecha" value="#{viajesController.viaje.fecha}" required="true" requiredMessage="Introduce Fecha"/>
+                                <p:message for="fecha"/>
+
+                                <h:outputLabel for="distancia" value="Distancia (KM): " />
+                                <p:inputText id="distancia" label="distancia" value="#{viajesController.viaje.distancia}" required="true" requiredMessage="Introduce Distancia"/>
+                                <p:message for="distancia"/>
+
+                                <h:outputLabel for="origen" value="Origen: " />
+                                <p:inputText id="origen" label="origen" value="#{viajesController.viaje.origen}" required="true" requiredMessage="Introduce Origen"/>
+                                <p:message for="origen"/>
+
+                                <h:outputLabel for="destino" value="Deestino: " />
+                                <p:inputText id="destino" label="destino" value="#{viajesController.viaje.destino}" required="true" requiredMessage="Introduce Destino"/>
+                                <p:message for="destino"/>
+
+                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{viajesController.insertViaje}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

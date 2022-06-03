@@ -38,15 +38,15 @@
                             </p:column>
 
                             <p:column headerText="Fecha">
-                                <p:datePicker value="#{g.fecha}" readonly="true"/>
+                                <h:outputText value="#{g.dateToString()}"/>
                             </p:column>
 
                             <p:column headerText="Importe">
-                                <h:outputText value="#{g.precio}" />
+                                <h:outputText value="#{g.precio}€" />
                             </p:column>
 
                             <p:column headerText="KM">
-                                <h:outputText value="#{g.km}" />
+                                <h:outputText value="#{g.km} Km" />
                             </p:column>
 
                             <p:column headerText="Tipo">
@@ -97,7 +97,7 @@
                                 </p:selectOneMenu>
                                 <p:message for="viaje" />
 
-                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.insertGasto}"/>
+                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.insertGasto()}"/>
                             </h:panelGrid>
                         </p:dialog>
                     </div>

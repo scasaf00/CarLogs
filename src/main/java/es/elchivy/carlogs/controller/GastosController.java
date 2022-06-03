@@ -2,9 +2,11 @@ package es.elchivy.carlogs.controller;
 
 import es.elchivy.carlogs.ejb.GastosFacadeLocal;
 import es.elchivy.carlogs.ejb.VehiculosFacadeLocal;
+import es.elchivy.carlogs.ejb.ViajesFacadeLocal;
 import es.elchivy.carlogs.modelo.Gastos;
 import es.elchivy.carlogs.modelo.Usuarios;
 import es.elchivy.carlogs.modelo.Vehiculos;
+import es.elchivy.carlogs.modelo.Viajes;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -15,8 +17,10 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +38,7 @@ public class GastosController implements Serializable {
 
     private String matricula;
 
-    private List<String> viajes;
+    private List<Viajes> viajes;
 
     private String viaje;
 
@@ -44,9 +48,14 @@ public class GastosController implements Serializable {
     @EJB
     private VehiculosFacadeLocal ejbVehiculos;
 
+    @EJB
+    private ViajesFacadeLocal ejbViajes;
+
     @PostConstruct
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        viajes = new ArrayList<>();
+        viajes = (List<Viajes>) user.getViajesCollection();
         List<Vehiculos> vehiculos = (List<Vehiculos>) user.getVehiculosCollection();
         gastos = new ArrayList<>();
         matriculas = new ArrayList<>();
@@ -78,8 +87,9 @@ public class GastosController implements Serializable {
         init();
     }
 
-    public void insertGasto() {
+    public void insertGasto() throws ParseException {
         gasto.setMatricula(ejbVehiculos.find(this.matricula));
+        gasto.setViaje(ejbViajes.findByOrDesDate(this.viaje));
         ejbGastos.create(gasto);
         init();
     }
@@ -100,7 +110,7 @@ public class GastosController implements Serializable {
         return matricula;
     }
 
-    public List<String> getViajes() {
+    public List<Viajes> getViajes() {
         return viajes;
     }
 
