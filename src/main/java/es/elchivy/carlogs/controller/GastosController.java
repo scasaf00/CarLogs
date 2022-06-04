@@ -6,9 +6,11 @@ import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -64,12 +66,26 @@ public class GastosController implements Serializable {
     private UsuariosFacadeLocal ejbUsuarios;
 
     @PostConstruct
-    public void init() {
+    public void init(){
+        Usuarios usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(!usuario.getTipo().equals("USER")){
+            //Redirigir a la página de inicio y mostrar mensaje de error
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         user = ejbUsuarios.find(user.getUsername());
 
         viajes = new ArrayList<>( user.getViajesCollection());
-        List<Vehiculos> vehiculos = new ArrayList<>(user.getVehiculosCollection());
+        List<Vehiculos> vehiculos = new ArrayList<>();
+        vehiculos = ejbUsuarios.getAlLVehiculos(user);
         gastos = new ArrayList<>();
         gastos = ejbGastos.getAllByUser(user);
         matriculas = new ArrayList<>();
@@ -83,6 +99,34 @@ public class GastosController implements Serializable {
             gasolineras.add(g.toString());
         }
         gasto = new Gastos();
+
+        // Objetos Mock para evitar NullPointerException
+
+        Gastos gastoMock = new Gastos();
+        Vehiculos vehiculoMock = new Vehiculos();
+        Usuarios usuarioMock = new Usuarios();
+
+        usuarioMock.setUsername("mock");
+        usuarioMock.setPassword("mock");
+        usuarioMock.setTipo("mock");
+
+        vehiculoMock.setMatricula("MOCK");
+        vehiculoMock.setUsuario(usuarioMock);
+        vehiculoMock.setGastoKm(new BigDecimal(0));
+        vehiculoMock.setColor("MOCK");
+        vehiculoMock.setModelo("MOCK");
+        vehiculoMock.setMarca("MOCK");
+        vehiculoMock.setTipoCombustible("MOCK");
+        vehiculoMock.setKmActual(new BigDecimal(0));
+
+        gastoMock.setId(0);
+        gastoMock.setMatricula(vehiculoMock);
+        gastoMock.setFecha(new java.util.Date());
+        gastoMock.setTipo("MOCK");
+        gastoMock.setPrecio(new BigDecimal(0));
+        gastoMock.setKm(new BigDecimal(0));
+
+        this.gastoSeleccionado = gastoMock;
     }
 
     public List<Gastos> getGastos() {
@@ -109,7 +153,9 @@ public class GastosController implements Serializable {
     public void insertGasto() throws ParseException {
         Vehiculos v = ejbVehiculos.find(this.matricula);
         gasto.setMatricula(v);
-        gasto.setViaje(ejbViajes.findByOrDesDate(this.viaje));
+        if(this.viaje != null) {
+            gasto.setViaje(ejbViajes.findByOrDesDate(this.viaje));
+        }
         ejbGastos.create(gasto);
         if(gasto.getTipo().equals("REPOSTAJE")) {
             Gasolineras gasolinera = ejbGasolineras.findByNombreDireccion(this.gasolinera);
@@ -201,6 +247,7 @@ public class GastosController implements Serializable {
     }
 
     public void setGastoSeleccionado(Gastos gastoSeleccionado) {
+        System.out.println("Seleccionado: " + gastoSeleccionado);
         this.gastoSeleccionado = gastoSeleccionado;
         PrimeFaces.current().executeScript("PF('dlg2').show()");
     }

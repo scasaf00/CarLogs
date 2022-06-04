@@ -21,9 +21,11 @@ import org.primefaces.model.charts.pie.PieChartModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,6 +49,17 @@ public class UserController implements Serializable {
 
     @PostConstruct
     public void init() {
+        Usuarios usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(!usuario.getTipo().equals("USER")){
+            //Redirigir a la página de inicio y mostrar mensaje de error
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         year = Calendar.getInstance().get(Calendar.YEAR);
         this.gastos = ejbGastos.getAllByUser(user);

@@ -6,6 +6,7 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Usuarios;
+import es.elchivy.carlogs.modelo.Vehiculos;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -51,6 +52,15 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         List<Usuarios> resultado = query.getResultList();
 
         return resultado;
+    }
+
+    @Override
+    public List<Vehiculos> getAlLVehiculos(Usuarios user) {
+        String consulta = "FROM Vehiculos v WHERE v.usuario =:param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", user);
+
+        return (List<Vehiculos>) query.getResultList();
     }
 
     public UsuariosFacade() {

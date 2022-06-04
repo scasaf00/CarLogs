@@ -62,6 +62,7 @@
                                 <p:commandButton
                                         value="Mas Información"
                                         styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        immediate="true"
                                         action="#{gastosController.setGastoSeleccionado(g)}"
                                         />
                             </p:column>
@@ -118,7 +119,8 @@
                                 <p:message id="descM" for="descTA" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}"/>
 
                                 <h:outputLabel for="viaje" value="Viaje: " />
-                                <p:selectOneMenu id="viaje" label="viaje" value="#{gastosController.viaje}" required="true">
+                                <p:selectOneMenu id="viaje" label="viaje" value="#{gastosController.viaje}">
+                                    <f:selectItem itemLabel="NINGUNO" itemValue=""/>
                                     <f:selectItems value="#{gastosController.viajes}"/>
                                 </p:selectOneMenu>
                                 <p:message for="viaje" />
@@ -136,16 +138,15 @@
                                 widgetVar="dlg2"
                                 focus="matricula"
                                 hideEffect="clip"
-                                resizable="false"
-                                rendered="#{gastosController.gastoSeleccionado != null ? true:false}">
+                                resizable="false">
 
-                            <h:panelGrid id="grid2" columns="3" cellpadding="5">
+                            <h:panelGrid id="grid2" columns="1" cellpadding="10">
                                 <p:autoUpdate/>
-                                <h:outputText value="Matricula: #{g.matricula}" />
-                                <h:outputText value="Tipo Gasto: #{g.tipo}" />
-                                <h:outputText value="Fecha: #{g.fecha}" />
-                                <h:outputText value="Importe: #{g.precio}" />
-                                <h:outputText value="KM: #{g.km}" />
+                                <h:outputText value="Matricula: #{gastosController.gastoSeleccionado.matricula.matricula}" />
+                                <h:outputText value="Tipo Gasto: #{gastosController.gastoSeleccionado.tipo}" />
+                                <h:outputText value="Fecha: #{gastosController.gastoSeleccionado.dateToString()}" />
+                                <h:outputText value="Importe: #{gastosController.gastoSeleccionado.precio}" />
+                                <h:outputText value="KM: #{gastosController.gastoSeleccionado.km}" />
                                 <h:outputText value="#{gastosController.masInfo()}" />
                             </h:panelGrid>
                         </p:dialog>
