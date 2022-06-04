@@ -5,6 +5,7 @@
  */
 package es.elchivy.carlogs.ejb;
 
+import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gastos;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,5 @@ public interface GastosFacadeLocal {
     List<Gastos> findRange(int[] range);
 
     int count();
-    
+
 }
