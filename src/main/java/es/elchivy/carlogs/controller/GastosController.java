@@ -68,9 +68,8 @@ public class GastosController implements Serializable {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         user = ejbUsuarios.find(user.getUsername());
 
-        viajes = new ArrayList<>();
-        viajes = (List<Viajes>) user.getViajesCollection();
-        List<Vehiculos> vehiculos = (List<Vehiculos>) user.getVehiculosCollection();
+        viajes = new ArrayList<>( user.getViajesCollection());
+        List<Vehiculos> vehiculos = new ArrayList<>(user.getVehiculosCollection());
         gastos = new ArrayList<>();
         gastos = ejbGastos.getAllByUser(user);
         matriculas = new ArrayList<>();
