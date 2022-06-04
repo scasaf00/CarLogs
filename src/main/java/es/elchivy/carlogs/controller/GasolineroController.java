@@ -281,7 +281,7 @@ public class GasolineroController implements Serializable {
         int totalRepostajes = numeroRepostajesGasolina + numeroRepostajesGasoil;
 
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Numero de repostajes: ",
-                "En el mes de " + mes + ", se repostó un número de " +totalRepostajes+ " repostajes." +
+                "En el mes de " + mes + ", se hicieron " +totalRepostajes+ " repostajes." +
                         " De los cuales "+numeroRepostajesGasolina+" fueron de gasolina y "+numeroRepostajesGasoil+" fueron de gasoil.");
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -365,11 +365,17 @@ public class GasolineroController implements Serializable {
 
     public float getPrecioGasolina() { return precioGasolina; }
 
-    public void setPrecioGasolina(float precioGasolina) { this.precioGasolina = precioGasolina;}
+    public void setPrecioGasolina(float precioGasolina) {
+        this.precioGasolina = precioGasolina;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Precio Gasolina: " + precioGasolina, ""));
+    }
 
     public float getPrecioGasoil() { return precioGasoil;}
 
-    public void setPrecioGasoil(float precioGasoil) { this.precioGasoil = precioGasoil; }
+    public void setPrecioGasoil(float precioGasoil) {
+        this.precioGasoil = precioGasoil;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Precio Gasoil: " + precioGasoil, ""));
+    }
 
     public Gasolineras getGasolinera(){
         return gasolinera;

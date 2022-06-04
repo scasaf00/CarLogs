@@ -43,7 +43,11 @@
                     </p:column>
 
                     <p:column>
-                        <p:commandButton id="aceptar" value="Aceptar" action="#{peticionesAdminController.enviar(g)}" />
+                        <p:commandButton
+                                id="aceptar"
+                                value="Aceptar"
+                                update="gasolineros"
+                                action="#{peticionesAdminController.enviar(g)}" />
                     </p:column>
 
                 </p:dataTable>

@@ -23,11 +23,11 @@
             <h:panelGrid id="loginGrid" columns="3" cellpadding="5">
 
                 <h:outputText value="Usuario"/>
-                <p:inputText id="username" value="#{loginController.user.username}" required="true" requiredMessage="Introduce username"/>
+                <p:inputText id="username" value="#{loginController.user.username}" required="true" requiredMessage="Introduce usuario"/>
                 <p:message for="username"/>
 
                 <h:outputText value="Contraseña"/>
-                <p:password id="password" value="#{loginController.user.password}" feedback="false" required="true" requiredMessage="Introduce password"/>
+                <p:password id="password" value="#{loginController.user.password}" feedback="false" required="true" requiredMessage="Introduce contraseña"/>
                 <p:message for="password"/>
 
             </h:panelGrid>
