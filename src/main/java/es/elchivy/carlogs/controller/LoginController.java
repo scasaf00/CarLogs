@@ -1,20 +1,15 @@
 package es.elchivy.carlogs.controller;
 
 import com.google.common.hash.Hashing;
-import es.elchivy.carlogs.ejb.UsuariosFacade;
 import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
-import es.elchivy.carlogs.resources.SessionUtils;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 

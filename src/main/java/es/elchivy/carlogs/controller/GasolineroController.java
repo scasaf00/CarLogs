@@ -2,8 +2,6 @@ package es.elchivy.carlogs.controller;
 
 
 import es.elchivy.carlogs.ejb.GasolinerasFacadeLocal;
-import es.elchivy.carlogs.ejb.RepostajesFacadeLocal;
-import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gasolineros;
 import es.elchivy.carlogs.modelo.Repostajes;
