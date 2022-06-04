@@ -13,8 +13,8 @@
 <h:body>
 
     <h:form id="loginForm">
-        <p:panel id="loginPanel" header="Login"
-                 style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%);">
+        <p:panel id="loginPanel" header="Iniciar sesión"
+                 style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
             <h:panelGrid id="loginGrid" columns="3" cellpadding="5">
 
                 <h:outputText value="Username"/>
@@ -27,12 +27,12 @@
 
             </h:panelGrid>
 
-            <h:panelGrid columns="3" cellpadding="10" width="100%">
+            <h:panelGrid columns="1" layout="grid" style="margin: 0 auto" cellpadding="10">
                 <p:commandButton id="loginButton" action="#{loginController.validateLogin()}"
-                                 value="Login" update="loginGrid" ajax="true" style="float: right;">
+                                 value="Entrar" update="loginGrid" ajax="true" >
                 </p:commandButton>
                 <p:commandLink action="register?faces-redirect=true"
-                               value="Register" immediate="true" style="float: right;"/>
+                               value="Únete a CarLogs" immediate="true" style="text-align: center"/>
             </h:panelGrid>
         </p:panel>
     </h:form>
