@@ -15,11 +15,11 @@
         <p:panel header="Resgistro" style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
             <h:panelGrid id ="grid" class="panel" columns="3" cellpadding="10">
                 <p:outputLabel value="Usuario: " for="usuario"/>
-                <p:inputText id="usuario" value="#{registerController.user.username}" maxlength="50" required="true"/>
+                <p:inputText id="usuario" value="#{registerController.user.username}" maxlength="50" required="true" requiredMessage="Introduce el nobre de usuario"/>
                 <p:message for="usuario"/>
 
                 <p:outputLabel value="Contraseña: " for="password"/>
-                <p:password id="password" value="#{registerController.user.password}" maxlength="50" required="true" match="password_again"/>
+                <p:password id="password" value="#{registerController.user.password}" maxlength="50" required="true" match="password_again" requiredMessage="Introduce contraseña"/>
                 <p:message for="password"/>
 
                 <p:outputLabel value="Repetir Contraseña: " for="password_again"/>
@@ -34,12 +34,12 @@
                 </p:selectOneMenu>
                 <p:message for="tipo"/>
 
-                <p:outputLabel  value="Gasolinera:" for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" />
-                <p:inputText  id="nombreGasolinera" value="#{registerController.gasolinera.nombre}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" maxlength="50" />
+                <p:outputLabel  value="Gasolinera:" for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:inputText  id="nombreGasolinera" value="#{registerController.gasolinera.nombre}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" maxlength="50" required="true" requiredMessage="Introduce nombre de la gasolinera"/>
                 <p:message for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
 
                 <p:outputLabel  value="Dirección:" for="direccion" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
-                <p:inputText  id="direccion" value="#{registerController.gasolinera.direccion}"  rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" maxlength="50"/>
+                <p:inputText  id="direccion" value="#{registerController.gasolinera.direccion}"  rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" maxlength="50" required="true" requiredMessage="Introduce direccion de la gasolinera"/>
                 <p:message for="direccion" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
 
                 <p:outputLabel  value="Precio Gasolina:" for="precioGasolina" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
