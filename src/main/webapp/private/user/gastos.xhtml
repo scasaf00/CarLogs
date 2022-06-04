@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml"/>
+        <p:menuitem value="Gastos" icon="pi pi-money-bill" url="#{request.contextPath}/faces/private/user/gastos.xhtml"/>
+        <p:menuitem value="Vehículos" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/vehiculos.xhtml"/>
+        <p:menuitem value="Viajes" icon="pi pi-map" url="#{request.contextPath}/faces/private/user/viajes.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="main">
+            <div id="div1" class="grid">
+                <div id="div2" class="col-12 md:col-6 lg:col-6 xl:col-12">
+                    <div id="div3" class="surface-card shadow-2 p-3 border-round">
+                        <p:dataTable id="gastos" var="g" value="#{gastosController.gastos}">
+                            <f:facet name="header">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:outputLabel class="text-900 font-medium text-xl" value="Gastos"/>
+                                    </div>
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" type="button" onclick="PF('dlg').show();"/>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Matricula">
+                                <h:outputText value="#{g.matricula.matricula}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{g.dateToString()}"/>
+                            </p:column>
+
+                            <p:column headerText="Importe">
+                                <h:outputText value="#{g.precio}€" />
+                            </p:column>
+
+                            <p:column headerText="KM">
+                                <h:outputText value="#{g.km} Km" />
+                            </p:column>
+
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{g.tipo}" />
+                            </p:column>
+
+                            <p:column headerText="Viaje">
+                                <h:outputText value="#{g.viaje}" />
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton
+                                        value="Mas Información"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        immediate="true"
+                                        action="#{gastosController.setGastoSeleccionado(g)}"
+                                        />
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton
+                                        value="Eliminar"
+                                        icon="pi pi-trash"
+                                        styleClass="ui-button-danger"
+                                        immediate="true"
+                                        update="@form"
+                                        action="#{gastosController.delete(g)}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dialog header="Añadir Gasto" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">
+
+                            <h:panelGrid id="grid" columns="3" cellpadding="5">
+                                <p:autoUpdate/>
+                                <h:outputLabel for="matricula" value="Matricula: " />
+                                <p:selectOneMenu id="matricula" label="matricula" value="#{gastosController.matricula}" required="true">
+                                    <f:selectItems value="#{gastosController.matriculas}"/>
+                                </p:selectOneMenu>
+                                <p:message for="matricula" />
+
+                                <h:outputLabel for="tipo" value="Tipo Gasto: " />
+                                <p:selectOneMenu id="tipo" label="tipoComb" value="#{gastosController.gasto.tipo}" required="true">
+                                    <f:selectItem itemLabel="OTRO" itemValue="OTRO"/>
+                                    <f:selectItem itemLabel="MANTENIMIENTO" itemValue="MANTENIMIENTO"/>
+                                    <f:selectItem itemLabel="REPOSTAJE" itemValue="REPOSTAJE"/>
+                                    <f:ajax render="gasO :nombreGasolinera :gasM :desc :descTA :descM" />
+                                </p:selectOneMenu>
+                                <p:message for="tipo"/>
+
+                                <h:outputLabel for="fecha" value="Fecha: " />
+                                <p:datePicker id="fecha" label="fecha" value="#{gastosController.gasto.fecha}" required="true" requiredMessage="Introduce Fecha"/>
+                                <p:message for="fecha"/>
+
+                                <h:outputLabel for="importe" value="Importe: " />
+                                <p:inputNumber id="importe" label="importe" value="#{gastosController.gasto.precio}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Importe"/>
+                                <p:message for="importe"/>
+
+                                <h:outputLabel for="km" value="KM: " />
+                                <p:inputNumber id="km" label="km" value="#{gastosController.gasto.km}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce KM"/>
+                                <p:message for="km"/>
+
+                                <p:outputLabel id="gasO"  value="Gasolinera:" for="nombreGasolinera" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}" />
+                                <p:selectOneMenu  id="nombreGasolinera" value="#{gastosController.gasolinera}" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}">
+                                    <f:selectItems value="#{gastosController.gasolineras}"/>
+                                </p:selectOneMenu>
+                                <p:message id="gasM" for="nombreGasolinera" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}"/>
+
+                                <p:outputLabel id="desc"  value="Descripcion:" for="desc" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
+                                <p:inputTextarea id="descTA" value="#{gastosController.descripcion}" maxlength="50" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
+                                <p:message id="descM" for="descTA" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}"/>
+
+                                <h:outputLabel for="viaje" value="Viaje: " />
+                                <p:selectOneMenu id="viaje" label="viaje" value="#{gastosController.viaje}">
+                                    <f:selectItem itemLabel="NINGUNO" itemValue=""/>
+                                    <f:selectItems value="#{gastosController.viajes}"/>
+                                </p:selectOneMenu>
+                                <p:message for="viaje" />
+
+                                <p:commandButton
+                                        value="Añadir"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        update="gastos"
+                                        action="#{gastosController.insertGasto()}"
+                                />
+                            </h:panelGrid>
+                        </p:dialog>
+                        <p:dialog
+                                header="Ver Gasto"
+                                widgetVar="dlg2"
+                                focus="matricula"
+                                hideEffect="clip"
+                                resizable="false">
+
+                            <h:panelGrid id="grid2" columns="1" cellpadding="10">
+                                <p:autoUpdate/>
+                                <h:outputText value="Matricula: #{gastosController.gastoSeleccionado.matricula.matricula}" />
+                                <h:outputText value="Tipo Gasto: #{gastosController.gastoSeleccionado.tipo}" />
+                                <h:outputText value="Fecha: #{gastosController.gastoSeleccionado.dateToString()}" />
+                                <h:outputText value="Importe: #{gastosController.gastoSeleccionado.precio}" />
+                                <h:outputText value="KM: #{gastosController.gastoSeleccionado.km}" />
+                                <h:outputText value="#{gastosController.masInfo()}" />
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

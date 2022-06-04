@@ -7,6 +7,8 @@ package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gastos;
+import es.elchivy.carlogs.modelo.Usuarios;
+
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,4 +33,5 @@ public interface GastosFacadeLocal {
 
     int count();
 
+    List<Gastos> getAllByUser(Usuarios usuario);
 }

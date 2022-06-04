@@ -40,5 +40,15 @@ public class GasolinerasFacade extends AbstractFacade<Gasolineras> implements Ga
         System.out.println("Gasolinera: " + q.getSingleResult());
         return (Gasolineras) q.getSingleResult();
     }
-    
+
+    @Override
+    public Gasolineras findByNombreDireccion(String gasolinera) {
+        String[] nombreDireccion = gasolinera.split(" - ");
+        String consulta = "SELECT g FROM Gasolineras g WHERE g.nombre = :nombre AND g.direccion = :direccion";
+        Query q = em.createQuery(consulta);
+        q.setParameter("nombre", nombreDireccion[0]);
+        q.setParameter("direccion", nombreDireccion[1]);
+        return (Gasolineras) q.getSingleResult();
+    }
+
 }

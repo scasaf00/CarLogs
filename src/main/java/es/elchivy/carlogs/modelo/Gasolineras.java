@@ -155,7 +155,7 @@ public class Gasolineras implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Gasolineras[ id=" + id + " ]";
+        return nombre + " - " + direccion;
     }
 
 }

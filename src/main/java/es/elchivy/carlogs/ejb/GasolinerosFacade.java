@@ -36,7 +36,7 @@ public class GasolinerosFacade extends AbstractFacade<Gasolineros> implements Ga
     @Override
     public List<Gasolineros> findAllNoAceptados() {
         //get all the gasolineros that are not accepged
-        String consulta = "FROM Gasolineros g WHERE g.aceptado = 0";
+        String consulta = "FROM Gasolineros g WHERE g.aceptado = false";
         Query query = em.createQuery(consulta);
         List<Gasolineros> resultado = query.getResultList();
 

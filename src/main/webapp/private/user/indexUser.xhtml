@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml"/>
+        <p:menuitem value="Gastos" icon="pi pi-money-bill" url="#{request.contextPath}/faces/private/user/gastos.xhtml"/>
+        <p:menuitem value="Vehículos" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/vehiculos.xhtml"/>
+        <p:menuitem value="Viajes" icon="pi pi-map" url="#{request.contextPath}/faces/private/user/viajes.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+        <h:form>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-3 xl:col-8">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <p:barChart model="#{userController.barModel}"/>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3 xl:col-4">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <p:dataTable
+                                id="ultimosMovimientos"
+                                var="g"
+                                value="#{userController.gastos.subList(0, userController.tamnioLista)}"
+                                widgetVar="gastosTable"
+                        >
+                            <f:facet name="header">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-12">
+                                        <p:outputLabel class="text-900 font-medium text-xl" value="Ultimos Movimientos"/>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Matricula">
+                                <h:outputText value="#{g.matricula.matricula}"  />
+                            </p:column>
+
+                            <p:column headerText="Importe">
+                                <h:outputText value="#{g.precio}€" />
+                            </p:column>
+
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{g.tipo}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div> <!-- Charts -->
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-3 xl:col-4">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-900 font-medium text-xl mb-3">VEHICULOS</span>
+                                <div><p:outputLabel class="text-900 font-medium text-xl" value="#{userController.vehiculos}"/></div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-car text-blue-500 text-xl"/>
+                            </div>
+                        </div>
+                        <p:commandButton value="Ver" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="vehiculos?faces-redirect=true"/>
+                    </div>
+                </div> <!-- Vehiculos -->
+                <div class="col-12 md:col-6 lg:col-3 xl:col-4">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-900 font-medium text-xl mb-3">GASTOS a #{userController.year}</span>
+                                <div><p:outputLabel class="text-900 font-medium text-xl" value="#{userController.totalG}€"/></div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-money-bill text-blue-500 text-xl"/>
+                            </div>
+                        </div>
+                        <p:commandButton value="Ver" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="gastos?faces-redirect=true"/>
+                    </div>
+                </div> <!-- Gastos -->
+                <div class="col-12 md:col-6 lg:col-3 xl:col-4">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-900 font-medium text-xl mb-3">VIAJES</span>
+                                <div><p:outputLabel class="text-900 font-medium text-xl" value="#{userController.viajes.size()}"/></div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-map text-blue-500 text-xl"/>
+                            </div>
+                        </div>
+                        <p:commandButton value="Ver" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="viajes?faces-redirect=true"/>
+                    </div>
+                </div> <!-- Viajes -->
+            </div> <!-- Enlaces -->
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

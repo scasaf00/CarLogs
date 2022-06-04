@@ -31,4 +31,6 @@ public interface GasolinerasFacadeLocal {
     int count();
 
     Gasolineras findGasolinera(Gasolineras gasolineras);
+
+    Gasolineras findByNombreDireccion(String gasolinera);
 }

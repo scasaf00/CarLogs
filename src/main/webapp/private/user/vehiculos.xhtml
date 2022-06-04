@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml"/>
+        <p:menuitem value="Gastos" icon="pi pi-money-bill" url="#{request.contextPath}/faces/private/user/gastos.xhtml"/>
+        <p:menuitem value="Vehículos" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/vehiculos.xhtml"/>
+        <p:menuitem value="Viajes" icon="pi pi-map" url="#{request.contextPath}/faces/private/user/viajes.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-6 xl:col-12">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <p:dataTable id="vehiculos" var="v" value="#{vehiculosController.vehiculos}">
+                            <f:facet name="header">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:outputLabel class="text-900 font-medium text-xl" value="Vehiculos"/>
+                                    </div>
+                                    <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                                        <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" type="button" onclick="PF('dlg').show();"/>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Matricula">
+                                <h:outputText value="#{v.matricula}" />
+                            </p:column>
+
+                            <p:column headerText="Marca">
+                                <h:outputText value="#{v.marca}" />
+                            </p:column>
+
+                            <p:column headerText="Modelo">
+                                <h:outputText value="#{v.modelo}" />
+                            </p:column>
+
+                            <p:column headerText="Color">
+                                <h:outputText value="#{v.color}" />
+                            </p:column>
+
+                            <p:column headerText="Consumo por KM">
+                                <h:outputText value="#{v.gastoKm}" />
+                            </p:column>
+
+                            <p:column headerText="KM Actuales">
+                                <h:outputText value="#{v.kmActual}" />
+                            </p:column>
+
+                            <p:column headerText="Tipo de Combustible">
+                                <h:outputText value="#{v.tipoCombustible}" />
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton
+                                        value="Eliminar"
+                                        styleClass="ui-button-danger"
+                                        icon="pi pi-trash"
+                                        immediate="true"
+                                        update="vehiculos"
+                                        action="#{vehiculosController.deleteVehiculo(v)}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dialog header="Añadir Vehiculo" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">
+
+                            <h:panelGrid id="grid" columns="3" cellpadding="5">
+                                <p:autoUpdate/>
+                                <h:outputLabel for="matricula" value="Matricula: " />
+                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" maxlength="7" required="true" requiredMessage="Introduce Matricula" />
+                                <p:message for="matricula"/>
+
+                                <h:outputLabel for="marca" value="Marca: " />
+                                <p:inputText id="marca" label="marca" value="#{vehiculosController.vehiculo.marca}" maxlength="50" required="true" requiredMessage="Introduce Marca"/>
+                                <p:message for="marca"/>
+
+                                <h:outputLabel for="modelo" value="Modelo: " />
+                                <p:inputText id="modelo" label="modelo" value="#{vehiculosController.vehiculo.modelo}" maxlength="50" required="true" requiredMessage="Introduce Modelo"/>
+                                <p:message for="modelo"/>
+
+                                <h:outputLabel for="color" value="Color: " />
+                                <p:inputText id="color" label="color" value="#{vehiculosController.vehiculo.color}" maxlength="50" required="true" requiredMessage="Introduce Color"/>
+                                <p:message for="color"/>
+
+                                <h:outputLabel for="gastoKM" value="Consumo por KM: " />
+                                <p:inputNumber id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Consumo por KM"/>
+                                <p:message for="gastoKM"/>
+
+                                <h:outputLabel for="kmActual" value="KM Actuales: " />
+                                <p:inputNumber id="kmActual" label="kmActual" value="#{vehiculosController.vehiculo.kmActual}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce KM actuales"/>
+                                <p:message for="kmActual"/>
+
+                                <h:outputLabel for="tipoComb" value="Tipo Combustible: " />
+                                <p:selectOneMenu id="tipoComb" label="tipoComb" value="#{vehiculosController.vehiculo.tipoCombustible}" required="true">
+                                    <f:selectItem itemLabel="Gasolina" itemValue="GASOLINA"/>
+                                    <f:selectItem itemLabel="Gasoil" itemValue="GASOIL"/>
+                                </p:selectOneMenu>
+
+                                <p:commandButton
+                                        value="Añadir"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        update="vehiculos"
+                                        action="#{vehiculosController.insertVehiculo}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

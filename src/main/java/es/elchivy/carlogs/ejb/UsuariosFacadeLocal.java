@@ -6,6 +6,8 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Usuarios;
+import es.elchivy.carlogs.modelo.Vehiculos;
+
 import java.util.List;
 import javax.ejb.Local;
 
@@ -35,5 +37,7 @@ public interface UsuariosFacadeLocal {
     void insertarUsuario(Usuarios usuario);
 
     List<Usuarios> getAllNotAdmin();
+
+    List<Vehiculos> getAlLVehiculos(Usuarios user);
 }
 
