@@ -71,11 +71,12 @@ public class Gastos implements Serializable {
     private Collection<Mantenimientos> mantenimientosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gastoId")
     private Collection<Repostajes> repostajesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gastoId")
-    private Collection<Viajes> viajesCollection;
     @JoinColumn(name = "matricula", referencedColumnName = "matricula")
     @ManyToOne(optional = false)
     private Vehiculos matricula;
+    @JoinColumn(name = "viaje", referencedColumnName = "id")
+    @ManyToOne
+    private Viajes viaje;
 
     public Gastos() {
     }
@@ -148,20 +149,20 @@ public class Gastos implements Serializable {
         this.repostajesCollection = repostajesCollection;
     }
 
-    public Collection<Viajes> getViajesCollection() {
-        return viajesCollection;
-    }
-
-    public void setViajesCollection(Collection<Viajes> viajesCollection) {
-        this.viajesCollection = viajesCollection;
-    }
-
     public Vehiculos getMatricula() {
         return matricula;
     }
 
     public void setMatricula(Vehiculos matricula) {
         this.matricula = matricula;
+    }
+
+    public Viajes getViaje() {
+        return viaje;
+    }
+
+    public void setViaje(Viajes viaje) {
+        this.viaje = viaje;
     }
 
     @Override

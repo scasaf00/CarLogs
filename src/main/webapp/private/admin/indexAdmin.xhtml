@@ -39,7 +39,13 @@
                     </p:column>
 
                     <p:column>
-                        <p:commandButton id="aceptar" value="Eliminar" icon="pi pi-trash" styleClass="ui-button-danger" action="#{adminController.eliminarUsuario(u)}" />
+                        <p:commandButton
+                                id="aceptar"
+                                value="Eliminar"
+                                icon="pi pi-trash"
+                                styleClass="ui-button-danger"
+                                update="usuarios"
+                                action="#{adminController.eliminarUsuario(u)}" />
                     </p:column>
 
                 </p:dataTable>

@@ -10,6 +10,7 @@ import es.elchivy.carlogs.modelo.Usuarios;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -78,16 +79,31 @@ public class RegisterController implements Serializable {
                 user.setGasolineros(gasolinero);
             }
 
+            boolean dup = false;
             try {
                 user.setPassword(Hashing.crc32().hashString(user.getPassword(), StandardCharsets.UTF_8).toString());
                 ejbUser.create(user);
             } catch (Exception e) {
+                dup = true;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El usuario ya existe"));
             }
+
+            if (!dup) {
+
+                //Return to login page and show message
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario registrado correctamente"));
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                }
+                catch (Exception e) {
+                    System.out.println("Error");
+                }
+            }
+
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden"));
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario creado correctamente"));
     }
 }

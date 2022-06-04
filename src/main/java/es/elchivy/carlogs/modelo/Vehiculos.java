@@ -189,7 +189,7 @@ public class Vehiculos implements Serializable {
 
     @Override
     public String toString() {
-        return "es.elchivy.carlogs.modelo.Vehiculos[ matricula=" + matricula + " ]";
+        return matricula;
     }
 
 }
