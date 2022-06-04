@@ -5,6 +5,7 @@
  */
 package es.elchivy.carlogs.ejb;
 
+import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gastos;
 import es.elchivy.carlogs.modelo.Usuarios;
 

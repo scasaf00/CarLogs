@@ -7,10 +7,8 @@ import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gasolineros;
 import es.elchivy.carlogs.modelo.Usuarios;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -89,10 +87,13 @@ public class RegisterController implements Serializable {
             }
 
             if (!dup) {
-
-                //Return to login page and show message
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario registrado correctamente"));
+                if(user.getTipo().equals("GASOLINERO")){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario gasolinero registrado correctamente, espere a que el administrador lo apruebe"));
+                }else {
+                    //Return to login page and show message
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario registrado correctamente"));
+                }
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
                 }

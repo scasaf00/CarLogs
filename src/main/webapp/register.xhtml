@@ -11,23 +11,19 @@
 </h:head>
 
 <h:body>
-    <h:form id="REGISTER">
-        <p:messages id="messages" showDetail="true" closable="true">
-            <p:autoUpdate/>
-        </p:messages>
+    <h:form>
         <p:panel header="Resgistro" style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
             <h:panelGrid id ="grid" class="panel" columns="3" cellpadding="10">
-
-                <h:outputText value="Usuario: " />
-                <p:inputText id="usuario" required="true" value="#{registerController.user.username}"/>
+                <p:outputLabel value="Usuario: " for="usuario"/>
+                <p:inputText id="usuario" value="#{registerController.user.username}" maxlength="50" required="true" requiredMessage="Introduce el nobre de usuario"/>
                 <p:message for="usuario"/>
 
-                <h:outputText value="Contraseña: "/>
-                <p:password id="password" required="true" value="#{registerController.user.password}" match="password_again"/>
+                <p:outputLabel value="Contraseña: " for="password"/>
+                <p:password id="password" value="#{registerController.user.password}" maxlength="50" required="true" match="password_again" requiredMessage="Introduce contraseña"/>
                 <p:message for="password"/>
 
-                <h:outputText value="Repetir Contraseña: "/>
-                <p:password id="password_again" required="true" value="#{registerController.password}"/>
+                <p:outputLabel value="Repetir Contraseña: " for="password_again"/>
+                <p:password id="password_again" value="#{registerController.password}" maxlength="50" required="true" />
                 <p:message for="password_again"/>
 
                 <p:outputLabel for="@next" value="Tipo de usuario"/>
@@ -38,13 +34,21 @@
                 </p:selectOneMenu>
                 <p:message for="tipo"/>
 
-                <p:outputLabel  value="Gasolinera:" for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" />
-                <p:inputText  id="nombreGasolinera" value="#{registerController.gasolinera.nombre}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:outputLabel  value="Gasolinera:" for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:inputText  id="nombreGasolinera" value="#{registerController.gasolinera.nombre}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" maxlength="50" required="true" requiredMessage="Introduce nombre de la gasolinera"/>
                 <p:message for="nombreGasolinera" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
 
                 <p:outputLabel  value="Dirección:" for="direccion" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
-                <p:inputText  id="direccion" value="#{registerController.gasolinera.direccion}" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:inputText  id="direccion" value="#{registerController.gasolinera.direccion}"  rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}" maxlength="50" required="true" requiredMessage="Introduce direccion de la gasolinera"/>
                 <p:message for="direccion" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+
+                <p:outputLabel  value="Precio Gasolina:" for="precioGasolina" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:inputNumber id="precioGasolina" value="#{registerController.gasolinera.precioGasolina}" minValue="1" maxValue="9999999999.99" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:message for="precioGasolina" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+
+                <p:outputLabel  value="Precio Gasoil:" for="precioGasoil" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:inputNumber  id="precioGasoil" value="#{registerController.gasolinera.precioGasoil}" minValue="1" maxValue="9999999999.99" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
+                <p:message for="precioGasoil" rendered="#{registerController.user.tipo == 'GASOLINERO' ? true:false}"/>
 
                 <p:commandButton value="Registrar" update="grid" action="#{registerController.insertUser}"/>
             </h:panelGrid>

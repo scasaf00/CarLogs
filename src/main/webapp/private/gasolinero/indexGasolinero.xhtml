@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="./../../WEB-INF/template/template.xhtml">
+
+    <ui:define name="top">
+        <p:menuitem value="Gasolinera" icon="pi pi-home" url="#{request.contextPath}/faces/private/gasolinero/indexGasolinero.xhtml?faces-redirect=true">
+        </p:menuitem>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+            <div class="card">
+                <h:form>
+                    <p:growl id="growl" showDetail="true"/>
+
+                    <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                        <p:barChart model="#{gasolineroController.barModelImporte}" style="width: 100%; height: 500px;">
+                            <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}"/>
+                        </p:barChart>
+                        <p:barChart model="#{gasolineroController.barModelLitros}" style="width: 100%; height: 500px;">
+                            <p:ajax event="itemSelect" listener="#{gasolineroController.itemSelect}"/>
+                        </p:barChart>
+                    </p:panelGrid>
+                    <div class="grid">
+                        <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-900 font-medium text-xl mb-3">Precio Gasolina</span>
+                                        <div><p:inputNumber value="#{gasolineroController.precioGasolina}" decimalPlaces="4"/></div>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                         style="width:2.5rem;height:2.5rem">
+                                        <i class="pi pi-car text-blue-500 text-xl"/>
+                                    </div>
+                                </div>
+                                <p:commandButton value="Cambiar precio" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gasolineroController.cambiarPrecioGasolina}"/>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6 lg:col-3 xl:col-6">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-900 font-medium text-xl mb-3">Precio Gasoil</span>
+                                        <div><p:inputNumber value="#{gasolineroController.precioGasoil}" decimalPlaces="4"/></div>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                         style="width:2.5rem;height:2.5rem">
+                                        <i class="pi pi-car text-blue-500 text-xl"/>
+                                    </div>
+                                </div>
+                                <p:commandButton value="Cambiar precio" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gasolineroController.cambiarPrecioGasoil}"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

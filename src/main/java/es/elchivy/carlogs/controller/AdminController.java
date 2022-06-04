@@ -1,10 +1,8 @@
 package es.elchivy.carlogs.controller;
 
-import es.elchivy.carlogs.ejb.GasolinerosFacadeLocal;
-import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
-import es.elchivy.carlogs.modelo.Gasolineros;
-import es.elchivy.carlogs.modelo.Usuarios;
 
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
+import es.elchivy.carlogs.modelo.Usuarios;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -24,7 +22,19 @@ public class AdminController implements Serializable {
     private UsuariosFacadeLocal ejbUsuarios;
 
     @PostConstruct
-    public void init(){
+    public void init() {
+        Usuarios usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(!usuario.getTipo().equals("ADMIN")){
+            //Redirigir a la página de inicio y mostrar mensaje de error
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         usuarios = ejbUsuarios.getAllNotAdmin();
 
     }
