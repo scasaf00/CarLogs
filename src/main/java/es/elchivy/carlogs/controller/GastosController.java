@@ -182,7 +182,6 @@ public class GastosController implements Serializable {
     }
 
     public String masInfo() {
-        System.out.println(gastoSeleccionado.toString());
         if(gastoSeleccionado.getTipo().equals("REPOSTAJE")) {
             Repostajes repostajes = (Repostajes) gastoSeleccionado.getRepostajesCollection().toArray()[0];
             return "Litros: " + repostajes.getLitros() + " - Gasolinera: " + repostajes.getGasolinera().toString();
@@ -198,7 +197,6 @@ public class GastosController implements Serializable {
     }
 
     public void setGastoSeleccionado(Gastos gastoSeleccionado) {
-        System.out.println("HOLA BOBO");
         this.gastoSeleccionado = gastoSeleccionado;
     }
 }

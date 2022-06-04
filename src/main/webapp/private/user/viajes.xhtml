@@ -73,11 +73,15 @@
                                 <p:inputText id="origen" label="origen" value="#{viajesController.viaje.origen}" required="true" requiredMessage="Introduce Origen"/>
                                 <p:message for="origen"/>
 
-                                <h:outputLabel for="destino" value="Deestino: " />
-                                <p:inputText id="destino" label="destino" value="#{viajesController.viaje.destino}" required="true" requiredMessage="Introduce Destino"/>
+                                <h:outputLabel for="destino" value="Destino: " />
+                                <p:inputText id="destino" label="destino" value="#{viajesController.viaje.destino}" maxlength="50" required="true" requiredMessage="Introduce Destino"/>
                                 <p:message for="destino"/>
 
-                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{viajesController.insertViaje}"/>
+                                <p:commandButton
+                                        value="Añadir"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        update="viajes"
+                                        action="#{viajesController.insertViaje}"/>
                             </h:panelGrid>
                         </p:dialog>
                     </div>

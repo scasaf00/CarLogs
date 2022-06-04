@@ -63,7 +63,8 @@
                             <p:column>
                                 <p:commandButton
                                         value="Eliminar"
-                                        styleClass="ui-button-danger ui-button-secondary ui-button-flat"
+                                        styleClass="ui-button-danger"
+                                        icon="pi pi-trash"
                                         immediate="true"
                                         update="vehiculos"
                                         action="#{vehiculosController.deleteVehiculo(v)}"/>
@@ -103,7 +104,11 @@
                                     <f:selectItem itemLabel="Gasoil" itemValue="GASOIL"/>
                                 </p:selectOneMenu>
 
-                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{vehiculosController.insertVehiculo}"/>
+                                <p:commandButton
+                                        value="Añadir"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        update="vehiculos"
+                                        action="#{vehiculosController.insertVehiculo}"/>
                             </h:panelGrid>
                         </p:dialog>
                     </div>

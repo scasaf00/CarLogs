@@ -11,12 +11,13 @@ import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
 import org.primefaces.model.charts.bar.BarChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
 import org.primefaces.model.charts.bar.BarChartOptions;
-import org.primefaces.model.charts.donut.DonutChartDataSet;
 import org.primefaces.model.charts.donut.DonutChartModel;
 import org.primefaces.model.charts.optionconfig.animation.Animation;
 import org.primefaces.model.charts.optionconfig.legend.Legend;
 import org.primefaces.model.charts.optionconfig.legend.LegendLabel;
 import org.primefaces.model.charts.optionconfig.title.Title;
+import org.primefaces.model.charts.pie.PieChartDataSet;
+import org.primefaces.model.charts.pie.PieChartModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -33,7 +34,7 @@ import java.util.List;
 public class UserController implements Serializable {
     private BarChartModel barModel;
 
-    private DonutChartModel donutModel;
+    private PieChartModel pieModel;
 
     private List<Gastos> gastos = new ArrayList<>();
 
@@ -41,17 +42,20 @@ public class UserController implements Serializable {
 
     private List<Viajes> viajes = new ArrayList<>();
 
+    private int year;
+
     @EJB
     private GastosFacadeLocal ejbGastos;
 
     @PostConstruct
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        year = Calendar.getInstance().get(Calendar.YEAR);
         this.gastos = ejbGastos.getAllByUser(user);
         this.viajes = new ArrayList<>();
         this.viajes = (List<Viajes>) user.getViajesCollection();
         createBarModels();
-        createDonutModels();
+        createPieChartModels();
     }
 
     // Grafica para los Gastos anuales
@@ -215,11 +219,11 @@ public class UserController implements Serializable {
         barModel.setOptions(options);
     }
 
-    private void createDonutModels(){
-        donutModel = new DonutChartModel();
+    private void createPieChartModels(){
+        pieModel = new PieChartModel();
         ChartData data = new ChartData();
 
-        DonutChartDataSet dataSet = new DonutChartDataSet();
+        PieChartDataSet dataSet = new PieChartDataSet();
         List<Number> values = new ArrayList<>();
         values.add(getGastosByMesRepostajes(Calendar.getInstance().get(Calendar.MONTH)));
         values.add(getGastosByMesMantenimientos(Calendar.getInstance().get(Calendar.MONTH)));
@@ -239,15 +243,15 @@ public class UserController implements Serializable {
         labels.add("Otros");
         data.setLabels(labels);
 
-        donutModel.setData(data);
+        pieModel.setData(data);
     }
 
     public BarChartModel getBarModel() {
         return barModel;
     }
 
-    public DonutChartModel getDonutModel() {
-        return donutModel;
+    public PieChartModel getPieModel() {
+        return pieModel;
     }
 
     private float getGastosByMes(int mes) {
@@ -322,5 +326,13 @@ public class UserController implements Serializable {
 
     public List<Viajes> getViajes() {
         return viajes;
+    }
+
+    public List<Gastos> getGastos() {
+        return gastos;
+    }
+
+    public int getYear() {
+        return year;
     }
 }
