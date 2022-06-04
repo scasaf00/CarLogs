@@ -44,12 +44,14 @@ public class UserController implements Serializable {
 
     private int year;
 
+    private Usuarios usuario;
+
     @EJB
     private GastosFacadeLocal ejbGastos;
 
     @PostConstruct
     public void init() {
-        Usuarios usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         if(!usuario.getTipo().equals("USER")){
             //Redirigir a la página de inicio y mostrar mensaje de error
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
@@ -66,6 +68,10 @@ public class UserController implements Serializable {
         this.viajes = new ArrayList<>();
         this.viajes = (List<Viajes>) user.getViajesCollection();
         createBarModels();
+    }
+
+    public Usuarios getUsuario() {
+        return usuario;
     }
 
     // Grafica para los Gastos anuales

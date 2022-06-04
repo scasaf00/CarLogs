@@ -11,7 +11,7 @@
 <ui:composition template="./../../WEB-INF/template/template.xhtml">
 
     <ui:define name="top">
-        <p:menuitem value="Usuarios" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml"/>
+        <p:menuitem value="#{userController.usuario.username}" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/indexUser.xhtml"/>
         <p:menuitem value="Gastos" icon="pi pi-money-bill" url="#{request.contextPath}/faces/private/user/gastos.xhtml"/>
         <p:menuitem value="Vehículos" icon="pi pi-users" url="#{request.contextPath}/faces/private/user/vehiculos.xhtml"/>
         <p:menuitem value="Viajes" icon="pi pi-map" url="#{request.contextPath}/faces/private/user/viajes.xhtml"/>
