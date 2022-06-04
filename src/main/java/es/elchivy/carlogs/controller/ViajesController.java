@@ -3,15 +3,10 @@ package es.elchivy.carlogs.controller;
 import es.elchivy.carlogs.ejb.ViajesFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
 import es.elchivy.carlogs.modelo.Viajes;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.el.MethodExpression;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -55,7 +50,11 @@ public class ViajesController implements Serializable {
     public void insertViaje() {
         viaje.setUsuario(user);
         ejbViajes.create(viaje);
-        viajes = (List<Viajes>) user.getViajesCollection();
-        init();
+        viajes.add(viaje);
+    }
+
+    public void deleteViaje(Viajes viaje) {
+        ejbViajes.remove(viaje);
+        viajes.remove(viaje);
     }
 }

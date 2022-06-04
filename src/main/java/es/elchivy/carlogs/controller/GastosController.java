@@ -1,25 +1,16 @@
 package es.elchivy.carlogs.controller;
 
-import es.elchivy.carlogs.ejb.GastosFacadeLocal;
-import es.elchivy.carlogs.ejb.VehiculosFacadeLocal;
-import es.elchivy.carlogs.ejb.ViajesFacadeLocal;
-import es.elchivy.carlogs.modelo.Gastos;
-import es.elchivy.carlogs.modelo.Usuarios;
-import es.elchivy.carlogs.modelo.Vehiculos;
-import es.elchivy.carlogs.modelo.Viajes;
+import es.elchivy.carlogs.ejb.*;
+import es.elchivy.carlogs.modelo.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.el.MethodExpression;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +29,17 @@ public class GastosController implements Serializable {
 
     private String matricula;
 
+    private List<String> gasolineras;
+
+    private String gasolinera;
+
     private List<Viajes> viajes;
 
     private String viaje;
+
+    private String descripcion;
+
+    private Gastos gastoSeleccionado;
 
     @EJB
     private GastosFacadeLocal ejbGastos;
@@ -51,9 +50,19 @@ public class GastosController implements Serializable {
     @EJB
     private ViajesFacadeLocal ejbViajes;
 
+    @EJB
+    private RepostajesFacadeLocal ejbRepostajes;
+
+    @EJB
+    private GasolinerasFacadeLocal ejbGasolineras;
+
+    @EJB
+    private MantenimientosFacadeLocal ejbMantenimientos;
+
     @PostConstruct
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+
         viajes = new ArrayList<>();
         viajes = (List<Viajes>) user.getViajesCollection();
         List<Vehiculos> vehiculos = (List<Vehiculos>) user.getVehiculosCollection();
@@ -62,6 +71,11 @@ public class GastosController implements Serializable {
         for (Vehiculos v : vehiculos) {
             gastos.addAll(v.getGastosCollection());
             matriculas.add(v.getMatricula());
+        }
+        gasolineras = new ArrayList<>();
+        List<Gasolineras> gas = ejbGasolineras.findAll();
+        for (Gasolineras g : gas) {
+            gasolineras.add(g.toString());
         }
         gasto = new Gastos();
     }
@@ -84,14 +98,39 @@ public class GastosController implements Serializable {
 
     public void delete(Gastos gasto) {
         ejbGastos.remove(gasto);
-        init();
+        gastos.remove(gasto);
     }
 
     public void insertGasto() throws ParseException {
-        gasto.setMatricula(ejbVehiculos.find(this.matricula));
+        Vehiculos v = ejbVehiculos.find(this.matricula);
+        gasto.setMatricula(v);
         gasto.setViaje(ejbViajes.findByOrDesDate(this.viaje));
         ejbGastos.create(gasto);
-        init();
+        if(gasto.getTipo().equals("REPOSTAJE")) {
+            Gasolineras gasolinera = ejbGasolineras.findByNombreDireccion(this.gasolinera);
+            Repostajes repostaje = new Repostajes();
+            BigDecimal litros = gasto.getPrecio().divide(BigDecimal.valueOf(getPrecioComb(v.getTipoCombustible(), gasolinera)), 2, RoundingMode.HALF_UP);
+            repostaje.setGasolinera(gasolinera);
+            repostaje.setGastoId(gasto);
+            repostaje.setFecha(gasto.getFecha());
+            repostaje.setLitros(litros);
+            ejbRepostajes.create(repostaje);
+        } else if(gasto.getTipo().equals("MANTENIMIENTO")){
+            Mantenimientos mantenimiento = new Mantenimientos();
+            mantenimiento.setGastoId(gasto);
+            mantenimiento.setFecha(gasto.getFecha());
+            mantenimiento.setDescripcion(this.descripcion);
+            ejbMantenimientos.create(mantenimiento);
+        }
+        gastos.add(gasto);
+    }
+
+    private float getPrecioComb(String tipoCombustible, Gasolineras gasolinera) {
+        if (tipoCombustible.equals("GASOLINA"))
+            return gasolinera.getPrecioGasolina();
+        else
+            return gasolinera.getPrecioGasoil();
+
     }
 
     public Usuarios getUser() {
@@ -122,4 +161,44 @@ public class GastosController implements Serializable {
         return viaje;
     }
 
+    public List<String> getGasolineras() {
+        return gasolineras;
+    }
+
+    public void setGasolinera(String gasolinera) {
+        this.gasolinera = gasolinera;
+    }
+
+    public String getGasolinera() {
+        return gasolinera;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String masInfo() {
+        System.out.println(gastoSeleccionado.toString());
+        if(gastoSeleccionado.getTipo().equals("REPOSTAJE")) {
+            Repostajes repostajes = (Repostajes) gastoSeleccionado.getRepostajesCollection().toArray()[0];
+            return "Litros: " + repostajes.getLitros() + " - Gasolinera: " + repostajes.getGasolinera().toString();
+        } else if(gastoSeleccionado.getTipo().equals("MANTENIMIENTO")) {
+            Mantenimientos mantenimientos = (Mantenimientos) gastoSeleccionado.getMantenimientosCollection().toArray()[0];
+            return "Descripcion: " + mantenimientos.getDescripcion();
+        }
+        return "";
+    }
+
+    public Gastos getGastoSeleccionado() {
+        return gastoSeleccionado;
+    }
+
+    public void setGastoSeleccionado(Gastos gastoSeleccionado) {
+        System.out.println("HOLA BOBO");
+        this.gastoSeleccionado = gastoSeleccionado;
+    }
 }

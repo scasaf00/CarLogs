@@ -52,12 +52,11 @@ public class VehiculosController implements Serializable {
     public void insertVehiculo(){
         vehiculo.setUsuario(user);
         ejbVehiculos.create(vehiculo);
-        init();
+        vehiculos.add(vehiculo);
     }
 
     public void deleteVehiculo(Vehiculos v){
         ejbVehiculos.remove(v);
         vehiculos.remove(v);
-        init();
     }
 }

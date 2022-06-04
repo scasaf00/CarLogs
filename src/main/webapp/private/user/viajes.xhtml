@@ -19,8 +19,7 @@
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-6 xl:col-12">
                     <div class="surface-card shadow-2 p-3 border-round">
-                        <p:dataTable id="gastos" var="vh" value="#{viajesController.viajes}">
-                            <p:autoUpdate/>
+                        <p:dataTable id="viajes" var="vh" value="#{viajesController.viajes}">
                             <f:facet name="header">
                                 <div class="grid">
                                     <div class="col-12 md:col-6 lg:col-3 xl:col-6">
@@ -37,7 +36,7 @@
                             </p:column>
 
                             <p:column headerText="Distancia">
-                                <h:outputLabel value="#{vh.distancia}"/>
+                                <h:outputLabel value="#{vh.distancia} Km"/>
                             </p:column>
 
                             <p:column headerText="Origen">
@@ -47,6 +46,17 @@
                             <p:column headerText="Destino">
                                 <h:outputText value="#{vh.destino}" />
                             </p:column>
+
+                            <p:column>
+                                <p:commandButton
+                                        value="Eliminar"
+                                        icon="pi pi-trash"
+                                        styleClass="ui-button-danger"
+                                        immediate="true"
+                                        update="viajes"
+                                        action="#{viajesController.deleteViaje(vh)}"/>
+                            </p:column>
+
                         </p:dataTable>
                         <p:dialog header="Añadir Viaje" widgetVar="dlg" focus="fecha" hideEffect="clip" resizable="false">
                             <h:panelGrid>

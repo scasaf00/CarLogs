@@ -21,7 +21,6 @@
                 <div class="col-12 md:col-6 lg:col-6 xl:col-12">
                     <div class="surface-card shadow-2 p-3 border-round">
                         <p:dataTable id="gastos" var="g" value="#{gastosController.gastos}">
-                            <p:autoUpdate/>
                             <f:facet name="header">
                                 <div class="grid">
                                     <div class="col-12 md:col-6 lg:col-3 xl:col-6">
@@ -58,7 +57,17 @@
                             </p:column>
 
                             <p:column>
-                                <p:commandButton value="Eliminar" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.delete(g)}"/>
+                                <p:commandButton value="Mas Información" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.setGastoSeleccionado(g)}" onclick="PF('dlg2').show();"/>
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton
+                                        value="Eliminar"
+                                        icon="pi pi-trash"
+                                        styleClass="ui-button-danger"
+                                        immediate="true"
+                                        update="@form"
+                                        action="#{gastosController.delete(g)}"/>
                             </p:column>
                         </p:dataTable>
                         <p:dialog header="Añadir Gasto" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">
@@ -70,6 +79,15 @@
                                     <f:selectItems value="#{gastosController.matriculas}"/>
                                 </p:selectOneMenu>
                                 <p:message for="matricula" />
+
+                                <h:outputLabel for="tipo" value="Tipo Gasto: " />
+                                <p:selectOneMenu id="tipo" label="tipoComb" value="#{gastosController.gasto.tipo}" required="true">
+                                    <f:selectItem itemLabel="OTRO" itemValue="OTRO"/>
+                                    <f:selectItem itemLabel="MANTENIMIENTO" itemValue="MANTENIMIENTO"/>
+                                    <f:selectItem itemLabel="REPOSTAJE" itemValue="REPOSTAJE"/>
+                                    <f:ajax render="gasO :nombreGasolinera :gasM :desc :descTA :descM" />
+                                </p:selectOneMenu>
+                                <p:message for="tipo"/>
 
                                 <h:outputLabel for="fecha" value="Fecha: " />
                                 <p:datePicker id="fecha" label="fecha" value="#{gastosController.gasto.fecha}" required="true" requiredMessage="Introduce Fecha"/>
@@ -83,13 +101,15 @@
                                 <p:inputText id="km" label="km" value="#{gastosController.gasto.km}" required="true" requiredMessage="Introduce KM"/>
                                 <p:message for="km"/>
 
-                                <h:outputLabel for="tipoComb" value="Tipo Combustible: " />
-                                <p:selectOneMenu id="tipoComb" label="tipoComb" value="#{gastosController.gasto.tipo}" required="true">
-                                    <f:selectItem itemLabel="REPOSTAJE" itemValue="REPOSTAJE"/>
-                                    <f:selectItem itemLabel="MANTENIMIENTO" itemValue="MANTENIMIENTO"/>
-                                    <f:selectItem itemLabel="OTRO" itemValue="OTRO"/>
+                                <p:outputLabel id="gasO"  value="Gasolinera:" for="nombreGasolinera" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}" />
+                                <p:selectOneMenu  id="nombreGasolinera" value="#{gastosController.gasolinera}" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}">
+                                    <f:selectItems value="#{gastosController.gasolineras}"/>
                                 </p:selectOneMenu>
-                                <p:message for="tipoComb"/>
+                                <p:message id="gasM" for="nombreGasolinera" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}"/>
+
+                                <p:outputLabel id="desc"  value="Descripcion:" for="desc" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
+                                <p:inputTextarea id="descTA" value="#{gastosController.descripcion}" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
+                                <p:message id="descM" for="descTA" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}"/>
 
                                 <h:outputLabel for="viaje" value="Viaje: " />
                                 <p:selectOneMenu id="viaje" label="viaje" value="#{gastosController.viaje}" required="true">
@@ -98,6 +118,18 @@
                                 <p:message for="viaje" />
 
                                 <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.insertGasto()}"/>
+                            </h:panelGrid>
+                        </p:dialog>
+                        <p:dialog header="Ver Gasto" widgetVar="dlg2" focus="matricula" hideEffect="clip" resizable="false" rendered="#{gastosController.gastoSeleccionado != null ? true:false}">
+
+                            <h:panelGrid id="grid2" columns="3" cellpadding="5">
+                                <p:autoUpdate/>
+                                <h:outputText value="Matricula: #{g.matricula}" />
+                                <h:outputText value="Tipo Gasto: #{g.tipo}" />
+                                <h:outputText value="Fecha: #{g.fecha}" />
+                                <h:outputText value="Importe: #{g.precio}" />
+                                <h:outputText value="KM: #{g.km}" />
+                                <h:outputText value="#{gastosController.masInfo()}" />
                             </h:panelGrid>
                         </p:dialog>
                     </div>

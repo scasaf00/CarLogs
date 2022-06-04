@@ -21,7 +21,6 @@
                 <div class="col-12 md:col-6 lg:col-6 xl:col-12">
                     <div class="surface-card shadow-2 p-3 border-round">
                         <p:dataTable id="vehiculos" var="v" value="#{vehiculosController.vehiculos}">
-                            <p:autoUpdate/>
                             <f:facet name="header">
                                 <div class="grid">
                                     <div class="col-12 md:col-6 lg:col-3 xl:col-6">
@@ -62,7 +61,12 @@
                             </p:column>
 
                             <p:column>
-                                <p:commandButton value="Eliminar" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{vehiculosController.deleteVehiculo(v)}"/>
+                                <p:commandButton
+                                        value="Eliminar"
+                                        styleClass="ui-button-danger ui-button-secondary ui-button-flat"
+                                        immediate="true"
+                                        update="vehiculos"
+                                        action="#{vehiculosController.deleteVehiculo(v)}"/>
                             </p:column>
                         </p:dataTable>
                         <p:dialog header="Añadir Vehiculo" widgetVar="dlg" focus="matricula" hideEffect="clip" resizable="false">
