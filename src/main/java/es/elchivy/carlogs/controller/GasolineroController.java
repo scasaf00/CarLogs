@@ -61,6 +61,17 @@ public class GasolineroController implements Serializable {
     public void init(){
 
         this.user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(!user.getTipo().equals("GASOLINERO")){
+            //Redirigir a la página de inicio y mostrar mensaje de error
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         this.gasolinero = user.getGasolineros();
         this.gasolinera = gasolinero.getGasolinera();
         this.repostajes = new ArrayList<>(gasolinera.getRepostajesCollection());

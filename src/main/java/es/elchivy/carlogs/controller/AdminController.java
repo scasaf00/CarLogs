@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,7 +25,19 @@ public class AdminController implements Serializable {
     private UsuariosFacadeLocal ejbUsuarios;
 
     @PostConstruct
-    public void init(){
+    public void init() throws IOException {
+        Usuarios usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(!usuario.getTipo().equals("ADMIN")){
+            //Redirigir a la página de inicio y mostrar mensaje de error
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         usuarios = ejbUsuarios.getAllNotAdmin();
 
     }
