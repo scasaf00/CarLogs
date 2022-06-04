@@ -66,11 +66,11 @@
                                 <p:message for="fecha"/>
 
                                 <h:outputLabel for="distancia" value="Distancia (KM): " />
-                                <p:inputText id="distancia" label="distancia" value="#{viajesController.viaje.distancia}" required="true" requiredMessage="Introduce Distancia"/>
+                                <p:inputNumber id="distancia" label="distancia" value="#{viajesController.viaje.distancia}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Distancia"/>
                                 <p:message for="distancia"/>
 
                                 <h:outputLabel for="origen" value="Origen: " />
-                                <p:inputText id="origen" label="origen" value="#{viajesController.viaje.origen}" required="true" requiredMessage="Introduce Origen"/>
+                                <p:inputText id="origen" label="origen" value="#{viajesController.viaje.origen}" maxlength="50" required="true" requiredMessage="Introduce Origen"/>
                                 <p:message for="origen"/>
 
                                 <h:outputLabel for="destino" value="Destino: " />

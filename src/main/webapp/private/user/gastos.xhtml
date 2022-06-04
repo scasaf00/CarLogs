@@ -94,11 +94,11 @@
                                 <p:message for="fecha"/>
 
                                 <h:outputLabel for="importe" value="Importe: " />
-                                <p:inputText id="importe" label="importe" value="#{gastosController.gasto.precio}" required="true" requiredMessage="Introduce Importe"/>
+                                <p:inputNumber id="importe" label="importe" value="#{gastosController.gasto.precio}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Importe"/>
                                 <p:message for="importe"/>
 
                                 <h:outputLabel for="km" value="KM: " />
-                                <p:inputText id="km" label="km" value="#{gastosController.gasto.km}" required="true" requiredMessage="Introduce KM"/>
+                                <p:inputNumber id="km" label="km" value="#{gastosController.gasto.km}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce KM"/>
                                 <p:message for="km"/>
 
                                 <p:outputLabel id="gasO"  value="Gasolinera:" for="nombreGasolinera" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}" />
@@ -108,7 +108,7 @@
                                 <p:message id="gasM" for="nombreGasolinera" rendered="#{gastosController.gasto.tipo == 'REPOSTAJE' ? true:false}"/>
 
                                 <p:outputLabel id="desc"  value="Descripcion:" for="desc" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
-                                <p:inputTextarea id="descTA" value="#{gastosController.descripcion}" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
+                                <p:inputTextarea id="descTA" value="#{gastosController.descripcion}" maxlength="50" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}" />
                                 <p:message id="descM" for="descTA" rendered="#{gastosController.gasto.tipo == 'MANTENIMIENTO' ? true:false}"/>
 
                                 <h:outputLabel for="viaje" value="Viaje: " />

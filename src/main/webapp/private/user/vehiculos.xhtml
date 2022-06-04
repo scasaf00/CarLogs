@@ -75,27 +75,27 @@
                             <h:panelGrid id="grid" columns="3" cellpadding="5">
                                 <p:autoUpdate/>
                                 <h:outputLabel for="matricula" value="Matricula: " />
-                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" required="true" requiredMessage="Introduce Matricula"/>
+                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" maxlength="50" required="true" requiredMessage="Introduce Matricula"/>
                                 <p:message for="matricula"/>
 
                                 <h:outputLabel for="marca" value="Marca: " />
-                                <p:inputText id="marca" label="marca" value="#{vehiculosController.vehiculo.marca}" required="true" requiredMessage="Introduce Marca"/>
+                                <p:inputText id="marca" label="marca" value="#{vehiculosController.vehiculo.marca}" maxlength="50" required="true" requiredMessage="Introduce Marca"/>
                                 <p:message for="marca"/>
 
                                 <h:outputLabel for="modelo" value="Modelo: " />
-                                <p:inputText id="modelo" label="modelo" value="#{vehiculosController.vehiculo.modelo}" required="true" requiredMessage="Introduce Modelo"/>
+                                <p:inputText id="modelo" label="modelo" value="#{vehiculosController.vehiculo.modelo}" maxlength="50" required="true" requiredMessage="Introduce Modelo"/>
                                 <p:message for="modelo"/>
 
                                 <h:outputLabel for="color" value="Color: " />
-                                <p:inputText id="color" label="color" value="#{vehiculosController.vehiculo.color}" required="true" requiredMessage="Introduce Color"/>
+                                <p:inputText id="color" label="color" value="#{vehiculosController.vehiculo.color}" maxlength="50" required="true" requiredMessage="Introduce Color"/>
                                 <p:message for="color"/>
 
                                 <h:outputLabel for="gastoKM" value="Consumo por KM: " />
-                                <p:inputText id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" required="true" requiredMessage="Introduce Consumo por KM"/>
+                                <p:inputNumber id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Consumo por KM"/>
                                 <p:message for="gastoKM"/>
 
                                 <h:outputLabel for="kmActual" value="KM Actuales: " />
-                                <p:inputText id="kmActual" label="kmActual" value="#{vehiculosController.vehiculo.kmActual}" required="true" requiredMessage="Introduce KM actuales"/>
+                                <p:inputNumber id="kmActual" label="kmActual" value="#{vehiculosController.vehiculo.kmActual}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce KM actuales"/>
                                 <p:message for="kmActual"/>
 
                                 <h:outputLabel for="tipoComb" value="Tipo Combustible: " />
