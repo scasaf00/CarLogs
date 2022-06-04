@@ -16,10 +16,10 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form>
-            <div class="grid">
-                <div class="col-12 md:col-6 lg:col-6 xl:col-12">
-                    <div class="surface-card shadow-2 p-3 border-round">
+        <h:form id="main">
+            <div id="div1" class="grid">
+                <div id="div2" class="col-12 md:col-6 lg:col-6 xl:col-12">
+                    <div id="div3" class="surface-card shadow-2 p-3 border-round">
                         <p:dataTable id="gastos" var="g" value="#{gastosController.gastos}">
                             <f:facet name="header">
                                 <div class="grid">
@@ -117,7 +117,12 @@
                                 </p:selectOneMenu>
                                 <p:message for="viaje" />
 
-                                <p:commandButton value="Añadir" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.insertGasto()}"/>
+                                <p:commandButton
+                                        value="Añadir"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        update="gastos"
+                                        action="#{gastosController.insertGasto()}"
+                                />
                             </h:panelGrid>
                         </p:dialog>
                         <p:dialog header="Ver Gasto" widgetVar="dlg2" focus="matricula" hideEffect="clip" resizable="false" rendered="#{gastosController.gastoSeleccionado != null ? true:false}">
