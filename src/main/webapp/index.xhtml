@@ -13,6 +13,11 @@
 <h:body>
 
     <h:form id="loginForm">
+
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
         <p:panel id="loginPanel" header="Iniciar sesión"
                  style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
             <h:panelGrid id="loginGrid" columns="3" cellpadding="5">

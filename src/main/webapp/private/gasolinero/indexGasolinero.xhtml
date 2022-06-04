@@ -11,7 +11,7 @@
 <ui:composition template="./../../WEB-INF/template/template.xhtml">
 
     <ui:define name="top">
-        <p:menuitem value="Gasolinera" icon="pi pi-home" url="#{request.contextPath}/faces/private/gasolinero/indexGasolinero.xhtml?faces-redirect=true">
+        <p:menuitem value="Gasolinera #{gasolineroController.gasolinera}" icon="pi pi-home" url="#{request.contextPath}/faces/private/gasolinero/indexGasolinero.xhtml?faces-redirect=true">
         </p:menuitem>
     </ui:define>
 

@@ -371,5 +371,9 @@ public class GasolineroController implements Serializable {
 
     public void setPrecioGasoil(float precioGasoil) { this.precioGasoil = precioGasoil; }
 
+    public Gasolineras getGasolinera(){
+        return gasolinera;
+    }
+
 
 }
