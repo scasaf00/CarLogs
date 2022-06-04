@@ -2,6 +2,7 @@ package es.elchivy.carlogs.controller;
 
 import es.elchivy.carlogs.ejb.*;
 import es.elchivy.carlogs.modelo.*;
+import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -59,19 +60,24 @@ public class GastosController implements Serializable {
     @EJB
     private MantenimientosFacadeLocal ejbMantenimientos;
 
+    @EJB
+    private UsuariosFacadeLocal ejbUsuarios;
+
     @PostConstruct
     public void init() {
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        user = ejbUsuarios.find(user.getUsername());
 
         viajes = new ArrayList<>();
         viajes = (List<Viajes>) user.getViajesCollection();
         List<Vehiculos> vehiculos = (List<Vehiculos>) user.getVehiculosCollection();
         gastos = new ArrayList<>();
+        gastos = ejbGastos.getAllByUser(user);
         matriculas = new ArrayList<>();
         for (Vehiculos v : vehiculos) {
-            gastos.addAll(v.getGastosCollection());
             matriculas.add(v.getMatricula());
         }
+
         gasolineras = new ArrayList<>();
         List<Gasolineras> gas = ejbGasolineras.findAll();
         for (Gasolineras g : gas) {
@@ -130,7 +136,6 @@ public class GastosController implements Serializable {
             return gasolinera.getPrecioGasolina();
         else
             return gasolinera.getPrecioGasoil();
-
     }
 
     public Usuarios getUser() {
@@ -198,5 +203,6 @@ public class GastosController implements Serializable {
 
     public void setGastoSeleccionado(Gastos gastoSeleccionado) {
         this.gastoSeleccionado = gastoSeleccionado;
+        PrimeFaces.current().executeScript("PF('dlg2').show()");
     }
 }

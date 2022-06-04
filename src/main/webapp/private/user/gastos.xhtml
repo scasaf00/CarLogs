@@ -59,7 +59,11 @@
                             </p:column>
 
                             <p:column>
-                                <p:commandButton value="Mas Información" styleClass="ui-button-raised ui-button-secondary ui-button-flat" action="#{gastosController.setGastoSeleccionado(g)}" onclick="PF('dlg2').show();"/>
+                                <p:commandButton
+                                        value="Mas Información"
+                                        styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                                        action="#{gastosController.setGastoSeleccionado(g)}"
+                                        />
                             </p:column>
 
                             <p:column>
@@ -127,7 +131,13 @@
                                 />
                             </h:panelGrid>
                         </p:dialog>
-                        <p:dialog header="Ver Gasto" widgetVar="dlg2" focus="matricula" hideEffect="clip" resizable="false" rendered="#{gastosController.gastoSeleccionado != null ? true:false}">
+                        <p:dialog
+                                header="Ver Gasto"
+                                widgetVar="dlg2"
+                                focus="matricula"
+                                hideEffect="clip"
+                                resizable="false"
+                                rendered="#{gastosController.gastoSeleccionado != null ? true:false}">
 
                             <h:panelGrid id="grid2" columns="3" cellpadding="5">
                                 <p:autoUpdate/>

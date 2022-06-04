@@ -34,8 +34,6 @@ import java.util.List;
 public class UserController implements Serializable {
     private BarChartModel barModel;
 
-    private PieChartModel pieModel;
-
     private List<Gastos> gastos = new ArrayList<>();
 
     private Usuarios user;
@@ -55,7 +53,6 @@ public class UserController implements Serializable {
         this.viajes = new ArrayList<>();
         this.viajes = (List<Viajes>) user.getViajesCollection();
         createBarModels();
-        createPieChartModels();
     }
 
     // Grafica para los Gastos anuales
@@ -219,39 +216,8 @@ public class UserController implements Serializable {
         barModel.setOptions(options);
     }
 
-    private void createPieChartModels(){
-        pieModel = new PieChartModel();
-        ChartData data = new ChartData();
-
-        PieChartDataSet dataSet = new PieChartDataSet();
-        List<Number> values = new ArrayList<>();
-        values.add(getGastosByMesRepostajes(Calendar.getInstance().get(Calendar.MONTH)));
-        values.add(getGastosByMesMantenimientos(Calendar.getInstance().get(Calendar.MONTH)));
-        values.add(getGastosByMesOtros(Calendar.getInstance().get(Calendar.MONTH)));
-        dataSet.setData(values);
-
-        List<String> bgColors = new ArrayList<>();
-        bgColors.add("rgba(54, 162, 235, 1)");
-        bgColors.add("rgb(255, 159, 64, 1)");
-        bgColors.add("rgba(75, 192, 192, 1)");
-        dataSet.setBackgroundColor(bgColors);
-
-        data.addChartDataSet(dataSet);
-        List<String> labels = new ArrayList<>();
-        labels.add("Repostaje");
-        labels.add("Mantenimiento");
-        labels.add("Otros");
-        data.setLabels(labels);
-
-        pieModel.setData(data);
-    }
-
     public BarChartModel getBarModel() {
         return barModel;
-    }
-
-    public PieChartModel getPieModel() {
-        return pieModel;
     }
 
     private float getGastosByMes(int mes) {
@@ -297,7 +263,7 @@ public class UserController implements Serializable {
         for (Gastos g : gastos) {
             if((g.getFecha().getYear() + 1900)== Calendar.getInstance().get(Calendar.YEAR)){
                 if (g.getFecha().getMonth() == i) {
-                    if (g.getTipo().equals("OTROS")) {
+                    if (g.getTipo().equals("OTRO")) {
                         total += Float.parseFloat(g.getPrecio().toString());
                     }
                 }
@@ -334,5 +300,9 @@ public class UserController implements Serializable {
 
     public int getYear() {
         return year;
+    }
+
+    public int getTamnioLista() {
+        return Math.min(gastos.size(), 8);
     }
 }

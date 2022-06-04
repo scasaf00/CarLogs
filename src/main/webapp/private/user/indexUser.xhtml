@@ -33,7 +33,7 @@
                         <p:dataTable
                                 id="ultimosMovimientos"
                                 var="g"
-                                value="#{userController.gastos.subList(0, gastosController.gastos.size())}"
+                                value="#{userController.gastos.subList(0, userController.tamnioLista)}"
                                 widgetVar="gastosTable"
                         >
                             <f:facet name="header">
