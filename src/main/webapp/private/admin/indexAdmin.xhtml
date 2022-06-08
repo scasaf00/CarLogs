@@ -23,7 +23,7 @@
         </p:messages>
         <h:form>
             <div class="card">
-                <p:dataTable id="usuarios" var="u" value="#{adminController.usuarios}">
+                <p:dataTable id="usuarios" var="u" value="#{adminController.usuarios}" paginator="true">
                     <f:facet name="header">
                         <div class="p-d-flex p-jc-between p-ai-center">
                             Usuarios registrados
