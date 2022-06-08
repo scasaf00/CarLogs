@@ -84,6 +84,11 @@ public class RegisterController implements Serializable {
             } catch (Exception e) {
                 dup = true;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El usuario ya existe"));
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                }catch(Exception ex){
+                    System.out.println("Error");
+                }
             }
 
             if (!dup) {
@@ -104,6 +109,11 @@ public class RegisterController implements Serializable {
 
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden"));
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("register.xhtml");
+            }catch (Exception ex){
+                System.out.println("Error");
+            }
         }
 
     }

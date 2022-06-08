@@ -1,7 +1,9 @@
 package es.elchivy.carlogs.controller;
 
 
+import es.elchivy.carlogs.ejb.GasolinerasFacadeLocal;
 import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
+import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Usuarios;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,6 +22,9 @@ public class AdminController implements Serializable {
 
     @EJB
     private UsuariosFacadeLocal ejbUsuarios;
+
+    @EJB
+    private GasolinerasFacadeLocal ejbGasolineras;
 
     @PostConstruct
     public void init() {
@@ -48,8 +53,13 @@ public class AdminController implements Serializable {
     }
 
     public void eliminarUsuario(Usuarios usuario){
+        Gasolineras gasolinera = new Gasolineras();
+        if(usuario.getTipo().equals("GASOLINERO")){
+            gasolinera = usuario.getGasolineros().getGasolinera();
+        }
         ejbUsuarios.remove(usuario);
         usuarios.remove(usuario);
+        ejbGasolineras.remove(gasolinera);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario eliminado", "El usuario ha sido eliminado"));
     }
 }
