@@ -23,7 +23,7 @@
         </p:messages>
         <h:form>
             <div class="card">
-                <p:dataTable id="gasolineros" var="g" value="#{peticionesAdminController.gasolineros}" paginator="true">
+                <p:dataTable id="gasolineros" var="g" value="#{peticionesAdminController.gasolineros}" paginator="true" paginatorPosition="bottom" rows="10">
                     <f:facet name="header">
                         <div class="p-d-flex p-jc-between p-ai-center">
                             Gasolineros pendientes de aprobación

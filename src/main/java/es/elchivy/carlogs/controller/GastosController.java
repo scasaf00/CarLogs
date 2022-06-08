@@ -43,6 +43,8 @@ public class GastosController implements Serializable {
 
     private Gastos gastoSeleccionado;
 
+    private List<Vehiculos> vehiculos;
+
     @EJB
     private GastosFacadeLocal ejbGastos;
 
@@ -83,7 +85,6 @@ public class GastosController implements Serializable {
         user = ejbUsuarios.find(user.getUsername());
 
         viajes = new ArrayList<>( user.getViajesCollection());
-        List<Vehiculos> vehiculos = new ArrayList<>();
         vehiculos = ejbUsuarios.getAlLVehiculos(user);
         gastos = new ArrayList<>();
         gastos = ejbGastos.getAllByUser(user);
@@ -171,6 +172,10 @@ public class GastosController implements Serializable {
             mantenimiento.setFecha(gasto.getFecha());
             mantenimiento.setDescripcion(this.descripcion);
             ejbMantenimientos.create(mantenimiento);
+        }
+        if(v.getKmActual().compareTo(gasto.getKm()) < 0){
+            v.setKmActual(gasto.getKm());
+            ejbVehiculos.edit(v);
         }
         gastos.add(gasto);
     }
