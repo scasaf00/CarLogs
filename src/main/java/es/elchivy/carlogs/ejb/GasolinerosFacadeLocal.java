@@ -6,6 +6,9 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Gasolineros;
+import es.elchivy.carlogs.modelo.Repostajes;
+import es.elchivy.carlogs.modelo.Usuarios;
+
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,5 +34,7 @@ public interface GasolinerosFacadeLocal {
     List<Gasolineros> findRange(int[] range);
 
     int count();
+
+    List<Repostajes> getRepostajes(Usuarios user);
     
 }

@@ -6,6 +6,7 @@
 package es.elchivy.carlogs.ejb;
 
 import es.elchivy.carlogs.modelo.Gasolineros;
+import es.elchivy.carlogs.modelo.Repostajes;
 import es.elchivy.carlogs.modelo.Usuarios;
 
 import javax.ejb.Stateless;
@@ -41,6 +42,14 @@ public class GasolinerosFacade extends AbstractFacade<Gasolineros> implements Ga
         List<Gasolineros> resultado = query.getResultList();
 
         return resultado;
+    }
+
+    @Override
+    public List<Repostajes> getRepostajes(Usuarios user){
+        String consulta = "FROM Repostajes r WHERE r.gasolinera = :param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", user.getGasolineros().getGasolinera());
+        return (List<Repostajes>) query.getResultList();
     }
 
 }

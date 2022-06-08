@@ -50,7 +50,7 @@
                                 <h:outputText value="#{v.color}" />
                             </p:column>
 
-                            <p:column headerText="Consumo por KM">
+                            <p:column headerText="Consumo a los 100 KM">
                                 <h:outputText value="#{v.gastoKm}" />
                             </p:column>
 
@@ -92,8 +92,8 @@
                                 <p:inputText id="color" label="color" value="#{vehiculosController.vehiculo.color}" maxlength="50" required="true" requiredMessage="Introduce Color"/>
                                 <p:message for="color"/>
 
-                                <h:outputLabel for="gastoKM" value="Consumo por KM: " />
-                                <p:inputNumber id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Consumo por KM"/>
+                                <h:outputLabel for="gastoKM" value="Consumo a los 100 KM: " />
+                                <p:inputNumber id="gastoKM" label="gastoKM" value="#{vehiculosController.vehiculo.gastoKm}" minValue="0" maxValue="9999999999.99" required="true" requiredMessage="Introduce Consumo a los 100 KM"/>
                                 <p:message for="gastoKM"/>
 
                                 <h:outputLabel for="kmActual" value="KM Actuales: " />

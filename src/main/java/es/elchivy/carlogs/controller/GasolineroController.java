@@ -2,6 +2,8 @@ package es.elchivy.carlogs.controller;
 
 
 import es.elchivy.carlogs.ejb.GasolinerasFacadeLocal;
+import es.elchivy.carlogs.ejb.GasolinerosFacadeLocal;
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.modelo.Gasolineras;
 import es.elchivy.carlogs.modelo.Gasolineros;
 import es.elchivy.carlogs.modelo.Repostajes;
@@ -54,11 +56,18 @@ public class GasolineroController implements Serializable {
     @EJB
     private GasolinerasFacadeLocal ejbGasolineras;
 
+    @EJB
+    private UsuariosFacadeLocal ejbUsuarios;
+
+    @EJB
+    private GasolinerosFacadeLocal ejbGasolineros;
+
 
     @PostConstruct
     public void init(){
 
         this.user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        this.user = ejbUsuarios.find(user.getUsername());
         if(!user.getTipo().equals("GASOLINERO")){
             //Redirigir a la página de inicio y mostrar mensaje de error
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No tienes permisos", "No tienes permisos para acceder a esta página"));
@@ -72,7 +81,7 @@ public class GasolineroController implements Serializable {
 
         this.gasolinero = user.getGasolineros();
         this.gasolinera = gasolinero.getGasolinera();
-        this.repostajes = new ArrayList<>(gasolinera.getRepostajesCollection());
+        this.repostajes = new ArrayList<>(ejbGasolineros.getRepostajes(user));
         this.precioGasolina = gasolinera.getPrecioGasolina();
         this.precioGasoil = gasolinera.getPrecioGasoil();
         createBarModelImporte();
