@@ -70,6 +70,7 @@ public class RegisterController implements Serializable {
         if (user.getPassword().equals(password)) {
             if (user.getTipo().equals("GASOLINERO")) {
                 if (ejbGasolinera.exist(gasolinera)){
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La gasolinera ya existe"));
                     try {
                         FacesContext.getCurrentInstance().getExternalContext().redirect("register.xhtml");

@@ -77,7 +77,10 @@
                             <h:panelGrid id="grid" columns="3" cellpadding="5">
                                 <p:autoUpdate/>
                                 <h:outputLabel for="matricula" value="Matricula: " />
-                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" maxlength="7" required="true" requiredMessage="Introduce Matricula" />
+                                <p:inputText id="matricula" label="matricula" value="#{vehiculosController.vehiculo.matricula}" maxlength="7" required="true" requiredMessage="Introduce Matricula" validatorMessage="Matricula invalida">
+                                    <f:validateRegex pattern="^[0-9]{1,4}(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{3}"/>
+                                </p:inputText>
+
                                 <p:message for="matricula"/>
 
                                 <h:outputLabel for="marca" value="Marca: " />
