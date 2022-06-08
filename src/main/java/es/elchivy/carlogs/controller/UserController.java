@@ -27,9 +27,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @Named
 @ViewScoped
@@ -323,5 +321,11 @@ public class UserController implements Serializable {
 
     public int getTamnioLista() {
         return Math.min(gastos.size(), 8);
+    }
+
+    public List<Gastos> getGastosReverse(){
+        List<Gastos> reverseGastos = this.gastos;
+        Collections.reverse(reverseGastos);
+        return reverseGastos;
     }
 }

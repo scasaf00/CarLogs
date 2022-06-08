@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Named
@@ -250,5 +251,11 @@ public class GastosController implements Serializable {
         System.out.println("Seleccionado: " + gastoSeleccionado);
         this.gastoSeleccionado = gastoSeleccionado;
         PrimeFaces.current().executeScript("PF('dlg2').show()");
+    }
+
+    public List<Gastos> getGastosReverse(){
+        List<Gastos> reverseGastos = this.gastos;
+        Collections.reverse(reverseGastos);
+        return reverseGastos;
     }
 }
