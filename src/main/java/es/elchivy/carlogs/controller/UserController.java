@@ -325,6 +325,12 @@ public class UserController implements Serializable {
 
     public List<Gastos> getGastosReverse(){
         List<Gastos> reverseGastos = this.gastos;
+        reverseGastos.sort((o1, o2) -> {
+            if (o1.getFecha() == null || o2.getFecha() == null) {
+                return 0;
+            }
+            return o1.getFecha().compareTo(o2.getFecha());
+        });
         Collections.reverse(reverseGastos);
         return reverseGastos;
     }

@@ -15,9 +15,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Named
 @ViewScoped
@@ -255,6 +253,12 @@ public class GastosController implements Serializable {
 
     public List<Gastos> getGastosReverse(){
         List<Gastos> reverseGastos = this.gastos;
+        reverseGastos.sort((o1, o2) -> {
+            if (o1.getFecha() == null || o2.getFecha() == null) {
+                return 0;
+            }
+            return o1.getFecha().compareTo(o2.getFecha());
+        });
         Collections.reverse(reverseGastos);
         return reverseGastos;
     }
