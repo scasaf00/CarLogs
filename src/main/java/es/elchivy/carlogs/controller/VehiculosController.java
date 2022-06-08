@@ -1,5 +1,6 @@
 package es.elchivy.carlogs.controller;
 
+import es.elchivy.carlogs.ejb.UsuariosFacadeLocal;
 import es.elchivy.carlogs.ejb.VehiculosFacadeLocal;
 import es.elchivy.carlogs.modelo.Usuarios;
 import es.elchivy.carlogs.modelo.Vehiculos;
@@ -28,6 +29,9 @@ public class VehiculosController implements Serializable {
     @EJB
     private VehiculosFacadeLocal ejbVehiculos;
 
+    @EJB
+    private UsuariosFacadeLocal ejbUsuarios;
+
     @PostConstruct
     public void init() {
         Usuarios usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
@@ -42,7 +46,8 @@ public class VehiculosController implements Serializable {
             }
         }
         user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        vehiculos = (List<Vehiculos>) user.getVehiculosCollection();
+        user = ejbUsuarios.find(user.getUsername());
+        vehiculos = ejbVehiculos.getVehiculos(user);
         vehiculo = new Vehiculos();
     }
 

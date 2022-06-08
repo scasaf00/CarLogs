@@ -5,6 +5,7 @@
  */
 package es.elchivy.carlogs.ejb;
 
+import es.elchivy.carlogs.modelo.Usuarios;
 import es.elchivy.carlogs.modelo.Vehiculos;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,6 @@ public interface VehiculosFacadeLocal {
     List<Vehiculos> findRange(int[] range);
 
     int count();
-    
+
+    List<Vehiculos> getVehiculos(Usuarios user);
 }
