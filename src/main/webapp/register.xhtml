@@ -13,6 +13,9 @@
 
 <h:body>
     <h:form>
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
         <p:panel header="Resgistro" style="position:absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); text-align: center">
             <h:panelGrid id ="grid" class="panel" columns="3" cellpadding="10">
                 <p:outputLabel value="Usuario: " for="usuario"/>

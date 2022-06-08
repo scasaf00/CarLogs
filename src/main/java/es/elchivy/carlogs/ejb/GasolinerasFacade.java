@@ -8,6 +8,7 @@ package es.elchivy.carlogs.ejb;
 import es.elchivy.carlogs.modelo.Gasolineras;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -31,14 +32,28 @@ public class GasolinerasFacade extends AbstractFacade<Gasolineras> implements Ga
     }
 
     @Override
-    public Gasolineras findGasolinera(Gasolineras gasolineras) {
+    public Gasolineras findGasolinera(Gasolineras gasolineras){
         //find gasolinera by nombre and direccion
         String consulta = "SELECT g FROM Gasolineras g WHERE g.nombre = :nombre AND g.direccion = :direccion";
         Query q = em.createQuery(consulta);
         q.setParameter("nombre", gasolineras.getNombre());
         q.setParameter("direccion", gasolineras.getDireccion());
-        System.out.println("Gasolinera: " + q.getSingleResult());
         return (Gasolineras) q.getSingleResult();
+    }
+
+    @Override
+    public boolean exist(Gasolineras gasolineras){
+        String consulta = "SELECT g FROM Gasolineras g WHERE g.nombre = :nombre AND g.direccion = :direccion";
+        Query q = em.createQuery(consulta);
+        q.setParameter("nombre", gasolineras.getNombre());
+        q.setParameter("direccion", gasolineras.getDireccion());
+
+        try {
+            q.getSingleResult();
+            return true;
+        }catch (NoResultException e){
+            return false;
+        }
     }
 
     @Override

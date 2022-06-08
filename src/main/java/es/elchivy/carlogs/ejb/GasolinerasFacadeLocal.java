@@ -32,5 +32,7 @@ public interface GasolinerasFacadeLocal {
 
     Gasolineras findGasolinera(Gasolineras gasolineras);
 
+    boolean exist(Gasolineras gasolineras);
+
     Gasolineras findByNombreDireccion(String gasolinera);
 }

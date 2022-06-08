@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 
@@ -68,13 +69,21 @@ public class RegisterController implements Serializable {
     public void insertUser() {
         if (user.getPassword().equals(password)) {
             if (user.getTipo().equals("GASOLINERO")) {
-                ejbGasolinera.create(gasolinera);
-
-                Gasolineros gasolinero = new Gasolineros();
-                gasolinero.setGasolinera(ejbGasolinera.findGasolinera(gasolinera));
-                gasolinero.setUsuario(user.getUsername());
-                gasolinero.setUsuarios(user);
-                user.setGasolineros(gasolinero);
+                if (ejbGasolinera.exist(gasolinera)){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La gasolinera ya existe"));
+                    try {
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("register.xhtml");
+                    }catch (Exception e){
+                        System.out.println("Error");
+                    }
+                }else {
+                    ejbGasolinera.create(gasolinera);
+                    Gasolineros gasolinero = new Gasolineros();
+                    gasolinero.setGasolinera(ejbGasolinera.findGasolinera(gasolinera));
+                    gasolinero.setUsuario(user.getUsername());
+                    gasolinero.setUsuarios(user);
+                    user.setGasolineros(gasolinero);
+                }
             }
 
             boolean dup = false;
